@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="total.css">
+<s:Push Id="requestId" Value="$FillValue($param1)"></s:Push>
+
+  <c:VerticalLayout>
+
+    <c:DockLayout CssClass="top_navigator">
+      <c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackTo(WorkList)">
+        <c:Image/>
+        <c:TextView Text="#back#"/>
+      </c:HorizontalLayout>
+      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnEvent="Forward" OnClickAction="$DoBackTo(history)"/>
+      <c:HorizontalLayout>
+        <c:TextView Text="#visitTotal#" />
+      </c:HorizontalLayout>
+    </c:DockLayout>
+
+    
+
+    <c:ScrollView Id="grScrollView">
+
+    
+	<s:If Test="$isProgress($requestId.Status)">
+      <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetBeginDate()">
+        <c:TextView Text="#begin#"></c:TextView>
+        <c:TextView Id="beginDate" Text="$DoFullDate($requestId.FactStartDataTime)"   CssClass="value"></c:TextView>
+    </c:DockLayout>
+    </s:If>
+    <s:Else>
+    <c:DockLayout CssClass="parameter_grid">
+        <c:TextView Text="#begin#"></c:TextView>
+        <c:TextView Id="beginDate" Text="$DoFullDate($requestId.FactStartDataTime)"   CssClass="value"></c:TextView>
+    </c:DockLayout>
+    </s:Else>
+    <c:HorizontalLine/>
+    <s:If Test="$isProgress($requestId.Status)">
+    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetEndDate()">
+        <c:TextView Text="#end#"></c:TextView>
+        <c:TextView Id="endDate" Text="$DoFullDate($requestId.FactEndDataTime)"  CssClass="value"></c:TextView>
+    </c:DockLayout>
+    </s:If>
+    <s:Else>
+    <c:DockLayout CssClass="parameter_grid">
+        <c:TextView Text="#end#"></c:TextView>
+        <c:TextView Id="endDate" Text="$DoFullDate($requestId.FactEndDataTime)"  CssClass="value"></c:TextView>
+    </c:DockLayout>
+    </s:Else>
+    <c:HorizontalLine/>
+	
+	<s:If Test="$isProgress($requestId.Status)">
+	<c:DockLayout CssClass="parameter_grid" OnClickAction="$DoStatusSelect()">
+	        <c:TextView Text="#requeststatus#" CssClass="caption"></c:TextView>
+	        <c:TextView Id="rStatus" Text="$Trans($requestId.Status.Description)"  CssClass="value"></c:TextView>
+	</c:DockLayout>
+	</s:If>
+	
+	<s:Else>
+	<c:DockLayout CssClass="parameter_grid">
+	        <c:TextView Text="#requeststatus#" CssClass="caption"></c:TextView>
+	        <c:TextView Id="rStatus" Text="$Trans($requestId.Status.Description)"  CssClass="value"></c:TextView>
+	</c:DockLayout>
+	</s:Else>
+	<c:HorizontalLine/>
+        
+   
+     
+
+    </c:ScrollView>
+
+  </c:VerticalLayout>
+
+</c:Screen>
+
+
+

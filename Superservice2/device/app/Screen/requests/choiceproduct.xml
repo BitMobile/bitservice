@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="choiceproduct.css">
+<c:VerticalLayout>	
+	 <c:HorizontalLayout CssClass="search">
+	 <s:Push Id="val" Value="$initsearch()"/>
+      <c:DockLayout >
+        <c:Image />
+        <c:EditText Id="edtSearch" Text="$prodsearch" Placeholder="#search#"></c:EditText>
+      </c:DockLayout>
+      <c:Button Id="btnSearch" Text="#search#" OnClickAction="$DoSearch($edtSearch.Text, $param1, $param2, $param3)"></c:Button>
+    </c:HorizontalLayout>    
+    <c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
+    
+    <c:ScrollView>   
+    <s:Iterator Id="product" Value="$GetProducts($param1.Customer, $prodsearch)">
+          <c:HorizontalLine/>
+          <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $product.Product, 1, $param3)">
+            <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+            <c:VerticalLayout>
+              <c:TextView Text="$product.Product.Description" CssClass="main_row"></c:TextView>
+             
+            </c:VerticalLayout>
+            <c:Image/>
+          </c:HorizontalLayout>
+
+     </s:Iterator>
+   </c:ScrollView>
+   
+   <c:DockLayout CssClass="footer">
+			<c:DockLayout CssClass="btn_bottom_footer " OnClickAction="$DoBackAndClean()">
+				<c:TextView Text="Назад" />
+			</c:DockLayout>
+	</c:DockLayout>
+   
+</c:VerticalLayout>
+</c:Screen>

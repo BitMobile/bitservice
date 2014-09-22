@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<bp:BusinessProcess xmlns:bp="BitMobile.BusinessProcess">
+
+  <bp:Workflow Name="Main" Controller="Main\Main.js">
+
+    <bp:Step Name="Menu" Screen="Main.xml" Controller="Main\Main.js">
+      <bp:Action Name="requests" NextWorkflow="requests"></bp:Action>
+      <bp:Action Name="customerlist" NextWorkflow="customerlist"></bp:Action>
+      <bp:Action Name="historylist" NextWorkflow="Historylist"></bp:Action>
+      
+      <bp:Action Name="Sync" NextWorkflow="Sync"/>
+    </bp:Step>
+
+  </bp:Workflow>
+
+  <bp:Workflow Name="requests">
+
+    <bp:Step Name="requests" Screen="requests.xml" Controller="requests\Main.js">
+      
+	  <bp:Action Name="SelectItem" NextStep="Customer"></bp:Action>
+      
+    </bp:Step>
+    
+    <bp:Step Name="Parameters" Screen="requests\parameters.xml" Controller="requests\customer.js">
+    	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="WorkList" Screen="requests\worklist.xml" Controller="requests\worklist.js">
+		<bp:Action Name="DoNew" NextStep="Work"></bp:Action>
+		<bp:Action Name="GoForward" NextStep="Total"></bp:Action>
+	</bp:Step>
+
+    <bp:Step Name="Work" Screen="requests\work.xml" Controller="requests\work.js">
+    	<bp:Action Name="ChoiceProduct" NextStep="ChoiceProduct"></bp:Action>
+    	<bp:Action Name="CMT" NextStep="WorkList"></bp:Action>
+    </bp:Step>
+    
+     <bp:Step Name="ChoiceProduct" Screen="requests\choiceproduct.xml" Controller="requests\choiceproduct.js">
+    	<bp:Action Name="DoSelect" NextStep="Work"></bp:Action>
+    	
+    </bp:Step>
+    
+    <bp:Step Name="Total" Screen="requests\total.xml" Controller="requests\total.js">
+    	<bp:Action Name="DoCommit" NextStep="requests"></bp:Action>
+    </bp:Step>
+    
+    <bp:Step Name="Customer" Screen="requests\customer.xml" Controller="requests\customer.js">
+    	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+    	<bp:Action Name="GoParams" NextStep="Parameters"></bp:Action>
+		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Contacts" Screen="requests\contacts.xml" Controller="requests\customer.js">
+		<bp:Action Name="EditContact" NextStep="EditContact"></bp:Action>
+		<bp:Action Name="AddContact" NextStep="AddContact"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Options" Screen="requests\Options.xml" Controller="requests\customer.js">
+		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="CurrentActivities" Screen="requests\CurrentActivities.xml" Controller="requests\customer.js">
+		<bp:Action Name="AddActivities" NextStep="AddActivities"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="AddActivities" Screen="requests\Activities.xml" Controller="requests\customer.js">
+		<bp:Action Name="AddAct" NextStep="CurrentActivities"></bp:Action>
+		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
+	</bp:Step>
+			
+	<bp:Step Name="EditContact" Screen="requests\contact.xml" Controller="requests\customer.js">
+		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="AddContact" Screen="requests\contact.xml" Controller="requests\customer.js">
+		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+	</bp:Step>
+</bp:Workflow>
+
+<bp:Workflow Name="customerlist">
+	<bp:Step Name="customers" Screen="customers.xml" Controller="clients\customers.js">      
+	  <bp:Action Name="SelectItem" NextStep="Customer"></bp:Action>      
+    </bp:Step>
+    
+    <bp:Step Name="Customer" Screen="customers\customer.xml" Controller="requests\customer.js">
+    	<bp:Action Name="Ready" NextStep="customers"></bp:Action>
+    	<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Contacts" Screen="requests\contacts.xml" Controller="requests\customer.js">
+		<bp:Action Name="EditContact" NextStep="EditContact"></bp:Action>
+		<bp:Action Name="AddContact" NextStep="AddContact"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Options" Screen="requests\Options.xml" Controller="requests\customer.js">
+		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="CurrentActivities" Screen="requests\CurrentActivities.xml" Controller="requests\customer.js">
+		<bp:Action Name="AddActivities" NextStep="AddActivities"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="AddActivities" Screen="requests\Activities.xml" Controller="requests\customer.js">
+		<bp:Action Name="AddAct" NextStep="CurrentActivities"></bp:Action>
+		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
+	</bp:Step>
+			
+	<bp:Step Name="EditContact" Screen="requests\contact.xml" Controller="requests\customer.js">
+		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="AddContact" Screen="requests\contact.xml" Controller="requests\customer.js">
+		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+	</bp:Step>
+	
+</bp:Workflow>
+ 
+  <bp:Workflow Name="Sync">
+    <bp:Step Name="Sync" Screen="Sync\Sync.xml" Controller="Sync\Main.js"/>
+  </bp:Workflow>
+
+<bp:Workflow Name="Historylist">
+	<bp:Step Name="history" Screen="history.xml" Controller="history\history.js">
+		 <bp:Action Name="SelectItem" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+		<bp:Step Name="WorkList" Screen="requests\worklist.xml" Controller="requests\worklist.js">
+		<bp:Action Name="DoNew" NextStep="Work"></bp:Action>
+		<bp:Action Name="GoForward" NextStep="Total"></bp:Action>
+	</bp:Step>
+
+    <bp:Step Name="Work" Screen="history\work.xml" Controller="requests\work.js">
+    	<bp:Action Name="ChoiceProduct" NextStep="ChoiceProduct"></bp:Action>
+    	<bp:Action Name="CMT" NextStep="WorkList"></bp:Action>
+    </bp:Step>
+    
+     <bp:Step Name="ChoiceProduct" Screen="requests\choiceproduct.xml" Controller="requests\choiceproduct.js">
+    	<bp:Action Name="DoSelect" NextStep="Work"></bp:Action>
+    	
+    </bp:Step>
+    
+    <bp:Step Name="Total" Screen="requests\total.xml" Controller="requests\total.js">
+    	<bp:Action Name="DoCommit" NextStep="history"></bp:Action>
+    </bp:Step>
+    
+    <bp:Step Name="Customer" Screen="requests\customer.xml" Controller="requests\customer.js">
+    	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Contacts" Screen="requests\contacts.xml" Controller="requests\customer.js">
+		<bp:Action Name="EditContact" NextStep="EditContact"></bp:Action>
+		<bp:Action Name="AddContact" NextStep="AddContact"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Options" Screen="requests\Options.xml" Controller="requests\customer.js">
+		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="CurrentActivities" Screen="requests\CurrentActivities.xml" Controller="requests\customer.js">
+		<bp:Action Name="AddActivities" NextStep="AddActivities"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="AddActivities" Screen="requests\Activities.xml" Controller="requests\customer.js">
+		<bp:Action Name="AddAct" NextStep="CurrentActivities"></bp:Action>
+		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
+	</bp:Step>
+			
+	<bp:Step Name="EditContact" Screen="requests\contact.xml" Controller="requests\customer.js">
+		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="AddContact" Screen="requests\contact.xml" Controller="requests\customer.js">
+		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+	</bp:Step>
+</bp:Workflow>
+</bp:BusinessProcess>

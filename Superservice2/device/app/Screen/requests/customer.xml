@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="customer.css">
+	<s:Push Id="Curreq" Value="$GetCurrentRequest($param1)"></s:Push>
+	<s:Push Id="objCust" Value="$Curreq.Customer"></s:Push>
+	<s:Push Id="objOutlet" Value="$Curreq.Outlet"></s:Push>
+	<s:Push Id="objMan" Value="$Curreq.Manager"></s:Push>
+	<s:Push Id="objMetro" Value="$objOutlet.Metro"></s:Push>
+  <c:DockLayout>
+
+    <c:DockLayout CssClass="top_navigator">
+      <c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackAndClean()">
+         <c:Image/>
+        <c:TextView Text="#back#"/>
+      </c:HorizontalLayout>
+      <s:If Test="$isITS($Curreq)">
+      	<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward" OnClickAction="$DoAction(GoParams, $param1, $objCust)"/>
+      </s:If>      	
+      <s:Else>
+      	<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward" OnClickAction="$DoAction(GoForward, $param1)"/>	
+      </s:Else>
+      <c:HorizontalLayout>
+        <c:TextView Text="#customer#" />
+      </c:HorizontalLayout>
+    </c:DockLayout>
+	
+	<c:DockLayout CssClass="footer">
+		<c:DockLayout CssClass="btn_left_footer" OnClickAction="$DoAction(Contacts, $objCust)">
+			<c:TextView Text="Контакты" />
+		</c:DockLayout>
+		
+		<c:DockLayout CssClass="btn_right_footer" OnClickAction="$DoAction(Options, $objCust)">
+			<c:TextView Text="Параметры" />
+		</c:DockLayout>
+		
+	</c:DockLayout>
+	<c:ScrollView>
+	<c:HorizontalLayout CssClass="caption_grid">
+        <c:TextView Text="#main#:"></c:TextView>
+        </c:HorizontalLayout>
+
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="#descriptioncust#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.Description" CssClass="main_row_custname"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+		<c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="#address#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objOutlet.Address" CssClass="main_row_addr"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="#metro#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objMetro.Description" CssClass="main_row"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	<c:HorizontalLayout CssClass="end_of_block"/>
+	
+	<c:HorizontalLayout CssClass="caption_grid">
+    <c:TextView Text="#request#:"></c:TextView>
+    </c:HorizontalLayout>
+	
+	    <c:HorizontalLine/>
+
+      <c:HorizontalLayout CssClass="memo_block">
+        <c:VerticalLayout>
+          <c:TextView Text="#requesttext#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$Curreq.TextTask" CssClass="main_row_reqtext"></c:TextView>
+		</c:VerticalLayout>
+	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="#manager#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objMan.Description" CssClass="main_row_manager"></c:TextView>
+		  
+		</c:VerticalLayout>	
+		
+			
+	  </c:HorizontalLayout>
+	<c:HorizontalLayout CssClass="end_of_block"/>
+	
+	</c:ScrollView>
+</c:DockLayout>
+
+
+
+</c:Screen>

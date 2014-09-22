@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="Contact.css">
+	<s:Push Id="curContact" Value="$GetCurPosition($param1)"></s:Push>
+	<s:Push Id="customer" Value="$param2"></s:Push>
+	
+	<s:If Test="$curContact != NULL">
+		<s:Push Id="contact" Value="$param1"></s:Push>
+	
+		<c:DockLayout>
+	
+			<c:DockLayout CssClass="footer">
+				<c:DockLayout CssClass="btn_left_footer" OnClickAction="$EditContact($customer, $lastName.Text, $firstName_middleName.Text, $telFull.Text, $position, $contact)">
+					<c:TextView Text="Готово"/>
+				</c:DockLayout>
+	
+				<c:DockLayout CssClass="btn_right_footer" OnClickAction="$Workflow.DoBack()">
+					<c:TextView Text="Отмена"/>
+				</c:DockLayout>
+			</c:DockLayout>
+			<c:ScrollView>
+				<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Фамилия" CssClass="description_row"></c:TextView>
+						<c:EditText Id="lastName" Text="$contact.LastName" CssClass="main_row"></c:EditText>												
+	    			</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
+				<c:HorizontalLine />
+				
+		<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Имя Отчество" CssClass="description_row"></c:TextView>
+						<c:EditText Id="firstName_middleName" Text="{$contact.FirstName} {$contact.MiddleName}" CssClass="main_row"></c:EditText>
+												
+	    			</c:VerticalLayout>				
+		</c:HorizontalLayout>
+				
+		<c:HorizontalLine />
+				
+				<c:HorizontalLayout CssClass="grid" OnClickAction="$DoSelectPos()">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Должность" CssClass="description_row"></c:TextView>
+						<c:TextView Id="position" Text="$contact.Position.Description" CssClass="main_row"></c:TextView>
+					</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
+				<c:HorizontalLine />
+				
+				<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Телефон" CssClass="description_row"></c:TextView>
+						<c:EditText Id="telFull" Text="{$contact.PhoneCountryCode} {$contact.PhoneCityCode} {$contact.PhoneNumber} {$contact.PhoneInternalCode}" CssClass="main_row"></c:EditText>
+					</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
+							
+				<c:HorizontalLayout CssClass="end_of_block" />
+	
+			</c:ScrollView>
+		</c:DockLayout>
+	</s:If>
+	<s:Else>
+		<c:DockLayout>	
+			<c:DockLayout CssClass="footer">
+				<c:DockLayout CssClass="btn_left_footer" OnClickAction="$CreateContact($customer, $lastName.Text, $firstName_middleName.Text, $telFull.Text, $position)">
+					<c:TextView Text="Готово"/>
+				</c:DockLayout>
+	
+				<c:DockLayout CssClass="btn_right_footer" OnClickAction="$Workflow.DoBack()">
+					<c:TextView Text="Отмена"/>
+				</c:DockLayout>
+			</c:DockLayout>
+			
+			<c:ScrollView>
+				<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Фамилия" CssClass="description_row"></c:TextView>
+						<c:EditText Id="lastName"  CssClass="main_row"></c:EditText>												
+	    			</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
+				<c:HorizontalLine />
+				
+		<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Имя Отчество" CssClass="description_row"></c:TextView>
+						<c:EditText Id="firstName_middleName" CssClass="main_row"></c:EditText>
+												
+	    			</c:VerticalLayout>				
+		</c:HorizontalLayout>
+				
+				<c:HorizontalLine />
+				
+				<c:HorizontalLayout CssClass="grid" OnClickAction="$DoSelectPos()">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Должность" CssClass="description_row"></c:TextView>
+						<c:TextView Id="position" Text="$contact.Position.Description" CssClass="main_row"></c:TextView>
+					</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
+				<c:HorizontalLine />
+				
+				<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Телефон" CssClass="description_row"></c:TextView>
+						<c:EditText Id="telFull" CssClass="main_row"></c:EditText>
+					</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
+							
+				<c:HorizontalLayout CssClass="end_of_block" />
+	
+			</c:ScrollView>
+		</c:DockLayout>	
+	</s:Else>
+
+
+
+</c:Screen>

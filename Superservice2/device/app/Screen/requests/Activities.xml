@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="Activities.css">
+	<s:Push Id="currentCustomer" Value="$param1"></s:Push>
+	<s:Push Id="activitieslist" Value="$GetAllActivities($currentCustomer, $aktsearch)"></s:Push>
+
+	<c:VerticalLayout>
+	<c:HorizontalLayout CssClass="search">
+	 <s:Push Id="val" Value="$initsearch()"/>
+      <c:DockLayout >
+        <c:Image />
+        <c:EditText Id="edtSearch" Text="$aktsearch" Placeholder="#search#"></c:EditText>
+      </c:DockLayout>
+      <c:Button Id="btnSearch" Text="#search#" OnClickAction="$DoSearch($edtSearch.Text, $param1)"></c:Button>
+    </c:HorizontalLayout>    
+    <c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
+	
+
+		
+						
+		<c:ScrollView>
+			
+			<s:Push Id="collectioncount" Value="$GetAllActivitiesCount($currentCustomer)"></s:Push>
+						
+			<s:If Test="$collectioncount == 0">
+				<c:HorizontalLayout CssClass="grid">
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					<c:VerticalLayout>
+						<c:TextView Text="Нет видов деятельности" CssClass="main_row"/>
+					</c:VerticalLayout>
+				</c:HorizontalLayout>
+				<c:HorizontalLine />
+			</s:If>
+			
+			<s:Else>
+			
+				<s:Iterator Id="act" Value="$activitieslist">
+	
+					<c:HorizontalLayout CssClass="grid" OnClickAction="$AddActivity($currentCustomer, $act.Id)">
+						<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+						<c:VerticalLayout>
+							<c:TextView Text="$act.DesAct" CssClass="main_row"></c:TextView>
+						</c:VerticalLayout>
+					</c:HorizontalLayout>
+					<c:HorizontalLine />
+	
+				</s:Iterator>
+			
+			</s:Else>
+
+			<c:HorizontalLayout CssClass="end_of_block" />
+									
+		</c:ScrollView>
+		
+	<c:DockLayout CssClass="footer">
+			<c:DockLayout CssClass="btn_bottom_footer " OnClickAction="$DoBackAndCleanAct()">
+				<c:TextView Text="Назад" />
+			</c:DockLayout>
+	</c:DockLayout>
+		
+	</c:VerticalLayout>
+
+
+
+</c:Screen>

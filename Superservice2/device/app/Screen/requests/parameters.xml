@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack"
+	StyleSheet="Options.css">
+<c:DockLayout>
+
+		<c:DockLayout CssClass="top_navigator">
+			<c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackTo(Customer)">
+         <c:Image/>
+        <c:TextView Text="#back#"/>
+      </c:HorizontalLayout>
+			<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"
+				OnClick="$CheckParamsFilling($param2, $param1)" />
+			<c:HorizontalLayout>
+				<c:TextView Text="ПАРАМЕТРЫ" />
+			</c:HorizontalLayout>
+		</c:DockLayout>
+	
+	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(CurrentActivities, $param2)">
+	        <c:TextView Text="Вид деятельности"></c:TextView>
+	        
+	        <s:Push Id="collectioncount" Value="$GetActivitiesCount($param2)"></s:Push>
+	        
+	        <s:If Test="$collectioncount == 0">
+	        	<c:TextView Text="Нет видов деятельности"  CssClass="value"></c:TextView>
+	        </s:If>
+	        <s:Else>
+	        	<c:TextView Text="$GetActivityCaption($param2)"  CssClass="value"></c:TextView>
+	        </s:Else>
+	        
+	    </c:DockLayout>
+	     <c:HorizontalLine/>	   
+	   
+	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogPeapleCount($param2)">
+	        <c:TextView Text="Кол-во сотрудников" ></c:TextView>
+	        
+	        <c:TextView Id="PeopleCountField" Text="$GetPeapleCount($param2)"  CssClass="value"></c:TextView>
+	        
+	        
+	    </c:DockLayout>
+	    <c:HorizontalLine/>   
+	   
+	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogFinDirExist($param2)">
+	        <c:TextView Text="Есть Фин. Директор" ></c:TextView>
+	        
+	        <c:TextView Id="FinDirExist" Text="$GetFinDir($param2)"  CssClass="value"></c:TextView>
+	        
+	        
+	    </c:DockLayout>
+	    <c:HorizontalLine/>
+		
+		
+	</c:DockLayout>
+</c:Screen>

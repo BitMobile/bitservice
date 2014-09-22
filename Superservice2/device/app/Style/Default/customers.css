@@ -1,0 +1,10 @@
+.main_row {
+    width: 100%;
+    height: 100%;
+    white-space: normal;
+    font: 30% Arial;
+    margin-top: 10%;
+}
+.top_navigator hl TextView {
+	margin-left: -10%;
+}
