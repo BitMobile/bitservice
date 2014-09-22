@@ -21,8 +21,14 @@
       
     </bp:Step>
     
-    <bp:Step Name="Parameters" Screen="requests\parameters.xml" Controller="requests\customer.js">
+    <bp:Step Name="Questions" Screen="requests\Questions.xml" Controller="requests\Questions.js">
     	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Parameters" Screen="requests\parameters.xml" Controller="requests\customer.js">
+    	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+    	<bp:Action Name="GoForwardQ" NextStep="Questions"></bp:Action>
 		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
 		<bp:Action Name="Options" NextStep="Options"></bp:Action>
 		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>

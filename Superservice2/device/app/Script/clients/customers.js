@@ -6,7 +6,7 @@ function GetCustomerList(searchText){
 		q.AddParameter("SearchText",  searchText);
 		qt = qt + searchtail;
 	}
-	q.Text = qt;
+	q.Text = qt + " ORDER BY Catalog_Customer.Description";
 	
 	return q.Execute();
 }

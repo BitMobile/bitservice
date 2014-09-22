@@ -1,23 +1,4 @@
-﻿function CheckParamsFilling(sender, cust, pr){
-	q = new Query("SELECT Id " +
-			"FROM Catalog_Customer_KindOfActivity " +
-			"WHERE Catalog_Customer_KindOfActivity.Ref == @currentCustomer");
-	q.AddParameter("currentCustomer", cust);
-	res = q.ExecuteCount();
-	if (res > 0 && cust.FinDirExist != DB.EmptyRef("Enum_LogicType") && cust.PeapleCount != DB.EmptyRef("Enum_PeopleCountVarint")){
-		Workflow.Action("GoForwardQ",[pr, cust]);
-	} else {
-		Dialog.Message("Не все параметры заполнены. Необходимо заполнить для продолжения работы");
-	}
-}
-
-function GetVal(t){
-	Dialog.Debug(t);
-	return t;
-}
-
-
-function inintvalues(p){
+﻿function inintvalues(p){
 	if ($.Exists("searchtext") == false){
 		$.AddGlobal("searchtext", null);
 	} 
@@ -296,7 +277,7 @@ function EditContact(customer, lastName, firstName_middleName, telFull, position
 	contactObj.PhoneInternalCode = PhoneInternalCode;
 
 	contactObj.Save(false);
-	
+	Workflow.Back();
 	} else {
 		Dialog.Message(Translate["#nonamecontact#"]);
 	}
@@ -309,14 +290,9 @@ function GetActivityCaption(cust){
 	
 	if (rec.Next()){
 		if (resCount > 0){
-			if (StrLen(rec.Kind.Description) > 15){
-				return Mid(rec.Kind.Description, 1, 15) + "... и еще " + resCount;
-			} else {
-				return rec.Kind.Description + " и еще " + resCount;				
-			}
-			
+			return rec.Kind.Description + " и еще " + resCount;
 		} else{
-			return Mid(rec.Kind.Description, 1, 20);
+			return rec.Kind.Description;
 		}
 				
 	} else {
@@ -401,8 +377,16 @@ function DoSearch(srchstr, p1){
 	}
 	Workflow.Refresh([p1]);	
 }
+<<<<<<< HEAD
+
+=======
 
 
+function DoBackAndCleanAct(){
+	$.Remove("aktsearch");
+	Workflow.Back();
+}
+>>>>>>> develop
 function GetPeapleCount(request){
 	
 	var q = new Query("SELECT PC.Description " +
@@ -466,9 +450,13 @@ function SetFinDirExist(Key, request){
 	obj = request.GetObject();
 	obj.FinDirExist = Key;
 	obj.Save(false);	
+<<<<<<< HEAD
 }
 	
 function DoBackAndCleanAct(){
 	$.Remove("aktsearch");
 	Workflow.Back();
+=======
+
+>>>>>>> develop
 }

@@ -48,6 +48,7 @@ function ClearMyGlobal(){
 }
 
 function isITS(req){
+	
 	if (req.DepartureType != DB.EmptyRef("Enum_DepartureType")){
 		if (req.DepartureType.ToString() == DB.Current.Constant.DepartureType.Departure.ToString() && $.workflow.name != "Historylist"){
 			return true;
@@ -63,6 +64,10 @@ function isITS(req){
 		}
 			 
 	}
+}
+
+function IsNullOrEmpty(val1) {
+    return String.IsNullOrEmpty(val1);
 }
 
 //-----------------Dialog handlers-----------------

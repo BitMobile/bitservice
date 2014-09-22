@@ -63,7 +63,11 @@ function GetToDayDoneRequestsWithSearch(searchText, getCount){//(searchText - с
 	
 function SetBeginDate() {
 	var header = Translate["#enterDateTime#"];
-    Dialog.ShowDateTime(header, SetBeginDateNow);
+	if($.Exists("filterStart") && $.filterStart != null){
+		Dialog.ShowDateTime(header, $.filterStart, SetBeginDateNow);
+	} else {
+		Dialog.ShowDateTime(header, SetBeginDateNow);
+	}
 }
 
 function SetBeginDateNow(key) {
@@ -75,7 +79,11 @@ function SetBeginDateNow(key) {
 
 function SetEndDate() {
 	var header = Translate["#enterDateTime#"];
-    Dialog.ShowDateTime(header, SetEndDateNow);
+	if($.Exists("filterStop") && $.filterStop != null){
+		Dialog.ShowDateTime(header,  $.filterStop, SetEndDateNow);
+	} else {
+		Dialog.ShowDateTime(header, SetEndDateNow);
+	}
 }
 
 function SetEndDateNow(key) {

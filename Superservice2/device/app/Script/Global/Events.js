@@ -7,9 +7,8 @@ function OnApplicationInit() {
 
 function OnWorkflowStart(name) {
 	 if ($.Exists("workflow"))
-	  $.Remove("workflow");
+		  $.Remove("workflow");
 	 Variables.AddGlobal("workflow", new Dictionary());
 
 	 Variables["workflow"].Add("name", name);
-	 
-	}
+}

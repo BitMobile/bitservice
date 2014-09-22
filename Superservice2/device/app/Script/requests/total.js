@@ -10,7 +10,11 @@ function FillValue(param){
 }
 function SetBeginDate(v) {
 	var header = Translate["#enterDateTime#"];
-    Dialog.ShowDateTime(header, SetBeginDateNow,v);
+	if($.Exists("faktStart") && $.faktStart != null){
+		Dialog.ShowDateTime(header, $.faktStart, SetBeginDateNow,v);
+	} else {
+		Dialog.ShowDateTime(header, SetBeginDateNow,v);
+	}
 }
 
 function SetBeginDateNow(key,v) {
@@ -29,7 +33,11 @@ function SetBeginDateNow(key,v) {
 
 function SetEndDate(v) {
 	var header = Translate["#enterDateTime#"];
-    Dialog.ShowDateTime(header, SetEndDateNow,v);
+	if($.Exists("faktEnd") && $.faktEnd != null){
+		Dialog.ShowDateTime(header, $.faktEnd, SetEndDateNow,v);
+	} else {
+		Dialog.ShowDateTime(header, SetEndDateNow,v);
+	}
 }
 
 function SetEndDateNow(key,v) {
