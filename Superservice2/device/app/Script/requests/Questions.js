@@ -1,30 +1,256 @@
-﻿function GetQuestionsByQuestionnaires(cust) {
-	var q = new Query("SELECT CQ.Id AS Question, CQ.Description AS Description, ED.Description AS AnswerType, DVQ.Answer AS Answer " +
-			"FROM Document_Questionnaire_Questions QQ " +
-			"INNER JOIN Document_Questionnaire DQ " +
+﻿function OnLoading() { 	  
+	 if($.Exists("TempAnswers") == false){
+		 $.AddGlobal("TempAnswers", new Dictionary());
+	 }
+}
+
+function onChangeControl(sender,cntrl){				
+	$.TempAnswers[cntrl] = Variables[cntrl].Text;	
+}
+
+function onChangeControlInteger(sender,cntrl){				
+	if (!validate(Variables[cntrl].Text, "[0-9]*")){
+		Dialog.Message("Разрешен ввод только целых чисел")
+	}
+	$.TempAnswers[cntrl] = Variables[cntrl].Text;	
+}
+
+function RollBackAdnBack(){
+	$.Remove("TempAnswers");
+	Workflow.Back();
+}
+
+function GetQuestionsByQuestionnaires(cust) {
+	var q = new Query("SELECT CQ.Id AS Question, CQ.Description AS Description, ED.Description AS AnswerType, DVQ.Answer AS Answer, QQ.Id AS Anketa " +
+			"FROM Document_Questionnaire DQ  " +
+			"LEFT JOIN Document_Questionnaire_Questions QQ " +
 			"ON QQ.Ref = DQ.Id " +
-			"INNER JOIN Catalog_Question CQ " +
+			"LEFT JOIN Catalog_Question CQ " +
 			"ON QQ.Question = CQ.Id " +
-			"INNER JOIN Enum_DataType ED " +
+			"LEFT JOIN Enum_DataType ED " +
 			"ON CQ.AnswerType = ED.Id " +
-			"LEFT JOIN (SELECT VQ.Question AS Question, VQ.Answer AS Answer FROM Document_Visit_Questions VQ INNER JOIN Document_Visit V ON VQ.Ref = V.Id WHERE V.Customer = @cust) DVQ " +
+			"LEFT JOIN (SELECT VQ.Question AS Question, VQ.Answer AS Answer " +
+					"FROM Document_SurveyResults_Questions VQ " +
+					"LEFT JOIN Document_SurveyResults V " +
+					"ON VQ.Ref = V.Id " +
+					"WHERE V.Customer = @cust) DVQ " +
 			"ON QQ.Question = DVQ.Question " +
 			"WHERE @ThisDay " +
 			"BETWEEN DQ.PriodFrom AND DQ.PeriodTo " +
+			"GROUP BY CQ.Id " +
 			"ORDER BY DVQ.Answer");
 	
 	q.AddParameter("ThisDay", DateTime.Now.Date);
 	q.AddParameter("cust", cust);
-	return q.Execute();
+	
+	return q.Execute().Unload();
 }
 
+function FillTempAnswers(control, val, quest, ind){
+	
+	if ($.TempAnswers.HasValue(ind) == false){
+		$.TempAnswers.Add(ind, quest);
+	}
+	
+	if ($.TempAnswers.HasValue(control) == true){
+		return $.TempAnswers[control];
+	} else {
+		$.TempAnswers.Add(control, val);
+		return $.TempAnswers[control];
+	}	
+}
+
+function SaveAnswersAndForward(p1, p2){
+	//Dialog.Debug($.questions.Count());
+	var cnt = "";
+	var quest = "";
+	for (i = 0; i <= $.questions.Count()-1; i++){
+		cnt = "control"+ i;
+		quest = "q"+ i;
+		//Dialog.Debug(recordset.Question);
+	//	Dialog.Debug($.TempAnswers[cnt]);//+ " 2:" + $.TempAnswers[quest] +" 3: " + $.TempAnswers[cnt]
+		if($.TempAnswers[cnt] != null){
+			if (!IsBlankString($.TempAnswers[cnt])){
+				InsertAnswer(p2, $.TempAnswers[quest], $.TempAnswers[cnt]);
+			}		
+		}
+	}
+	$.Remove("TempAnswers");
+	DoAction("GoForward", p1, p2);
+}
+
+function InsertAnswer(cust,quest, answer){
+	// Get SurveyResults
+	var qAnkets = new Query("SELECT DQ.Id AS Anketa " +
+			"From Document_Questionnaire DQ " +
+			"LEFT JOIN Document_Questionnaire_Questions DQQ " +
+			"ON DQQ.Ref = DQ.Id " +
+			"WHERE DQQ.Question = @quest " +
+			"AND datetime('now') BETWEEN datetime(DQ.PriodFrom, 'start of day') AND datetime(DQ.PeriodTo, 'start of day', '+1 days')");
+	
+	qAnkets.AddParameter("quest", quest);
+	
+	var res = qAnkets.Execute();
+	
+	while (res.Next()){
+		var refSR = SurveyExists(res.Anketa, cust);
+		if (refSR == null){//если ответника нет создаем его
+				var objSRres = DB.Create("Document.SurveyResults");
+				objSRres.Customer = cust;
+				objSRres.Questionnaire = res.Anketa;
+				objSRres.Date = CurrentDate();
+				objSRres.Save(false);
+				
+				 //Create answers
+				var objQuest = DB.Create("Document.SurveyResults_Questions");
+				objQuest.Ref = objSRres.Id;
+				objQuest.Question = quest;
+				objQuest.Answer = answer;
+				objQuest.Save(false);
+		} else {
+			var obj =  QuestionInSurvey(refSR, quest)
+			if (obj == null){
+				var objQuest = DB.Create("Document.SurveyResults_Questions");
+				objQuest.Ref = refSR;
+				objQuest.Question = quest;
+				objQuest.Answer = answer;
+				objQuest.Save(false);
+			} else {
+				var objQuest = obj.GetObject();
+				objQuest.Ref = refSR;
+				objQuest.Question = quest;
+				objQuest.Answer = answer;
+				objQuest.Save(false);
+			}
+			
+		}
+		
+	}
+	
+//	var q = new Query("SELECT QQ.Question, QQ.Ref As Anketa, SR.Id AS SRes, SR.Customer AS Cust, SRQ.Id AS SRQUEST " +
+//			"FROM Document_Questionnaire_Questions QQ " +
+//			"INNER JOIN Document_Questionnaire Q ON Q.Id = QQ.Ref " +
+//			"LEFT JOIN Document_SurveyResults SR ON SR.Questionnaire = Q.Id " +
+//			"LEFT JOIN Document_SurveyResults_Questions SRQ " +
+//			"ON SRQ.Question = QQ.Question " +
+//			"WHERE QQ.Question = @quest " +
+//			"AND (SR.Customer = @cust OR SR.Customer IS NULL) " +
+//			"AND datetime('now') BETWEEN datetime(Q.PriodFrom, 'start of day') AND datetime(Q.PeriodTo, 'start of day', '+1 days')");
+//	
+//	q.AddParameter("cust", cust);
+//	q.AddParameter("quest", quest);
+//	
+//	res = q.Execute();
+//	
+//	while (res.Next()){
+//		// Create Survey Results
+//		if (res.SRes == EmptyRef("Document.SurveyResults")){
+//			objSRres = DB.Create("Document.SurveyResults");
+//			objSRres.Customer = cust;
+//			objSRres.Questionnaire = res.Anketa;
+//			objSRres.Date = CurrentDate();
+//			objSRres.Save();
+//			// Create answers
+//			objQuest = DB.Create("Document.SurveyResults_Questions");
+//			objQuest.Ref = objSRres.Id;
+//			objQuest.Question = quest;
+//			objQuest.Answer = answer;
+//			objQuest.Save();			
+//			
+//		} else {
+//			
+//			objSRres = res.SRes; 			
+//			if (res.SRQUEST == null){
+//				objQuest = DB.Create("Document.SurveyResults_Questions");
+//				objQuest.Ref = objSRres;
+//				objQuest.Question = quest;
+//				objQuest.Answer = answer;
+//				objQuest.Save();
+//			} else {
+//				objQuest = res.SRQUEST.GetObject();
+//				objQuest.Ref = objSRres;
+//				objQuest.Question = quest;
+//				objQuest.Answer = answer;
+//				objQuest.Save();
+//			}
+//		}		
+//	}
+	
+}
+
+function QuestionInSurvey(srs, quest){
+	var q = new Query("SELECT DSRq.Id " +
+			"FROM Document_SurveyResults_Questions DSRQ " +
+			"WHERE DSRQ.Question = @quest " +
+			"AND DSRQ.Ref = @srs");
+	q.AddParameter("quest", quest);
+	q.AddParameter("srs", srs);
+	
+	var res = q.ExecuteScalar();
+	return res;
+}
+
+function SurveyExists(ank, cust){
+	var q = new Query("SELECT DSR.Id " +
+			"FROM Document_SurveyResults DSR " +
+			"WHERE DSR.Questionnaire = @ank " +
+			"AND DSR.Customer = @cust");
+	q.AddParameter("cust", cust);
+	q.AddParameter("ank", ank);
+	
+	var res = q.ExecuteScalar();
+	return res;
+}
+
+function SetDate(cont) {
+	var header = Translate["#enterDateTime#"];
+	Dialog.ShowDateTime(header, SetDateNow, cont);	
+}
+
+function SetDateNow(key, cont){
+	$.TempAnswers[cont] = key;
+	Variables[cont].Text = key;
+} 
+
+function SetSelection(control, question){
+	
+	var q = new Query("SELECT Id, Value " +
+			"FROM Catalog_Question_ValueList " +
+			"WHERE Ref = @quest");
+	
+	q.AddParameter("quest", question);	
+	var res = q.Execute().Unload();
+	
+	var arr = [];	
+	while (res.Next()){
+		arr.push([res.Value, res.Value]);
+	}
+	Dialog.Select("#SelectAnswer#", arr, SetSelectionNow, control);
+}
+
+function SetSelectionNow(key, control) {
+	$.TempAnswers[control] = key;
+	Variables[control].Text = key;
+}
+
+function SetBoolean(control){
+	var Cunt =[];
+	Cunt.push(["ДА", "ДА"]);
+	Cunt.push(["НЕТ", "НЕТ"]);
+	Dialog.Select("#answer#", Cunt, SetBooleanNow, control);
+}
+
+function SetBooleanNow(key, control){
+	$.TempAnswers[control] = key;
+	Variables[control].Text = key;
+}
 
 function ViewAnswers(Questions){
 	Dialog.Debug(Questions.Description + " " + Questions.Answer);
 }
 
 function FillValueAndtext(vl, control){ //Поставить тикет Саше пытались передать параметры вида: question.Value
-	Dialog.Debug(control);
+	
 	//Variables[control].Text = vl;
 	return vl;
 }
@@ -40,7 +266,9 @@ function test(){
 	Dialog.Debug("Yeap!!!")
 }
 
-function CreateVisitQuestionValueIfNotExists(cust, question) {	
+function CreateAnswerQuestionValueIfNotExists(cust, question, an) {	
+	
+	
 	var query = new Query("SELECT DVQ.Id " +
 			"FROM Document_Visit_Questions DVQ " +
 			"INNER JOIN Document_Visit DV" +
@@ -62,135 +290,111 @@ function CreateVisitQuestionValueIfNotExists(cust, question) {
 
 }
 
-///+++ Mary Code +++
-//function CreateArray() {
-//	return [];
-//}
-//
-//function GetQuesttionaire(outlet, scale) {
-//
-//	var q1 = new Query(
-//			"SELECT Id FROM Document_Questionnaire WHERE OutletType=@type AND OutletClass=@class AND Scale=@scale ORDER BY Date desc");
-//	q1.AddParameter("type", outlet.Type);
-//	q1.AddParameter("class", outlet.Class);
-//	q1.AddParameter("scale", scale);
-//
-//	return q1.ExecuteScalar();
-//
-//}
-//
-//function GetQuestionsByQuestionnaires(outlet) {
-//
-//	var regionQuest = GetQuesttionaire(outlet,
-//			DB.Current.Constant.QuestionnaireScale.Region);
-//	var territoryQuest = GetQuesttionaire(outlet,
-//			DB.Current.Constant.QuestionnaireScale.Territory);
-//	var query = new Query(GetQuestionsQueryText());
-//	query.AddParameter("ref1", regionQuest);
-//	query.AddParameter("ref2", territoryQuest);
-//	Variables.Add("workflow.questions_qty", query.ExecuteCount());
-//	return query.Execute();
-//}
-//
-//function GetQuestionsQueryText() {
-//	return "SELECT DQQ.LineNumber, DQQ.Question, CQ.Description, ED.Description AS AnswerType, 1 AS T1 FROM Document_Questionnaire_Questions DQQ JOIN Catalog_Question CQ ON DQQ.Question=CQ.Id JOIN Enum_DataType ED ON CQ.AnswerType=ED.Id WHERE Ref=@ref1 UNION ALL SELECT q1.LineNumber, q1.Question, CQ.Description, ED.Description AS AnswerType, 2 AS T1 FROM Document_Questionnaire_Questions q1 LEFT JOIN Document_Questionnaire_Questions q2 ON q2.Question=q1.Question and q2.ref=@ref1 JOIN Catalog_Question CQ ON q1.Question=CQ.Id JOIN Enum_DataType ED ON CQ.AnswerType=ED.Id WHERE q1.Ref =@ref2  and q2.Id is null ORDER BY T1, LineNumber"
-//}
-//
-//function CreateVisitQuestionValueIfNotExists(visit, question, questionValue) {
-//
-//	var query = new Query(
-//			"SELECT Id FROM Document_Visit_Questions WHERE Ref == @Visit AND Question == @Question");
-//	query.AddParameter("Visit", visit);
-//	query.AddParameter("Question", question);
-//	var result = query.ExecuteScalar();
-//	if (result == null) {
-//		var p = DB.Create("Document.Visit_Questions");
-//		p.Ref = visit;
-//		p.Question = question;
-//		p.Answer = "";
-//		p.Save();
-//		result = p.Id;
-//	}
-//	return result;
-//
-//}
-//
-//function GetSnapshotText(text) {
-//	if (String.IsNullOrEmpty(text))
-//		return Translate["#noSnapshot#"];
-//	else
-//		return Translate["#snapshotAttached#"];
-//}
-//
-//function GoToQuestionAction(answerType, question, visit, control, questionItem) {
-//	if (answerType == "ValueList") {
-//		var q = new Query();
-//		q.Text = "SELECT Value, Value FROM Catalog_Question_ValueList WHERE Ref=@ref";
-//		q.AddParameter("ref", questionItem);
-//		Global.ValueListSelect(question, "Answer", q.Execute(),
-//				Variables[control]);
-//	}
-//
-//	if (answerType == "Snapshot") {
-//		GetCameraObject(visit);
-//		Camera.MakeSnapshot(SaveAtVisit, [ question, control ]);
-//	}
-//
-//	if (answerType == "DateTime") {
-//		if (IsNullOrEmpty(question.Answer))
-//			var date = DateTime.Now;
-//		else
-//			var date = DateTime.Parse(question.Answer);
-//		Global.DateTimeDialog(question, "Answer", date, Variables[control]);
-//	}
-//
-//	if (answerType == "Boolean") {
-//		Global.BooleanDialogSelect(question, "Answer", Variables[control]);
-//	}
-//
-//}
-//
-//function SaveAtVisit(arr) {
-//	var question = arr[0];
-//	var control = arr[1];
-//	question = question.GetObject();
-//	question.Answer = Variables["guid"];
-//	question.Save();
-//	Variables[control].Text = Translate["#snapshotAttached#"];
-//
-//}
-//
-///*function SaveValue(control, questionValue){
-//	questionValue = questionValue.GetObject();
-//	questionValue.Save();
-//}*/
-//
-//function GetCameraObject(entity) {
-//	FileSystem.CreateDirectory("/private/Document.Visit");
-//	var guid = Global.GenerateGuid();
-//	Variables.Add("guid", guid);
-//	var path = String.Format("/private/Document.Visit/{0}/{1}.jpg", entity.Id,
-//			guid);
-//	Camera.Size = 300;
-//	Camera.Path = path;
-//}
-//
-//function CheckEmptyQuestionsAndForward(visit) {
-//
-//	var qr = new Query(
-//			"SELECT Id FROM Document_Visit_Questions WHERE Answer IS NULL  OR Answer=''");
-//	var res = qr.Execute();
-//
-//	while (res.Next()) {
-//		DB.Delete(res.Id);
-//	}
-//
-//	Workflow.Forward([]);
-//}
-//
-//function GetActionAndBack() {
-//	if ($.workflow.skipTasks) {
-//		Workflow.BackTo("Outlet");
-//	} else
-//		Workflow.Back();
-//}
+// +++ MultiList
+function MakeChoose(control, variant, parcontrol){
+	
+	if (Variables[control].Visible == true){
+		Variables[control].Visible = false;
+		$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables[variant].Text + ";", ""); 
+	} else {
+		Variables[control].Visible = true;
+		$.TempAnswers[parcontrol] = $.TempAnswers[parcontrol] + " " + Variables[variant].Text +";"; 
+	}
+	
+}
+
+function makeVisible(variant) {
+
+	if ($.tempString != null){
+		if (Find($.tempString, variant) > 0){
+				var rm = StrReplace($.tempString, variant + ";", "");
+				$.Remove("tempString");
+				$.Add("tempString", rm);
+				return true;
+			} else {
+				return false;
+			}
+	} else {
+		
+		return false;
+	}
+		
+}
+
+function makeFreeVisible() {
+	if ($.tempString != null){
+		if (IsBlankString($.tempString)){
+			return false;
+		} else {
+			return true;
+		}
+	} else {
+		
+		return false;
+	}
+	
+}
+
+function OdnoglazayaZmeya(parcontrol) {
+	if ($.tempString != null){
+		if (IsBlankString($.tempString)){
+			return "";
+		} else {
+			
+			s = $.tempString;
+			$.Remove("tempString");
+			$.Add("tempString", $.TempAnswers[parcontrol]);
+			ss = TrimAll(StrReplace(s, ";", ""));
+			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], ss + ";", "");
+			return ss;
+		}
+	} else {
+		
+		return "";
+	}
+	
+}
+
+function FreeChoose(parcontrol){
+	
+	if (Variables["Free"].Visible == true){
+		Variables["Free"].Visible = false;
+		Variables["FreeField"].Visible = false;
+		$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables["MemoFree"].Text + ";", "");
+	} else {
+		Variables["Free"].Visible = true;
+		Variables["FreeField"].Visible = true;
+		
+	}
+}
+
+
+function GetValues(quest, parcontrol){
+	$.Add("tempString", $.TempAnswers[parcontrol]);
+	$.Add("RollString", $.TempAnswers[parcontrol]);
+	var q = new Query("SELECT Id, Value " +
+			"FROM Catalog_Question_ValueList " +
+			"WHERE Ref = @quest");
+	
+	q.AddParameter("quest", quest);	
+	return q.Execute().Unload();	
+}
+
+function SaveValueAndBack(parcontrol){
+	if (Variables.Exists("Free") == true){
+		if (Variables["Free"].Visible == true && !IsBlankString(Variables["MemoFree"].Text)){
+			$.TempAnswers[parcontrol] = $.TempAnswers[parcontrol] + " " + Variables["MemoFree"].Text +";";
+		} 
+	}	
+	$.Remove("tempString");
+	$.Remove("RollString");
+	Workflow.BackTo("Questions");
+}
+ 
+function RollBackAndBack(parcontrol) {
+	$.TempAnswers[parcontrol] = $.RollString;
+	$.Remove("tempString");
+	$.Remove("RollString");
+	Workflow.BackTo("Questions");
+}
+

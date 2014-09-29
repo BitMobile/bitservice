@@ -8,7 +8,7 @@
 	<c:DockLayout>
 
 		<c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_left_footer" OnClickAction="$Workflow.DoAction(AddContact, NULL, $objCust)">
+			<c:DockLayout CssClass="btn_left_footer" OnClickAction="$Workflow.DoAction(GoForward, NULL, $objCust)">
 				<c:TextView Text="Добавить" />
 			</c:DockLayout>
 

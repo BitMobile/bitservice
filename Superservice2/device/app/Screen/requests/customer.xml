@@ -11,13 +11,8 @@
       <c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackAndClean()">
          <c:Image/>
         <c:TextView Text="#back#"/>
-      </c:HorizontalLayout>
-      <s:If Test="$isITS($Curreq)">
+      </c:HorizontalLayout>     
       	<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward" OnClickAction="$DoAction(GoParams, $param1, $objCust)"/>
-      </s:If>      	
-      <s:Else>
-      	<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward" OnClickAction="$DoAction(GoForward, $param1)"/>	
-      </s:Else>
       <c:HorizontalLayout>
         <c:TextView Text="#customer#" />
       </c:HorizontalLayout>
