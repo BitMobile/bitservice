@@ -37,14 +37,14 @@
 	   
 	   
 	   
-	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogPeapleCount($param1)">
+	  <!--    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogPeapleCount($param1)">
 	        <c:TextView Text="Кол-во сотрудников"></c:TextView>
 	        
 	        <c:TextView Id="PeopleCountField" Text="$GetPeapleCount($param1)"  CssClass="value"></c:TextView>
 	        
 	        
 	    </c:DockLayout>
-	    <c:HorizontalLine/>
+	    <c:HorizontalLine/>-->
 	   
 	   
 	   
