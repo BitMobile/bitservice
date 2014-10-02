@@ -2,7 +2,7 @@
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack"
 	StyleSheet="Options.css">
 <c:DockLayout>
-
+		<s:Push Id="cust" Value="$param2"/>
 		<c:DockLayout CssClass="top_navigator">
 			<c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackTo(Customer)">
          <c:Image/>
@@ -30,14 +30,14 @@
 	    </c:DockLayout>
 	     <c:HorizontalLine/>	   
 	   
-	    <!-- <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogPeapleCount($param2)">
+	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogPeapleCount($param2)">
 	        <c:TextView Text="Кол-во сотрудников" ></c:TextView>
 	        
-	        <c:TextView Id="PeopleCountField" Text="$GetPeapleCount($param2)"  CssClass="value"></c:TextView>
+	        <c:EditText Id="PeopleCountField" Text="$cust.DigitPeopleCount" Value ="$cust.DigitPeopleCount" CssClass="value"></c:TextView>
 	        
 	        
 	    </c:DockLayout>
-	    <c:HorizontalLine/>  -->  
+	    <c:HorizontalLine/>  
 	   
 	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogFinDirExist($param2)">
 	        <c:TextView Text="Есть Фин. Директор" ></c:TextView>

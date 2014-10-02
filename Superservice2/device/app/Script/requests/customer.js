@@ -296,7 +296,7 @@ function EditContact(customer, lastName, firstName_middleName, telFull, position
 	contactObj.PhoneInternalCode = PhoneInternalCode;
 
 	contactObj.Save(false);
-	
+	Workflow.Back();
 	} else {
 		Dialog.Message(Translate["#nonamecontact#"]);
 	}
