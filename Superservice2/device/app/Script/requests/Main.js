@@ -24,7 +24,7 @@ function GetToDayUnDoneRequestsWithSearch(searchText, getCount){//(searchText - 
 		q.AddParameter("SearchText", searchText);
 		qtext = qtext + searchtail;
 	}
-	q.Text = qtext; 
+	q.Text = qtext + " ORDER BY REQ.PlanStartDataTime"; 
 	q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expired);
 	q.AddParameter("DateStart", DateTime.Now.Date);
@@ -48,7 +48,7 @@ function GetToDayDoneRequestsWithSearch(searchText, getCount){//(searchText - с
 		q.AddParameter("SearchText", searchText);
 		qtext = qtext + searchtail;
 	}
-	q.Text = qtext;
+	q.Text = qtext + "  ORDER BY REQ.PlanStartDataTime";
 	q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("DateStart", DateTime.Now.Date);
 	q.AddParameter("DateEnd", DateTime.Now.Date.AddDays(1));
@@ -117,7 +117,7 @@ function GetAllActiveTaskDetails(searchtext, dtstart, dtstop){
 		qtext = qtext + stoptail;
 	}
 	
-	q.Text = qtext;
+	q.Text = qtext + "  ORDER BY REQ.PlanStartDataTime";
 	q.AddParameter("StatusProc", DB.Current.Constant.VisitStatus.Processing);
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expected);
 	var c = q.Execute();
