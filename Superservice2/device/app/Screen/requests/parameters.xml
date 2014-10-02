@@ -29,7 +29,7 @@
 	        
 	    </c:DockLayout>
 	     <c:HorizontalLine/>	   
-	   
+	   <!-- 
 	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogPeapleCount($param2)">
 	        <c:TextView Text="Кол-во сотрудников" ></c:TextView>
 	        
@@ -38,7 +38,7 @@
 	        
 	    </c:DockLayout>
 	    <c:HorizontalLine/>  
-	   
+	    -->
 	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogFinDirExist($param2)">
 	        <c:TextView Text="Есть Фин. Директор" ></c:TextView>
 	        
