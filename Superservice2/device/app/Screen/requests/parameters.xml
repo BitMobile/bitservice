@@ -29,16 +29,16 @@
 	        
 	    </c:DockLayout>
 	     <c:HorizontalLine/>	   
-	   <!-- 
-	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogPeapleCount($param2)">
+	   
+	    <c:DockLayout CssClass="parameter_grid">
 	        <c:TextView Text="Кол-во сотрудников" ></c:TextView>
 	        
-	        <c:EditText Id="PeopleCountField" Text="$cust.DigitPeopleCount" Value ="$cust.DigitPeopleCount" CssClass="value"></c:TextView>
+	        <c:EditText Id="PeopleCountField" Value ="$cust.DigitPeopleCount" Keyboard="numeric" OnChange="$CheckPeopleCount()" CssClass="value"></c:EditText>
 	        
 	        
 	    </c:DockLayout>
 	    <c:HorizontalLine/>  
-	    -->
+	    
 	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogFinDirExist($param2)">
 	        <c:TextView Text="Есть Фин. Директор" ></c:TextView>
 	        

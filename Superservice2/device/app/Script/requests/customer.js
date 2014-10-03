@@ -16,6 +16,12 @@ function GetVal(t){
 	return t;
 }
 
+function SavePeopleCount(c){
+	
+	
+	
+}
+
 
 function inintvalues(p){
 	if ($.Exists("searchtext") == false){
@@ -471,4 +477,11 @@ function SetFinDirExist(Key, request){
 function DoBackAndCleanAct(){
 	$.Remove("aktsearch");
 	Workflow.Back();
+}
+
+function CheckPeopleCount(){
+	if (!validate(Variables["PeopleCountField"].Text, "[0-9]*")){
+		Dialog.Message("Разрешен ввод только целых чисел");
+	}
+	
 }
