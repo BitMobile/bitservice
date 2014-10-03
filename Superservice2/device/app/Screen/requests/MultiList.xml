@@ -8,7 +8,7 @@
         <c:Image/>
         <c:TextView Text=""/>
       </c:HorizontalLayout>
-      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnEvent="Forward"  OnClickAction="$SaveValueAndBack($param2)"/>
+      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnEvent="Forward"  OnClickAction="$SaveValueAndBack($param2, $param3)"/>
       <c:HorizontalLayout>
         <c:TextView Text="#SelectAnswer#" />
       </c:HorizontalLayout>

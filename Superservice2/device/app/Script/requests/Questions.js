@@ -4,15 +4,17 @@
 	 }
 }
 
-function onChangeControl(sender,cntrl){				
-	$.TempAnswers[cntrl] = Variables[cntrl].Text;	
+function onChangeControl(sender,cntrl, isChange){				
+	$.TempAnswers[cntrl] = Variables[cntrl].Text;
+	$.TempAnswers[isChange] = 1;
 }
 
-function onChangeControlInteger(sender,cntrl){				
+function onChangeControlInteger(sender,cntrl, isChange){				
 	if (!validate(Variables[cntrl].Text, "[0-9]*")){
 		Dialog.Message("Разрешен ввод только целых чисел")
 	}
-	$.TempAnswers[cntrl] = Variables[cntrl].Text;	
+	$.TempAnswers[cntrl] = Variables[cntrl].Text;
+	$.TempAnswers[isChange] = 1;
 }
 
 function RollBackAdnBack(){
@@ -46,12 +48,16 @@ function GetQuestionsByQuestionnaires(cust) {
 	return q.Execute().Unload();
 }
 
-function FillTempAnswers(control, val, quest, ind){
-	
+function FillTempAnswers(control, val, quest, ind, isChange){
+	//Помечаем все вопросы как измененные
+	if ($.TempAnswers.HasValue(isChange) == false){
+		$.TempAnswers.Add(isChange, 0);
+	}
+	//Сохранение ссылки на вопрос
 	if ($.TempAnswers.HasValue(ind) == false){
 		$.TempAnswers.Add(ind, quest);
 	}
-	
+	//Сохранение ответов на вопросы
 	if ($.TempAnswers.HasValue(control) == true){
 		return $.TempAnswers[control];
 	} else {
@@ -67,11 +73,10 @@ function SaveAnswersAndForward(p1, p2){
 	for (i = 0; i <= $.questions.Count()-1; i++){
 		cnt = "control"+ i;
 		quest = "q"+ i;
-		//Dialog.Debug(recordset.Question);
-	//	Dialog.Debug($.TempAnswers[cnt]);//+ " 2:" + $.TempAnswers[quest] +" 3: " + $.TempAnswers[cnt]
-		if($.TempAnswers[cnt] != null){
-			if (!IsBlankString($.TempAnswers[cnt])){
-				InsertAnswer(p2, $.TempAnswers[quest], $.TempAnswers[cnt]);
+		changed = "isChange" + i;
+		if($.TempAnswers[cnt] != null && $.TempAnswers[changed] == 1){
+			if (!IsBlankString($.TempAnswers[cnt].toString())){
+				InsertAnswer(p2, $.TempAnswers[quest], $.TempAnswers[cnt], p1);
 			}		
 		}
 	}
@@ -79,7 +84,26 @@ function SaveAnswersAndForward(p1, p2){
 	DoAction("GoForward", p1, p2);
 }
 
-function InsertAnswer(cust,quest, answer){
+function SaveSurveyIntoVisit(refSurvey, refVisit){
+	var q = new Query("SELECT Id " +
+			"FROM Document_Visit_Questionnaires " +
+			"WHERE Ref = @rVisit " +
+			"AND Questionnaire = @rSurvey");
+	q.AddParameter("rVisit", refVisit);
+	q.AddParameter("rSurvey", refSurvey);
+	
+	var res = q.ExecuteScalar();
+	
+	if (res == null){
+		var obj = DB.Create("Document.Visit_Questionnaires");
+		obj.Ref = refVisit;
+		obj.Questionnaire = refSurvey;
+		obj.Save(false);
+	}
+	
+}
+
+function InsertAnswer(cust,quest, answer, visit){
 	// Get SurveyResults
 	var qAnkets = new Query("SELECT DQ.Id AS Anketa " +
 			"From Document_Questionnaire DQ " +
@@ -107,6 +131,7 @@ function InsertAnswer(cust,quest, answer){
 				objQuest.Question = quest;
 				objQuest.Answer = answer;
 				objQuest.Save(false);
+				SaveSurveyIntoVisit(objSRres.Id, visit);
 		} else {
 			var obj =  QuestionInSurvey(refSR, quest)
 			if (obj == null){
@@ -122,7 +147,7 @@ function InsertAnswer(cust,quest, answer){
 				objQuest.Answer = answer;
 				objQuest.Save(false);
 			}
-			
+			SaveSurveyIntoVisit(refSR, visit);
 		}
 		
 	}
@@ -202,17 +227,18 @@ function SurveyExists(ank, cust){
 	return res;
 }
 
-function SetDate(cont) {
+function SetDate(cont, isChange) {
 	var header = Translate["#enterDateTime#"];
-	Dialog.ShowDateTime(header, SetDateNow, cont);	
+	Dialog.ShowDateTime(header, SetDateNow, [cont, isChange]);	
 }
 
-function SetDateNow(key, cont){
-	$.TempAnswers[cont] = key;
-	Variables[cont].Text = key;
+function SetDateNow(key, control, isChange){
+	$.TempAnswers[control[0]] = key;
+	Variables[control[0]].Text = key;
+	$.TempAnswers[control[1]] = 1;
 } 
 
-function SetSelection(control, question){
+function SetSelection(control, question, isChange){
 	
 	var q = new Query("SELECT Id, Value " +
 			"FROM Catalog_Question_ValueList " +
@@ -225,24 +251,27 @@ function SetSelection(control, question){
 	while (res.Next()){
 		arr.push([res.Value, res.Value]);
 	}
-	Dialog.Select("#SelectAnswer#", arr, SetSelectionNow, control);
+	Dialog.Select("#SelectAnswer#", arr, SetSelectionNow, [control, isChange]);
 }
 
-function SetSelectionNow(key, control) {
-	$.TempAnswers[control] = key;
-	Variables[control].Text = key;
+function SetSelectionNow(key, control, isChange) {
+	$.TempAnswers[control[0]] = key;
+	Variables[control[0]].Text = key;
+	$.TempAnswers[control[1]] = 1;
 }
 
-function SetBoolean(control){
+function SetBoolean(control, isChange){
 	var Cunt =[];
 	Cunt.push(["ДА", "ДА"]);
 	Cunt.push(["НЕТ", "НЕТ"]);
-	Dialog.Select("#answer#", Cunt, SetBooleanNow, control);
+	Dialog.Select("#answer#", Cunt, SetBooleanNow, [control, isChange]);
 }
 
 function SetBooleanNow(key, control){
-	$.TempAnswers[control] = key;
-	Variables[control].Text = key;
+	Console.WriteLine("control:" + control[0] + " change " + control[1]);
+	$.TempAnswers[control[0]] = key;
+	Variables[control[0]].Text = key;
+	$.TempAnswers[control[1]] = 1;
 }
 
 function ViewAnswers(Questions){
@@ -356,11 +385,19 @@ function OdnoglazayaZmeya(parcontrol) {
 }
 
 function FreeChoose(parcontrol){
-	
+	Console.WriteLine(Variables["Free"].Visible);
+	Console.WriteLine($.TempAnswers[parcontrol]);
+	Console.WriteLine(Variables["MemoFree"].Text);
+	//Console.WriteLine(IsBlankString($.TempAnswers[parcontrol]));
+	//Console.WriteLine(IsBlankString(Variables["MemoFree"].Text));
 	if (Variables["Free"].Visible == true){
+		
 		Variables["Free"].Visible = false;
 		Variables["FreeField"].Visible = false;
-		$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables["MemoFree"].Text + ";", "");
+		if($.TempAnswers[parcontrol] != null  && Variables["MemoFree"].Text != null && $.TempAnswers[parcontrol] != ""  && Variables["MemoFree"].Text != ""){
+			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables["MemoFree"].Text + ";", "");
+		}
+		
 	} else {
 		Variables["Free"].Visible = true;
 		Variables["FreeField"].Visible = true;
@@ -380,12 +417,13 @@ function GetValues(quest, parcontrol){
 	return q.Execute().Unload();	
 }
 
-function SaveValueAndBack(parcontrol){
+function SaveValueAndBack(parcontrol, isChange){
 	if (Variables.Exists("Free") == true){
 		if (Variables["Free"].Visible == true && !IsBlankString(Variables["MemoFree"].Text)){
 			$.TempAnswers[parcontrol] = $.TempAnswers[parcontrol] + " " + Variables["MemoFree"].Text +";";
 		} 
-	}	
+	}
+	$.TempAnswers[isChange] = 1;
 	$.Remove("tempString");
 	$.Remove("RollString");
 	Workflow.BackTo("Questions");

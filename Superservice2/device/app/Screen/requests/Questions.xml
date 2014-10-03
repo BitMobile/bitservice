@@ -28,7 +28,7 @@
         <s:Iterator Id="question" Value="$questions" Status="statusCount">  
         <!-- <s:Push Id="questionValue" Value="$CreateAnswerQuestionValueIfNotExists($cust,$question.Question, $question.Anketa)"></s:Push> -->     
         <s:Push Id="index" Value="{$statusCount.Index}"></s:Push> 
-        <s:Push Id="AnswerValue" Value="$FillTempAnswers(control{$index}, $question.Answer, $question.Question, q{$index})"></s:Push>
+        <s:Push Id="AnswerValue" Value="$FillTempAnswers(control{$index}, $question.Answer, $question.Question, q{$index}, isChange{$index})"></s:Push>
 		  
           <c:HorizontalLayout CssClass="grid">
            
@@ -38,39 +38,39 @@
 
                <s:If Test="$question.AnswerType=='Integer'">
               <s:If Test="$EmptyString($AnswerValue)">
-	          		<c:MemoEdit Id="control{$index}" Text = "-" onChange="$onChangeControlInteger(control{$index})"  Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
+	          		<c:MemoEdit Id="control{$index}" Text = "-" onChange="$onChangeControlInteger(control{$index}, isChange{$index})"  Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
 	          	</s:If>
 	            <s:Else>
-                	<c:MemoEdit Id="control{$index}"  Text = "$AnswerValue" onChange="$onChangeControlInteger(control{$index})" Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
+                	<c:MemoEdit Id="control{$index}"  Text = "$AnswerValue" onChange="$onChangeControlInteger(control{$index}, isChange{$index})" Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
               	</s:Else>
               </s:If> 
 		
                <s:If Test="$question.AnswerType=='Decimal'">
               	<s:If Test="$EmptyString($AnswerValue)">
-	          		<c:MemoEdit Id="control{$index}" Text = "-" onChange="$onChangeControl(control{$index})"  Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
+	          		<c:MemoEdit Id="control{$index}" Text = "-" onChange="$onChangeControl(control{$index}, isChange{$index})"  Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
 	          	  </s:If>
 	            <s:Else>
-                	<c:MemoEdit Id="control{$index}"  Text = "$AnswerValue"  onChange="$onChangeControl(control{$index})" Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
+                	<c:MemoEdit Id="control{$index}"  Text = "$AnswerValue"  onChange="$onChangeControl(control{$index}, isChange{$index})" Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
               	</s:Else>
               </s:If>
 
               <s:If Test="$question.AnswerType=='String'">
 	          	<s:If Test="$question.Answer==''">
-	          		<c:MemoEdit Id="control{$index}" Text = "-" onChange="$onChangeControl(control{$index})" CssClass="main_row"></c:MemoEdit>
+	          		<c:MemoEdit Id="control{$index}" Text = "-" onChange="$onChangeControl(control{$index}, isChange{$index})" CssClass="main_row"></c:MemoEdit>
 	          	</s:If>
 	            <s:Else>
-	            	<c:MemoEdit Id="control{$index}" Text = "$AnswerValue"  onChange="$onChangeControl(control{$index})" CssClass="main_row"></c:MemoEdit>
+	            	<c:MemoEdit Id="control{$index}" Text = "$AnswerValue"  onChange="$onChangeControl(control{$index}, isChange{$index})" CssClass="main_row"></c:MemoEdit>
 	            </s:Else>                
               </s:If>
 
               <s:If Test="$question.AnswerType=='ValueList'">
                 <s:If Test="$question.Answer==''">
-                  <c:VerticalLayout OnClickAction="$SetSelection(control{$index}, $question.Question)">
+                  <c:VerticalLayout OnClickAction="$SetSelection(control{$index}, $question.Question, isChange{$index})">
                   <c:TextView Id="control{$index}" Text="-" CssClass="main_rowvl"></c:TextView>
                   </c:VerticalLayout>
                 </s:If>
                 <s:Else>
-                  <c:VerticalLayout OnClickAction="$SetSelection(control{$index}, $question.Question)">
+                  <c:VerticalLayout OnClickAction="$SetSelection(control{$index}, $question.Question, isChange{$index})">
                   <c:TextView Id="control{$index}" Text="$AnswerValue" CssClass="main_rowvl"></c:TextView>
                   </c:VerticalLayout>
                 </s:Else>
@@ -84,19 +84,19 @@
                 <s:Else>
                   <s:Push Id="answerValue" Value="$AnswerValue"></s:Push>
                 </s:Else>
-                <c:VerticalLayout OnClickAction="$SetDate(control{$index})">
+                <c:VerticalLayout OnClickAction="$SetDate(control{$index}, isChange{$index})">
                 <c:TextView Id="control{$index}" Text="$answerValue" CssClass="main_rowvl" ></c:TextView>
                 </c:VerticalLayout>
               </s:If>
 
               <s:If Test="$question.AnswerType=='Boolean'">
                <s:If Test="$EmptyString($AnswerValue)">
-	          		<c:VerticalLayout OnClickAction="$SetBoolean(control{$index})">
+	          		<c:VerticalLayout OnClickAction="$SetBoolean(control{$index}, isChange{$index})">
 	          			<c:TextView Id="control{$index}" Text="-" CssClass="main_rowvl"></c:TextView>
 	          		</c:VerticalLayout>
 	          	</s:If>
 	            <s:Else>
-	            	<c:VerticalLayout OnClickAction="$SetBoolean(control{$index})">
+	            	<c:VerticalLayout OnClickAction="$SetBoolean(control{$index}, isChange{$index})">
                 		<c:TextView Id="control{$index}" Text="$AnswerValue" CssClass="main_rowvl"></c:TextView>
                 	</c:VerticalLayout>
                 </s:Else>
@@ -104,12 +104,12 @@
 			
 			  <s:If Test="$question.AnswerType=='MultiValueList'">
 	               <s:If Test="$EmptyString($AnswerValue)">
-		          		<c:VerticalLayout OnClickAction="$DoAction(MultiList, $question.Question, control{$index})">
+		          		<c:VerticalLayout OnClickAction="$DoAction(MultiList, $question.Question, control{$index}, isChange{$index})">
 		          			<c:TextView Id="control{$index}" Text="-" CssClass="main_rowvl"></c:TextView>
 		          		</c:VerticalLayout>
 		          	</s:If>
 		            <s:Else>
-		            	<c:VerticalLayout OnClickAction="$DoAction(MultiList, $question.Question, control{$index})">
+		            	<c:VerticalLayout OnClickAction="$DoAction(MultiList, $question.Question, control{$index}, isChange{$index})">
 	                		<c:TextView Id="control{$index}" Text="$AnswerValue" CssClass="main_rowvl"></c:TextView>
 	                	</c:VerticalLayout>
 	                </s:Else>
