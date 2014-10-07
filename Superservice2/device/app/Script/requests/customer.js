@@ -4,7 +4,9 @@
 			"WHERE Catalog_Customer_KindOfActivity.Ref == @currentCustomer");
 	q.AddParameter("currentCustomer", cust);
 	res = q.ExecuteCount();
-	if (!isITS(pr)||(res > 0 && cust.FinDirExist != DB.EmptyRef("Enum_LogicType"))){//&& cust.PeapleCount != DB.EmptyRef("Enum_PeopleCountVarint")
+	if (!isITS(pr)||(res > 0 && cust.FinDirExist != DB.EmptyRef("Enum_LogicType") && cust.DigitPeopleCount > 0)){//&& cust.PeapleCount != DB.EmptyRef("Enum_PeopleCountVarint")
+		obj = cust.GetObject();
+		obj.Save(false);
 		Workflow.Action("GoForwardQ",[pr, cust]);
 	} else {
 		Dialog.Message("Не все параметры заполнены. Необходимо заполнить для продолжения работы");
@@ -16,12 +18,11 @@ function GetVal(t){
 	return t;
 }
 
-function SavePeopleCount(c){
-	
-	
-	
+function SaveCustomerAndBack(){
+	obj = $.currentCustomer.GetObject();
+	obj.Save(false);
+	Workflow.Back();
 }
-
 
 function inintvalues(p){
 	if ($.Exists("searchtext") == false){

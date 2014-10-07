@@ -39,8 +39,8 @@ function GetToDayUnDoneRequestsCount(){//(searchText - строка поиска
 function GetToDayDoneRequestCount(){//(searchText - строка поиска, getCount - получать ли количество[1-ДА,0-НЕТ])
 	var q = new Query("SELECT Document_Visit.Id " +
 			"FROM Document_Visit " +
-			"WHERE Document_Visit.PlanStartDataTime >= @DateStart " +
-			"AND Document_Visit.PlanStartDataTime < @DateEnd " +
+			"WHERE Document_Visit.FactEndDataTime >= @DateStart " +
+			"AND Document_Visit.FactEndDataTime < @DateEnd " +
 			"AND Document_Visit.Status == @StatusComp");	
 	q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("DateStart", DateTime.Now.Date);
@@ -50,15 +50,13 @@ function GetToDayDoneRequestCount(){//(searchText - строка поиска, g
 
 function GetToDayUnDoneRequestsMonthCount(){//(searchText - строка поиска, getCount - получать ли количество[1-ДА,0-НЕТ])
 	var q = new Query("SELECT Id FROM Document_Visit " +
-			"WHERE Document_Visit.PlanStartDataTime >= @DateStart " +
-			"AND Document_Visit.PlanStartDataTime < @DateEnd " +
-			"AND Document_Visit.Status <> @StatusEx");
+			"WHERE Document_Visit.PlanStartDataTime BETWEEN " +
+			"datetime('now', 'start of month') AND " +
+			"datetime('now', 'start of month', '+1 months') " +
+			"AND Document_Visit.Status = @StatusEx");
 	 
 	//q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expected);
-	q.AddParameter("DateStart", GetBeginOfCurrentMonth());
-	q.AddParameter("DateEnd", GetEndOfCurrentMonth());
-	//Dialog.Debug(GetBeginOfCurrentMonth() + " - " + GetEndOfCurrentMonth());
 	return q.ExecuteCount();
 	
 }
@@ -67,14 +65,12 @@ function GetToDayUnDoneRequestsMonthCount(){//(searchText - строка пои�
 function GetToDayDoneRequestMonthCount(){//(searchText - строка поиска, getCount - получать ли количество[1-ДА,0-НЕТ])
 	var q = new Query("SELECT Id " +
 			"FROM Document_Visit " +
-			"WHERE Document_Visit.FactEndDataTime >= @DateStart " +
-			"AND Document_Visit.FactEndDataTime < @DateEnd " +
+			"WHERE Document_Visit.FactEndDataTime " +
+			"BETWEEN datetime('now', 'start of month') " +
+			"AND datetime('now', 'start of month', '+1 months') " +
 			"AND Document_Visit.Status = @StatusComp");
 	
 	q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
-	q.AddParameter("DateStart", GetBeginOfCurrentMonth());
-	q.AddParameter("DateEnd", GetEndOfCurrentMonth());
-	//Dialog.Debug(q.ExecuteCount());
 	return q.ExecuteCount();
 }
 

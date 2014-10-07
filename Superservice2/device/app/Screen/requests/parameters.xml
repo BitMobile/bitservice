@@ -9,7 +9,7 @@
         <c:TextView Text="#back#"/>
       </c:HorizontalLayout>
 			<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"
-				OnClick="$CheckParamsFilling($param2, $param1)" />
+				OnClick="$CheckParamsFilling($cust, $param1)" />
 			<c:HorizontalLayout>
 				<c:TextView Text="ПАРАМЕТРЫ" />
 			</c:HorizontalLayout>
