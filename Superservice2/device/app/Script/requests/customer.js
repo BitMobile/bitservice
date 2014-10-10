@@ -7,11 +7,19 @@
 	if (!isITS(pr)||(res > 0 && cust.FinDirExist != DB.EmptyRef("Enum_LogicType") && cust.DigitPeopleCount > 0)){//&& cust.PeapleCount != DB.EmptyRef("Enum_PeopleCountVarint")
 		obj = cust.GetObject();
 		obj.Save(false);
-		Workflow.Action("GoForwardQ",[pr, cust]);
+		Console.WriteLine($.ResQuery.Count());
+		if ($.ResQuery.Count() > 0){
+			Workflow.Action("GoForwardQ",[pr, cust]);
+		} else {
+			Workflow.Action("GoForward",[pr, cust]);
+		}
+		
 	} else {
 		Dialog.Message("Не все параметры заполнены. Необходимо заполнить для продолжения работы");
 	}
 }
+
+
 
 function GetVal(t){
 	Dialog.Debug(t);
@@ -386,6 +394,7 @@ function DoBackAndClean(){
 	$.Remove("refStatus");
 	$.Remove("faktEnd");
 	$.Remove("faktStart");
+	$.Remove("ResQuery");
 	ClearMyGlobal();
 	Workflow.Back();
 	DB.Rollback();

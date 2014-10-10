@@ -122,6 +122,7 @@ function CommitRequest(request, fStart, fStop, refStatus){
 	$.Remove("refStatus");
 	$.Remove("faktEnd");
 	$.Remove("faktStart");	
+	$.Remove("ResQuery");
 	ClearMyGlobal();
 	Workflow.Action("DoCommit", []);
 }

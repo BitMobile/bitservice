@@ -4,6 +4,11 @@
 	 }
 }
 
+function initResQuery(q){
+	q.First();
+	return q;
+}
+
 function onChangeControl(sender,cntrl, isChange){				
 	$.TempAnswers[cntrl] = Variables[cntrl].Text;
 	$.TempAnswers[isChange] = 1;
@@ -18,35 +23,12 @@ function onChangeControlInteger(sender,cntrl, isChange){
 }
 
 function RollBackAdnBack(){
-	$.Remove("TempAnswers");
+	$.Remove("TempAnswers"); 
+	//GetQuestionsByQuestionnaires($.cust);
 	Workflow.Back();
 }
 
-function GetQuestionsByQuestionnaires(cust) {
-	var q = new Query("SELECT CQ.Id AS Question, CQ.Description AS Description, ED.Description AS AnswerType, DVQ.Answer AS Answer, QQ.Id AS Anketa " +
-			"FROM Document_Questionnaire DQ  " +
-			"LEFT JOIN Document_Questionnaire_Questions QQ " +
-			"ON QQ.Ref = DQ.Id " +
-			"LEFT JOIN Catalog_Question CQ " +
-			"ON QQ.Question = CQ.Id " +
-			"LEFT JOIN Enum_DataType ED " +
-			"ON CQ.AnswerType = ED.Id " +
-			"LEFT JOIN (SELECT VQ.Question AS Question, VQ.Answer AS Answer " +
-					"FROM Document_SurveyResults_Questions VQ " +
-					"LEFT JOIN Document_SurveyResults V " +
-					"ON VQ.Ref = V.Id " +
-					"WHERE V.Customer = @cust) DVQ " +
-			"ON QQ.Question = DVQ.Question " +
-			"WHERE @ThisDay " +
-			"BETWEEN DQ.PriodFrom AND DQ.PeriodTo " +
-			"GROUP BY CQ.Id " +
-			"ORDER BY DVQ.Answer");
-	
-	q.AddParameter("ThisDay", DateTime.Now.Date);
-	q.AddParameter("cust", cust);
-	
-	return q.Execute().Unload();
-}
+
 
 function FillTempAnswers(control, val, quest, ind, isChange){
 	//Помечаем все вопросы как измененные
@@ -70,6 +52,7 @@ function SaveAnswersAndForward(p1, p2){
 	//Dialog.Debug($.questions.Count());
 	var cnt = "";
 	var quest = "";
+	var changed = false;
 	for (i = 0; i <= $.questions.Count()-1; i++){
 		cnt = "control"+ i;
 		quest = "q"+ i;
@@ -77,10 +60,14 @@ function SaveAnswersAndForward(p1, p2){
 		if($.TempAnswers[cnt] != null && $.TempAnswers[changed] == 1){
 			if (!IsBlankString($.TempAnswers[cnt].toString())){
 				InsertAnswer(p2, $.TempAnswers[quest], $.TempAnswers[cnt], p1);
+				changed = true;
 			}		
 		}
 	}
 	$.Remove("TempAnswers");
+	if (changed) {// Если что то записывалость по перевыбираем запрос
+		GetQuestionsByQuestionnaires(p2);
+	}	
 	DoAction("GoForward", p1, p2);
 }
 
@@ -151,55 +138,6 @@ function InsertAnswer(cust,quest, answer, visit){
 		}
 		
 	}
-	
-//	var q = new Query("SELECT QQ.Question, QQ.Ref As Anketa, SR.Id AS SRes, SR.Customer AS Cust, SRQ.Id AS SRQUEST " +
-//			"FROM Document_Questionnaire_Questions QQ " +
-//			"INNER JOIN Document_Questionnaire Q ON Q.Id = QQ.Ref " +
-//			"LEFT JOIN Document_SurveyResults SR ON SR.Questionnaire = Q.Id " +
-//			"LEFT JOIN Document_SurveyResults_Questions SRQ " +
-//			"ON SRQ.Question = QQ.Question " +
-//			"WHERE QQ.Question = @quest " +
-//			"AND (SR.Customer = @cust OR SR.Customer IS NULL) " +
-//			"AND datetime('now') BETWEEN datetime(Q.PriodFrom, 'start of day') AND datetime(Q.PeriodTo, 'start of day', '+1 days')");
-//	
-//	q.AddParameter("cust", cust);
-//	q.AddParameter("quest", quest);
-//	
-//	res = q.Execute();
-//	
-//	while (res.Next()){
-//		// Create Survey Results
-//		if (res.SRes == EmptyRef("Document.SurveyResults")){
-//			objSRres = DB.Create("Document.SurveyResults");
-//			objSRres.Customer = cust;
-//			objSRres.Questionnaire = res.Anketa;
-//			objSRres.Date = CurrentDate();
-//			objSRres.Save();
-//			// Create answers
-//			objQuest = DB.Create("Document.SurveyResults_Questions");
-//			objQuest.Ref = objSRres.Id;
-//			objQuest.Question = quest;
-//			objQuest.Answer = answer;
-//			objQuest.Save();			
-//			
-//		} else {
-//			
-//			objSRres = res.SRes; 			
-//			if (res.SRQUEST == null){
-//				objQuest = DB.Create("Document.SurveyResults_Questions");
-//				objQuest.Ref = objSRres;
-//				objQuest.Question = quest;
-//				objQuest.Answer = answer;
-//				objQuest.Save();
-//			} else {
-//				objQuest = res.SRQUEST.GetObject();
-//				objQuest.Ref = objSRres;
-//				objQuest.Question = quest;
-//				objQuest.Answer = answer;
-//				objQuest.Save();
-//			}
-//		}		
-//	}
 	
 }
 

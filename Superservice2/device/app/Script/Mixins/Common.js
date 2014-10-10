@@ -70,5 +70,41 @@ function IsNullOrEmpty(val1) {
     return String.IsNullOrEmpty(val1);
 }
 
+function GetQuestionsByQuestionnaires(cust) {
+	var q = new Query("SELECT CQ.Id AS Question, CQ.Description AS Description, ED.Description AS AnswerType, DVQ.Answer AS Answer, QQ.Id AS Anketa " +
+			"FROM Document_Questionnaire DQ  " +
+			"LEFT JOIN Document_Questionnaire_Questions QQ " +
+			"ON QQ.Ref = DQ.Id " +
+			"LEFT JOIN Catalog_Question CQ " +
+			"ON QQ.Question = CQ.Id " +
+			"LEFT JOIN Enum_DataType ED " +
+			"ON CQ.AnswerType = ED.Id " +
+			"LEFT JOIN (SELECT VQ.Question AS Question, VQ.Answer AS Answer " +
+					"FROM Document_SurveyResults_Questions VQ " +
+					"LEFT JOIN Document_SurveyResults V " +
+					"ON VQ.Ref = V.Id " +
+					"WHERE V.Customer = @cust) DVQ " +
+			"ON QQ.Question = DVQ.Question " +
+			"WHERE @ThisDay " +
+			"BETWEEN DQ.PriodFrom AND DQ.PeriodTo " +
+			"GROUP BY CQ.Id " +
+			"ORDER BY DVQ.Answer");
+	
+	q.AddParameter("ThisDay", DateTime.Now.Date);
+	q.AddParameter("cust", cust);
+	
+	var res = q.Execute().Unload();
+	
+	if ($.Exists("ResQuery")){
+		$.Remove("ResQuery");
+		$.AddGlobal("ResQuery", res);
+	} else {
+		$.AddGlobal("ResQuery", res);
+	}
+	
+	return cust;
+
+}
+
 //-----------------Dialog handlers-----------------
 

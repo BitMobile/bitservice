@@ -3,12 +3,12 @@
 	StyleSheet="worklist.css">
 	<s:Push Id="rs" Value="$GetWorkList($param1)"></s:Push>
 	<s:Push Id="vl" Value="$PullArray($rs,1)"></s:Push>
-	<s:Push Id="request" Value="$param1"></s:Push>
+	<s:Push Id="request" Value="$param1"></s:Push>	
 	<c:DockLayout>
 
 		<c:DockLayout CssClass="top_navigator">
 			
-				<c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackTo(Questions)">
+				<c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackToQuestionOrNot()">
 					 <c:Image/>
 	        		 <c:TextView Text="#back#"/>
       			</c:HorizontalLayout>						

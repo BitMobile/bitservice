@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="customer.css">
 	<s:Push Id="Curreq" Value="$GetCurrentRequest($param1)"></s:Push>
-	<s:Push Id="objCust" Value="$Curreq.Customer"></s:Push>
+	<s:Push Id="objCust" Value="$GetQuestionsByQuestionnaires($Curreq.Customer)"></s:Push>
 	<s:Push Id="objOutlet" Value="$Curreq.Outlet"></s:Push>
 	<s:Push Id="objMan" Value="$Curreq.Manager"></s:Push>
 	<s:Push Id="objMetro" Value="$objOutlet.Metro"></s:Push>
