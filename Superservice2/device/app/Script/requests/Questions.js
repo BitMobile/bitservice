@@ -307,14 +307,11 @@ function OdnoglazayaZmeya(parcontrol) {
 		if (IsBlankString($.tempString)){
 			return "";
 		} else {
-			s = $.tempString;
-			Dialog.Debug("s=" + s);
+			s = $.tempString;			
 			$.Remove("tempString");
 			$.Add("tempString", $.TempAnswers[parcontrol]);
-			ss = TrimAll(StrReplace(s, ";", ""));
-			Dialog.Debug("ss=" + ss);
-			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], TrimAll(ss)+";", "");
-			Dialog.Debug($.TempAnswers[parcontrol]);
+			ss = TrimAll(StrReplace(s, ";", ""));			
+			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], TrimAll(ss)+";", "");			
 			return ss;
 		}
 	} else {
