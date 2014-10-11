@@ -314,8 +314,7 @@ function OdnoglazayaZmeya(parcontrol) {
 			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], TrimAll(ss)+";", "");			
 			return ss;
 		}
-	} else {
-		
+	} else {		
 		return "";
 	}
 	
@@ -358,7 +357,16 @@ function GetValues(quest, parcontrol){
 function SaveValueAndBack(parcontrol, isChange){
 	if (Variables.Exists("Free") == true){
 		if (Variables["Free"].Visible == true && !IsBlankString(Variables["MemoFree"].Text)){
-			$.TempAnswers[parcontrol] = TrimAll($.TempAnswers[parcontrol]) + " " + TrimAll(Variables["MemoFree"].Text)+";";
+			if ($.TempAnswers[parcontrol] != null){
+				if (!IsBlankString($.TempAnswers[parcontrol])){
+					$.TempAnswers[parcontrol] = TrimAll($.TempAnswers[parcontrol]) + " " + TrimAll(Variables["MemoFree"].Text)+";";
+				} else {
+					$.TempAnswers[parcontrol] = TrimAll(Variables["MemoFree"].Text)+";";
+				}
+			} else {					
+				$.TempAnswers[parcontrol] = TrimAll(Variables["MemoFree"].Text)+";";
+			}
+			
 		} 
 	}
 	$.TempAnswers[isChange] = 1;
