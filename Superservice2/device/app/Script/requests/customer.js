@@ -8,7 +8,7 @@
 		obj = cust.GetObject();
 		obj.Save(false);
 		Console.WriteLine($.ResQuery.Count());
-		if ($.ResQuery.Count() > 0){
+		if ($.ResQuery.Count() > 0 && $.workflow.name != "Historylist"){
 			Workflow.Action("GoForwardQ",[pr, cust]);
 		} else {
 			Workflow.Action("GoForward",[pr, cust]);
