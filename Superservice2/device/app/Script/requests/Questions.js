@@ -307,12 +307,14 @@ function OdnoglazayaZmeya(parcontrol) {
 		if (IsBlankString($.tempString)){
 			return "";
 		} else {
-			
 			s = $.tempString;
+			Dialog.Debug("s=" + s);
 			$.Remove("tempString");
 			$.Add("tempString", $.TempAnswers[parcontrol]);
 			ss = TrimAll(StrReplace(s, ";", ""));
-			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], ss + ";", "");
+			Dialog.Debug("ss=" + ss);
+			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], TrimAll(ss)+";", "");
+			Dialog.Debug($.TempAnswers[parcontrol]);
 			return ss;
 		}
 	} else {
@@ -332,9 +334,10 @@ function FreeChoose(parcontrol){
 		
 		Variables["Free"].Visible = false;
 		Variables["FreeField"].Visible = false;
-		if($.TempAnswers[parcontrol] != null  && Variables["MemoFree"].Text != null && $.TempAnswers[parcontrol] != ""  && Variables["MemoFree"].Text != ""){
-			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables["MemoFree"].Text + ";", "");
-		}
+		Variables["MemoFree"].Text = "";
+//		if($.TempAnswers[parcontrol] != null  && Variables["MemoFree"].Text != null && $.TempAnswers[parcontrol] != ""  && Variables["MemoFree"].Text != ""){
+//			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables["MemoFree"].Text + ";", "");
+//		}
 		
 	} else {
 		Variables["Free"].Visible = true;
@@ -358,7 +361,7 @@ function GetValues(quest, parcontrol){
 function SaveValueAndBack(parcontrol, isChange){
 	if (Variables.Exists("Free") == true){
 		if (Variables["Free"].Visible == true && !IsBlankString(Variables["MemoFree"].Text)){
-			$.TempAnswers[parcontrol] = $.TempAnswers[parcontrol] + " " + Variables["MemoFree"].Text +";";
+			$.TempAnswers[parcontrol] = TrimAll($.TempAnswers[parcontrol]) + " " + TrimAll(Variables["MemoFree"].Text)+";";
 		} 
 	}
 	$.TempAnswers[isChange] = 1;
