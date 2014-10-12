@@ -21,7 +21,7 @@ function GetAllCompleteTaskDetails(searchtext, dtstart, dtstop){
 		qtext = qtext + stoptail;
 	}
 	
-	q.Text = qtext;
+	q.Text = qtext + " ORDER BY REQ.PlanStartDataTime";
 	q.AddParameter("StatusProc", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expired);
 	var c = q.Execute();
@@ -31,7 +31,12 @@ function GetAllCompleteTaskDetails(searchtext, dtstart, dtstop){
 
 function SetBeginDate() {
 	var header = Translate["#enterDateTime#"];
-    Dialog.ShowDateTime(header, SetBeginDateNow);
+    if($.Exists("filterStart") && $.filterStart != null){
+    	Dialog.ShowDateTime(header,  $.filterStart, SetBeginDateNow);
+    } else {
+    	Dialog.ShowDateTime(header, SetBeginDateNow);
+    }
+	
 }
 
 function SetBeginDateNow(key) {
@@ -43,7 +48,11 @@ function SetBeginDateNow(key) {
 
 function SetEndDate() {
 	var header = Translate["#enterDateTime#"];
-    Dialog.ShowDateTime(header, SetEndDateNow);
+	 if($.Exists("filterStop") && $.filterStop != null){
+		 Dialog.ShowDateTime(header, $.filterStop, SetEndDateNow);
+	 } else {
+		 Dialog.ShowDateTime(header, SetEndDateNow);
+	 }
 }
 
 function SetEndDateNow(key) {

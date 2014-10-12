@@ -1,0 +1,21 @@
+
+.description_row {
+	height: 40%;	
+	font: 42% Arial;
+}
+
+.main_row {
+    height: 40%;
+    margin-top: 5%;
+    white-space: normal;
+    color: #e6891b;
+}
+
+.main_rowvl {
+	height: 40%;
+	width: 100%;
+    margin-top: 5%;
+    white-space: normal;
+    color: #e6891b;
+    font: 86.5% Arial;
+}

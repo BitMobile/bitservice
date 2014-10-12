@@ -21,8 +21,19 @@
       
     </bp:Step>
     
-    <bp:Step Name="Parameters" Screen="requests\parameters.xml" Controller="requests\customer.js">
+    <bp:Step Name="MultiList" Screen="requests\MultiList.xml" Controller="requests\Questions.js">
+    	
+	</bp:Step>
+    
+    <bp:Step Name="Questions" Screen="requests\Questions.xml" Controller="requests\Questions.js">
     	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+		<bp:Action Name="MultiList" NextStep="MultiList"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Parameters" Screen="requests\parameters.xml" Controller="requests\customer.js">
+    	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+    	<bp:Action Name="GoForwardQ" NextStep="Questions"></bp:Action>
 		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
 		<bp:Action Name="Options" NextStep="Options"></bp:Action>
 		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
@@ -135,7 +146,21 @@
 		 <bp:Action Name="SelectItem" NextStep="Customer"></bp:Action>
 	</bp:Step>
 	
-		<bp:Step Name="WorkList" Screen="requests\worklist.xml" Controller="requests\worklist.js">
+	 <bp:Step Name="Questions" Screen="requests\Questions.xml" Controller="requests\Questions.js">
+    	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+		<bp:Action Name="MultiList" NextStep="MultiList"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Parameters" Screen="requests\parameters.xml" Controller="requests\customer.js">
+    	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+    	<bp:Action Name="GoForwardQ" NextStep="Questions"></bp:Action>
+		<bp:Action Name="CurrentActivities" NextStep="CurrentActivities"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+		<bp:Action Name="Customer" NextStep="Customer"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="WorkList" Screen="requests\worklist.xml" Controller="requests\worklist.js">
 		<bp:Action Name="DoNew" NextStep="Work"></bp:Action>
 		<bp:Action Name="GoForward" NextStep="Total"></bp:Action>
 	</bp:Step>
@@ -158,6 +183,7 @@
     	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
 		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
 		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+		<bp:Action Name="GoParams" NextStep="Parameters"></bp:Action>
 	</bp:Step>
 	
 	<bp:Step Name="Contacts" Screen="requests\contacts.xml" Controller="requests\customer.js">

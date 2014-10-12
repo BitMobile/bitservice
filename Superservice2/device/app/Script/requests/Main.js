@@ -24,7 +24,7 @@ function GetToDayUnDoneRequestsWithSearch(searchText, getCount){//(searchText - 
 		q.AddParameter("SearchText", searchText);
 		qtext = qtext + searchtail;
 	}
-	q.Text = qtext; 
+	q.Text = qtext + " ORDER BY REQ.PlanStartDataTime"; 
 	q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expired);
 	q.AddParameter("DateStart", DateTime.Now.Date);
@@ -48,7 +48,7 @@ function GetToDayDoneRequestsWithSearch(searchText, getCount){//(searchText - с
 		q.AddParameter("SearchText", searchText);
 		qtext = qtext + searchtail;
 	}
-	q.Text = qtext;
+	q.Text = qtext + "  ORDER BY REQ.PlanStartDataTime";
 	q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("DateStart", DateTime.Now.Date);
 	q.AddParameter("DateEnd", DateTime.Now.Date.AddDays(1));
@@ -63,7 +63,11 @@ function GetToDayDoneRequestsWithSearch(searchText, getCount){//(searchText - с
 	
 function SetBeginDate() {
 	var header = Translate["#enterDateTime#"];
-    Dialog.ShowDateTime(header, SetBeginDateNow);
+	if($.Exists("filterStart") && $.filterStart != null){
+		Dialog.ShowDateTime(header, $.filterStart, SetBeginDateNow);
+	} else {
+		Dialog.ShowDateTime(header, SetBeginDateNow);
+	}
 }
 
 function SetBeginDateNow(key) {
@@ -75,7 +79,11 @@ function SetBeginDateNow(key) {
 
 function SetEndDate() {
 	var header = Translate["#enterDateTime#"];
-    Dialog.ShowDateTime(header, SetEndDateNow);
+	if($.Exists("filterStop") && $.filterStop != null){
+		Dialog.ShowDateTime(header,  $.filterStop, SetEndDateNow);
+	} else {
+		Dialog.ShowDateTime(header, SetEndDateNow);
+	}
 }
 
 function SetEndDateNow(key) {
@@ -109,7 +117,7 @@ function GetAllActiveTaskDetails(searchtext, dtstart, dtstop){
 		qtext = qtext + stoptail;
 	}
 	
-	q.Text = qtext;
+	q.Text = qtext + "  ORDER BY REQ.PlanStartDataTime";
 	q.AddParameter("StatusProc", DB.Current.Constant.VisitStatus.Processing);
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expected);
 	var c = q.Execute();

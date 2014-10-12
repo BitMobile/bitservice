@@ -3,22 +3,15 @@
 	StyleSheet="worklist.css">
 	<s:Push Id="rs" Value="$GetWorkList($param1)"></s:Push>
 	<s:Push Id="vl" Value="$PullArray($rs,1)"></s:Push>
-	<s:Push Id="request" Value="$param1"></s:Push>
+	<s:Push Id="request" Value="$param1"></s:Push>	
 	<c:DockLayout>
 
 		<c:DockLayout CssClass="top_navigator">
-			<s:If Test="$isITS($param1)">
-				<c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackTo(Parameters)">
+			
+				<c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackToQuestionOrNot()">
 					 <c:Image/>
 	        		 <c:TextView Text="#back#"/>
-      			</c:HorizontalLayout>
-			</s:If>
-			<s:Else>
-				<c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackTo(Customer)">
-					<c:Image/>
-	        		<c:TextView Text="#back#"/>
-      			</c:HorizontalLayout>
-			</s:Else>			
+      			</c:HorizontalLayout>						
        
 			<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"
 				OnClickAction="$Workflow.DoAction(GoForward, $param1)" />

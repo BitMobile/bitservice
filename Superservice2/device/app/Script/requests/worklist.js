@@ -36,3 +36,11 @@ function GetWorkDescription(w){
 	 
 	 return h + d;
 }
+
+function DoBackToQuestionOrNot(){
+	if ($.ResQuery.Count() > 0 && $.workflow.name != "Historylist"){
+		Workflow.BackTo("Questions");
+	} else {
+		Workflow.BackTo("Parameters");
+	}
+}

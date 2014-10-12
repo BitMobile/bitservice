@@ -6,7 +6,7 @@
 	<c:DockLayout>
 
 		<c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_bottom_footer " OnClickAction="$Workflow.DoBack()">
+			<c:DockLayout CssClass="btn_bottom_footer " OnClickAction="$SaveCustomerAndBack()">
 				<c:TextView Text="Готово" />
 			</c:DockLayout>
 		</c:DockLayout>
@@ -37,10 +37,10 @@
 	   
 	   
 	   
-	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogPeapleCount($param1)">
-	        <c:TextView Text="Кол-во сотрудников"></c:TextView>
+	  <c:DockLayout CssClass="parameter_grid">
+	        <c:TextView Text="Кол-во сотрудников" ></c:TextView>
 	        
-	        <c:TextView Id="PeopleCountField" Text="$GetPeapleCount($param1)"  CssClass="value"></c:TextView>
+	        <c:EditText Id="PeopleCountField" Value ="$currentCustomer.DigitPeopleCount" Keyboard="numeric" OnChange="$CheckPeopleCount()" CssClass="value"></c:EditText>
 	        
 	        
 	    </c:DockLayout>
