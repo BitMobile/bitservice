@@ -17,7 +17,7 @@
 		  </c:DockLayout>
 		  <c:Button Id="btnSearch" Text="#search#" OnClickAction="$DoSearch($edtSearch.Text)"></c:Button>
 	</c:HorizontalLayout>
-	<c:ScrollView>
+	<c:ScrollView Id="SVCustomers">
 		<s:Push Id="cst" Value="$GetCustomerList($clientsearch)" />
 				<s:Iterator Id="client" Value="$cst">
 					<s:Push Id="hasRow" Value="true" />

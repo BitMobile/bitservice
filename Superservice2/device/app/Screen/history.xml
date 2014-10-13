@@ -42,7 +42,7 @@
 		<c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
 		
 		
-		<c:ScrollView>
+		<c:ScrollView Id="SVHistory">
 			<s:Push Id="allrequests" Value="$GetAllCompleteTaskDetails($searchAll, $filterStart, $filterStop)"></s:Push>
 			
 			<s:Iterator Id="allrequest" Value="$allrequests">

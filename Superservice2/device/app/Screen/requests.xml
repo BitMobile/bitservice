@@ -57,7 +57,7 @@
 		  <c:Button Id="btnSearch" Text="#search#" OnClickAction="$findtodaytext($edtSearchToDay.Text)"></c:Button>
 		</c:HorizontalLayout>
 		<c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
-      <c:ScrollView>
+      <c:ScrollView Id="SVToDay">
        
 
         <c:HorizontalLayout CssClass="caption_grid">
@@ -143,7 +143,7 @@
 		<c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
 		
 		
-		<c:ScrollView>
+		<c:ScrollView Id="SVAll">
 			<s:Push Id="allrequests" Value="$GetAllActiveTaskDetails($searchAll, $filterStart, $filterStop)"></s:Push>
 			
 			<s:Iterator Id="allrequest" Value="$allrequests">
