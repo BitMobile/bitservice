@@ -7,7 +7,6 @@
 	if (!isITS(pr)||(res > 0 && cust.FinDirExist != DB.EmptyRef("Enum_LogicType") && cust.DigitPeopleCount > 0)){//&& cust.PeapleCount != DB.EmptyRef("Enum_PeopleCountVarint")
 		obj = cust.GetObject();
 		obj.Save(false);
-		Console.WriteLine($.ResQuery.Count());
 		if ($.ResQuery.Count() > 0 && $.workflow.name != "Historylist"){
 			Workflow.Action("GoForwardQ",[pr, cust]);
 		} else {
