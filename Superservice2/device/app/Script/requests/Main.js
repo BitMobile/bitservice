@@ -1,4 +1,7 @@
 ﻿// ------------------------ requests screen module ------------------------
+function OnLoading(){
+	SetListType();
+}
 
 function GetTodaysActiveTask(){
 	var q = new Query("SELECT * FROM Document_Visit WHERE PlanStartDataTime >= @DateStart AND PlanStartDataTime < @DateEnd AND Status != @StatusComp AND Status != @StatusEx");
@@ -181,7 +184,9 @@ function findinalltext(key){
 	Workflow.Refresh([]);
 }
 //-----------------------------code from Masha----------------------------
-      function SetListType() {
+
+
+function SetListType() {
     if ($.Exists("visitsType") == false)
         $.AddGlobal("visitsType", "planned");
     else
