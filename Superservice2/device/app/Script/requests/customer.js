@@ -196,10 +196,17 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		
 			if (StrLen(editTel) >= 11 || (StrLen(editTel) >= 12 && plusFind == 1)) {
 				if (plusFind == 1) {
-					PhoneCountryCode = Mid(editTel, 1, 2);
-					PhoneCityCode = Mid(editTel, 3, 3);
-					PhoneNumber = Mid(editTel, 6, 7);
-					PhoneInternalCode = Right(editTel, StrLen(editTel) - 12);
+					if (StrLen(editTel) >= 12){
+						PhoneCountryCode = Mid(editTel, 1, 2);
+						PhoneCityCode = Mid(editTel, 3, 3);
+						PhoneNumber = Mid(editTel, 6, 7);
+						PhoneInternalCode = Right(editTel, StrLen(editTel) - 12);
+					} else{
+						PhoneCountryCode = Mid(editTel, 1, 1);
+						PhoneCityCode = Mid(editTel, 2, 3);
+						PhoneNumber = Mid(editTel, 5, 7);
+						PhoneInternalCode = Right(editTel, StrLen(editTel) - 11);
+					}
 				} else {
 					PhoneCountryCode = Mid(editTel, 1, 1);
 					PhoneCityCode = Mid(editTel, 2, 3);
@@ -281,10 +288,18 @@ function EditContact(customer, lastName, firstName_middleName, telFull, position
 
 	if (StrLen(editTel) >= 11 || (StrLen(editTel) >= 12 && plusFind == 1)) {
 		if (plusFind == 1) {
-			PhoneCountryCode = Mid(editTel, 1, 2);
-			PhoneCityCode = Mid(editTel, 3, 3);
-			PhoneNumber = Mid(editTel, 6, 7);
-			PhoneInternalCode = Right(editTel, StrLen(editTel) - 12);
+			if (StrLen(editTel) >= 12){
+				PhoneCountryCode = Mid(editTel, 1, 2);
+				PhoneCityCode = Mid(editTel, 3, 3);
+				PhoneNumber = Mid(editTel, 6, 7);
+				PhoneInternalCode = Right(editTel, StrLen(editTel) - 12);
+			} else{
+				PhoneCountryCode = Mid(editTel, 1, 1);
+				PhoneCityCode = Mid(editTel, 2, 3);
+				PhoneNumber = Mid(editTel, 5, 7);
+				PhoneInternalCode = Right(editTel, StrLen(editTel) - 11);
+			}
+			
 		} else {
 			PhoneCountryCode = Mid(editTel, 1, 1);
 			PhoneCityCode = Mid(editTel, 2, 3);
