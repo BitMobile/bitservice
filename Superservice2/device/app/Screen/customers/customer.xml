@@ -41,21 +41,18 @@
 	  </c:HorizontalLayout>
 	  
 		<c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="grid">
-		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+	  <c:HorizontalLayout CssClass="memo_block">		
 		<c:VerticalLayout>
 		  <c:TextView Text="#Factaddress#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objCust.FactAddress" CssClass="main_row_addr"></c:TextView>
-		  
+		  <c:TextView Text="$objCust.FactAddress" CssClass="main_row_reqtext"></c:TextView>		  
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>
 	  
 	  <c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="grid">
-		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+	  <c:HorizontalLayout CssClass="memo_block">		
 		<c:VerticalLayout>
 		  <c:TextView Text="#Uraddress#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objCust.UrAddress" CssClass="main_row_addr"></c:TextView>
+		  <c:TextView Text="$objCust.UrAddress" CssClass="main_row_reqtext"></c:TextView>
 		  
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>

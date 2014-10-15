@@ -27,6 +27,8 @@
 .memo_block vl description_row{
 	font: 80% Arial;
 	height: 18%;
+	width: 100%;
+	
 }
 
 .memo_block vl main_row {

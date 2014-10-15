@@ -44,12 +44,10 @@
 	  </c:HorizontalLayout>
 	  
 		<c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
-		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+	  <c:HorizontalLayout CssClass="memo_block">
 		<c:VerticalLayout>
 		  <c:TextView Text="#address#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objOutlet.Address" CssClass="main_row_addr"></c:TextView>
-		  
+		  <c:TextView Text="$objOutlet.Address" CssClass="main_row_reqtext"></c:TextView>		  
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>
 	  
