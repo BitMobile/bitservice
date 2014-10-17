@@ -119,21 +119,23 @@
       </c:ScrollView>
     </s:If>
 	<s:Else>
-	
-	<c:DockLayout CssClass="parameter_grid" OnClickAction="$SetBeginDate()">
-        <c:TextView Text="#begin#"></c:TextView>
-        <c:TextView Id="beginDate" Text="$filterDate($filterStart)"   CssClass="value"></c:TextView>
-    </c:DockLayout>
+	<c:SwipeHorizontalLayout Id="swipe_layout" CssClass="swipe_layout" Index="0">
+		<c:HorizontalLayout CssClass="parameter_grid" onClickAction="$Workflow.DoAction(EditFilter)">
+	        <c:TextView Text="#period#" CssClass="periodcaption"></c:TextView>
+	       	<c:TextView Id="Period" Text="{$filterDateCaption(@recvStartPeriod)} - {$filterDateCaption(@recvStopPeriod)}"   CssClass="filtervalue"></c:TextView>
+	        <c:Image CssClass="filterarrow" />
+	    </c:HorizontalLayout>
+	    
+	    <c:HorizontalLayout CssClass="grey_swipe" OnClickAction="$ClearFilter()">
+			<c:VerticalLayout>
+				<c:TextView Text="#Clear#"></c:TextView>
+	        </c:VerticalLayout>
+		</c:HorizontalLayout>
+	    
+    </c:SwipeHorizontalLayout>
     <c:HorizontalLine/>
-    
-    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetEndDate()">
-        <c:TextView Text="#end#"></c:TextView>
-        <c:TextView Id="endDate" Text="$filterDate($filterStop)"  CssClass="value"></c:TextView>
-    </c:DockLayout>
-    <c:HorizontalLine/>
-		
-	  
-	  <c:HorizontalLayout CssClass="search">
+    	  
+	<c:HorizontalLayout CssClass="search">
 		  <c:DockLayout >
 			<c:Image />
 			<c:EditText Id="edtSearchAll" Text="$searchAll" Placeholder="#search#"></c:EditText>
@@ -144,7 +146,7 @@
 		
 		
 		<c:ScrollView Id="SVAll">
-			<s:Push Id="allrequests" Value="$GetAllActiveTaskDetails($searchAll, $filterStart, $filterStop)"></s:Push>
+			<s:Push Id="allrequests" Value="$GetAllActiveTaskDetails($searchAll)"></s:Push>
 			
 			<s:Iterator Id="allrequest" Value="$allrequests">
           

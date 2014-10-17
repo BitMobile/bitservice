@@ -3,6 +3,35 @@ function OnLoading(){
 	SetListType();
 }
 
+function MakeFilterSettingsBackUp(){
+	
+	if ($.Exists("BUFilterCopy") == true){
+		$.Remove("BUFilterCopy");
+		$.Add("BUFilterCopy", new Dictionary());
+		$.BUFilterCopy.Add("Start", recvStartPeriod);
+		$.BUFilterCopy.Add("Stop", recvStopPeriod);
+	} else {
+		$.Add("BUFilterCopy", new Dictionary());
+		$.BUFilterCopy.Add("Start", recvStartPeriod);
+		$.BUFilterCopy.Add("Stop", recvStopPeriod);
+	}
+	
+}
+
+function RollBackAndBack(){
+	recvStartPeriod = $.BUFilterCopy.Start;
+	recvStopPeriod = $.BUFilterCopy.Stop;
+	Workflow.Back();
+	
+}
+
+function clearmyfilter(){
+	$.beginDate.Text = "";
+	recvStartPeriod = undefined;
+	$.endDate.Text = "";
+	recvStopPeriod = undefined;
+}
+
 function GetTodaysActiveTask(){
 	var q = new Query("SELECT * FROM Document_Visit WHERE PlanStartDataTime >= @DateStart AND PlanStartDataTime < @DateEnd AND Status != @StatusComp AND Status != @StatusEx");
 	q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
@@ -66,8 +95,9 @@ function GetToDayDoneRequestsWithSearch(searchText, getCount){//(searchText - с
 	
 function SetBeginDate() {
 	var header = Translate["#enterDateTime#"];
-	if($.Exists("filterStart") && $.filterStart != null){
-		Dialog.ShowDateTime(header, $.filterStart, SetBeginDateNow);
+	Console.WriteLine(recvStartPeriod);
+	if(recvStartPeriod != undefined){
+		Dialog.ShowDateTime(header, recvStartPeriod, SetBeginDateNow);
 	} else {
 		Dialog.ShowDateTime(header, SetBeginDateNow);
 	}
@@ -75,15 +105,14 @@ function SetBeginDate() {
 
 function SetBeginDateNow(key) {
 	$.beginDate.Text = filterDate(key);
-	$.Remove("filterStart");
-	$.AddGlobal("filterStart", BegOfDay(key));
-	Workflow.Refresh([]);
+	recvStartPeriod = BegOfDay(key);
+	//Workflow.Refresh([]);
 }
 
 function SetEndDate() {
 	var header = Translate["#enterDateTime#"];
-	if($.Exists("filterStop") && $.filterStop != null){
-		Dialog.ShowDateTime(header,  $.filterStop, SetEndDateNow);
+	if(recvStopPeriod != undefined){
+		Dialog.ShowDateTime(header, recvStopPeriod, SetEndDateNow);
 	} else {
 		Dialog.ShowDateTime(header, SetEndDateNow);
 	}
@@ -91,13 +120,12 @@ function SetEndDate() {
 
 function SetEndDateNow(key) {
 	$.endDate.Text = filterDate(key);
-	$.Remove("filterStop");
-	$.AddGlobal("filterStop", EndOfDay(key));
+	recvStopPeriod = EndOfDay(key);
 	//Dialog.Debug(BegOfDay(key));
-	Workflow.Refresh([]);
+	//Workflow.Refresh([]);
 }
 
-function GetAllActiveTaskDetails(searchtext, dtstart, dtstop){
+function GetAllActiveTaskDetails(searchtext){
 	var q = new Query();
 	var qtext = "SELECT CUST.Description AS CustName,  ADDRS.Address AS Addr, REQ.PlanStartDataTime AS Start, REQ.PlanEndDataTime AS Stop, REQ.Id AS Ind FROM Document_Visit REQ LEFT JOIN Catalog_Customer CUST ON REQ.Customer = CUST.Id LEFT JOIN Catalog_Outlet ADDRS ON REQ.Outlet = ADDRS.Id WHERE (Status == @StatusProc OR Status == @StatusEx)";
 	
@@ -107,16 +135,16 @@ function GetAllActiveTaskDetails(searchtext, dtstart, dtstop){
 		qtext = qtext + searchtail;
 	}
 	
-	if (dtstart != null){
+	if (recvStartPeriod != undefined){
 		var starttail = " AND REQ.PlanStartDataTime >= @DateStart";//AND REQ.PlanStartDataTime < @DateEnd
-		q.AddParameter("DateStart", dtstart);
+		q.AddParameter("DateStart", recvStartPeriod);
 		qtext = qtext + starttail;
 		
 	}
 	
-	if (dtstop != null){
+	if (recvStopPeriod != undefined){
 		var stoptail = " AND REQ.PlanStartDataTime < @DateEnd";//AND REQ.PlanStartDataTime < @DateEnd
-		q.AddParameter("DateEnd", dtstop);
+		q.AddParameter("DateEnd", recvStopPeriod);
 		qtext = qtext + stoptail;
 	}
 	
@@ -128,7 +156,11 @@ function GetAllActiveTaskDetails(searchtext, dtstart, dtstop){
 	return c; 
 }
 
-
+function ClearFilter(){
+	recvStartPeriod = undefined;
+	recvStopPeriod = undefined;
+	Workflow.Refresh([]);
+}
 
 function PeriodTime(dateStart, dateStop){
 
@@ -144,6 +176,14 @@ function PeriodTime(dateStart, dateStop){
 function filterDate(dt){
 	if (dt != null){
 		return String.Format("{0:dd MMMM yyyy}", DateTime.Parse(dt));
+	} else {
+		return "";
+	}
+}
+
+function filterDateCaption(dt){
+	if (dt != null){
+		return String.Format("{0:dd.MM.yyyy}", DateTime.Parse(dt));
 	} else {
 		return "";
 	}

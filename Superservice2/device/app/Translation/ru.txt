@@ -199,6 +199,7 @@ FaxNumbers	Номера факсов
 
 
 requests	Заявки
+ClearFilter	Очистить фильтр
 reqdone	закрыто
 requndone	осталось
 reqmth	за месяц
@@ -207,6 +208,7 @@ requesttext	Текст заявки
 manager	Менеджер
 clients	Клиенты
 reports	Отчеты
+Clear	Очистить
 worktimesheets	Лувры
 today	Сегодня	
 requestsAll	Все
@@ -214,6 +216,7 @@ donerequests	ВЫПОЛНЕННЫЕ ЗАЯВКИ
 undonerequests	НЕВЫПОЛНЕННЫЕ ЗАЯВКИ
 begin	Начало
 end	Окончание
+period	Период
 customer	Клиент
 next	Далее
 main	Основное

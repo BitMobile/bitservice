@@ -26,6 +26,7 @@
     <c:GlobalModules>
       <c:Module Name="Global" File="Global\Global.js" />
       <c:Module Name="Facade" File="Global\Facade.js" />
+      <c:Module Name="Vars" File="Global\Vars.js" />
     </c:GlobalModules>
 
     <c:Mixins>
