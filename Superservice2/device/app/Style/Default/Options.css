@@ -72,3 +72,10 @@
 	margin-top: 10%;
 	
 }
+
+.main_row {
+    height: 40%;
+    margin-top: 5%;
+    white-space: normal;
+    color: #e6891b;
+}

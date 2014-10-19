@@ -207,6 +207,7 @@ request	ЗАЯВКА
 requesttext	Текст заявки
 manager	Менеджер
 clients	Клиенты
+NoAnswer	Отказ
 reports	Отчеты
 Clear	Очистить
 worktimesheets	Лувры

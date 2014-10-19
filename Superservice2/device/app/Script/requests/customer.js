@@ -452,7 +452,7 @@ function SetPeapleCount(Key, request){
 //////////////////////////////////////////////////////////////////////////////////
 function GetFinDir(request){
 	var q = new Query("SELECT LT.Description " +
-			"FROM Catalog_Customer C JOIN Enum_LogicType LT ON C.FinDirExist = LT.Id  " +
+			"FROM Catalog_Customer C JOIN Enum_Logic3 LT ON C.FinDirExist = LT.Id  " +
 			"WHERE C.Id == @Cust");
 	q.AddParameter("Cust", request);
 	c = q.ExecuteScalar();
@@ -465,9 +465,10 @@ function GetFinDir(request){
 }
 function SetDialogFinDirExist(request){
 	var Cunt =[];
-	Cunt.push([DB.Current.Constant.LogicType.Yes, "ДА"]);
-	Cunt.push([DB.Current.Constant.LogicType.No, "НЕТ"]);
-	Cunt.push([DB.EmptyRef("Enum.LogicType"), "Пустое значение"]);
+	Cunt.push([DB.Current.Constant.Logic3.Yes, "ДА"]);
+	Cunt.push([DB.Current.Constant.Logic3.No, "НЕТ"]);
+	Cunt.push([DB.Current.Constant.Logic3.NoAnswer, "Отказ"]);
+	Cunt.push([DB.EmptyRef("Enum.Logic3"), "Пустое значение"]);
 	Dialog.Select("#answer#", Cunt, SetFinDirExist, request);
 }
 
@@ -478,9 +479,24 @@ function SetFinDirExist(Key, request){
 		DescKey = Translate["#" + Key.Description + "#"];
 	}
 	$.FinDirExist.Text = DescKey;
+	
+	if (Key == "@ref[Enum_Logic3]:8b052e18-38dc-cdf9-456d-2e7a155dd06d"){
+		$.CauseOfFailure.Visible = true;
+	} else {
+		$.CauseOfFailure.Visible  = false;
+	}
+	
 	obj = request.GetObject();
 	obj.FinDirExist = Key;
-	obj.Save(false);	
+	obj.Save();	
+}
+
+function FinDirFailure(Key){
+	if (Key == "@ref[Enum_Logic3]:8b052e18-38dc-cdf9-456d-2e7a155dd06d"){
+		return true;
+	} else {
+		return false;
+	}
 }
 	
 function DoBackAndCleanAct(){

@@ -47,6 +47,15 @@
 	        
 	    </c:DockLayout>
 	    <c:HorizontalLine/>
+	    
+		<c:HorizontalLayout Id="CauseOfFailure" CssClass="grid" Visible="$FinDirFailure($cust.FinDirExist)">
+         
+           		<c:VerticalLayout >
+           			<c:TextView Text="Введите причину отказа" CssClass="description_row"></c:TextView>
+           			<c:MemoEdit Id="CauseOfFailureField" Value ="$cust.CauseOfFailure" CssClass="main_row"></c:MemoEdit>
+           		</c:VerticalLayout>
+           		
+        </c:HorizontalLayout>
 		
 		
 	</c:DockLayout>
