@@ -488,7 +488,7 @@ function SetFinDirExist(Key, request){
 	
 	obj = request.GetObject();
 	obj.FinDirExist = Key;
-	obj.Save();	
+	obj.Save(false);	
 }
 
 function FinDirFailure(Key){

@@ -28,7 +28,13 @@
 						OnClickAction="$Workflow.DoAction(EditContact, $contact.Id, $objCust)">
 						<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 						<c:VerticalLayout>
-							<c:TextView Text="$contact.LastName" CssClass="main_row"></c:TextView>
+							<s:If Test="$contact.MainContact">
+								<c:TextView Text="$contact.LastName" CssClass="main_rowbold"></c:TextView>
+							</s:If>
+							<s:Else>
+								<c:TextView Text="$contact.LastName" CssClass="main_row"></c:TextView>
+							</s:Else>
+							<c:TextView Text="$contact.LastName" CssClass="main_rowbold"></c:TextView>
 							<c:TextView Text="{$contact.FirstName} {$contact.MiddleName}" CssClass="main_row"></c:TextView>
 							<c:TextView Text="$contact.Position.Description" CssClass="description_row"></c:TextView>
 						</c:VerticalLayout>

@@ -75,3 +75,11 @@ dock-align: right;
     margin-top: -5%;
 }
 
+.main_rowbold {
+    width: 100%;
+    height: 40%;
+    white-space: normal;
+    font: 60% Arial-BoldMT;
+    margin-top: -5%;
+}
+

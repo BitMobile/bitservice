@@ -44,24 +44,26 @@
 	        
 	        
 	    </c:DockLayout>
-	    <c:HorizontalLine/>
+	    <c:HorizontalLine/>	   
 	   
 	   
-	   
-	   
-	   
-	   
-	   
-	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogFinDirExist($param1)">
-	        <c:TextView Text="Есть Фин. Директор"></c:TextView>
+	   <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogFinDirExist($currentCustomer)">
+	        <c:TextView Text="Есть Фин. Директор" ></c:TextView>
 	        
-	        <c:TextView Id="FinDirExist" Text="$GetFinDir($param1)"  CssClass="value"></c:TextView>
+	        <c:TextView Id="FinDirExist" Text="$GetFinDir($currentCustomer)"  CssClass="value"></c:TextView>
 	        
 	        
 	    </c:DockLayout>
 	    <c:HorizontalLine/>
-    	
-		
+	    
+		<c:HorizontalLayout Id="CauseOfFailure" CssClass="grid" Visible="$FinDirFailure($currentCustomer.FinDirExist)">
+         
+           		<c:VerticalLayout >
+           			<c:TextView Text="Введите причину отказа" CssClass="description_row"></c:TextView>
+           			<c:MemoEdit Id="CauseOfFailureField" Value ="$currentCustomer.CauseOfFailure" CssClass="main_row"></c:MemoEdit>
+           		</c:VerticalLayout>
+           		
+        </c:HorizontalLayout>		
 	</c:DockLayout>
 
 
