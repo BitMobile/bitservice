@@ -1,4 +1,65 @@
-function GetAllCompleteTaskDetails(searchtext, dtstart, dtstop){
+function MakeFilterSettingsBackUp(){
+	
+	if ($.Exists("BUFilterCopy") == true){
+		$.Remove("BUFilterCopy");
+		$.Add("BUFilterCopy", new Dictionary());
+		$.BUFilterCopy.Add("Start", historyStart);
+		$.BUFilterCopy.Add("Stop", historyStop);
+	} else {
+		$.Add("BUFilterCopy", new Dictionary());
+		$.BUFilterCopy.Add("Start", historyStart);
+		$.BUFilterCopy.Add("Stop", historyStop);
+	}
+	
+}
+
+function RollBackAndBack(){
+	historyStart = $.BUFilterCopy.Start;
+	historyStop = $.BUFilterCopy.Stop;
+	Workflow.Back();
+	
+}
+
+function clearmyfilter(){
+	$.beginDate.Text = "";
+	historyStart = undefined;
+	$.endDate.Text = "";
+	historyStop = undefined;
+}
+function ClearFilter(){
+	historyStart = undefined;
+	historyStop = undefined;
+	Workflow.Refresh([]);
+}
+
+function PeriodTime(dateStart, dateStop){
+
+	if (dateStop != NULL){
+		var p = String.Format("{0:dd.MM.} {0:HH:mm} - {1:HH:mm}", DateTime.Parse(dateStart), DateTime.Parse(dateStop));
+		//String.Format("{0:dd.MM. 0:hh:mm - 1:hh:mm}", DateTime.Parse(dateStart), DateTime.Parse(dateStop));
+	} else {
+		var p = String.Format("{0:dd.MM.} {0:HH:mm}", DateTime.Parse(dateStart));
+	}	
+	return p;
+}
+
+function filterDate(dt){
+	if (dt != null){
+		return String.Format("{0:dd MMMM yyyy}", DateTime.Parse(dt));
+	} else {
+		return "";
+	}
+}
+
+function filterDateCaption(dt){
+	if (dt != null){
+		return String.Format("{0:dd.MM.yyyy}", DateTime.Parse(dt));
+	} else {
+		return "";
+	}
+}
+
+function GetAllCompleteTaskDetails(searchtext){
 	var q = new Query();
 	var qtext = "SELECT CUST.Description AS CustName,  ADDRS.Address AS Addr, REQ.PlanStartDataTime AS Start, REQ.PlanEndDataTime AS Stop, REQ.Id AS Ind FROM Document_Visit REQ LEFT JOIN Catalog_Customer CUST ON REQ.Customer = CUST.Id LEFT JOIN Catalog_Outlet ADDRS ON REQ.Outlet = ADDRS.Id WHERE (Status == @StatusProc OR Status == @StatusEx)";
 	
@@ -8,16 +69,16 @@ function GetAllCompleteTaskDetails(searchtext, dtstart, dtstop){
 		qtext = qtext + searchtail;
 	}
 	
-	if (dtstart != null){
+	if (historyStart != undefined){
 		var starttail = " AND REQ.PlanStartDataTime >= @DateStart";//AND REQ.PlanStartDataTime < @DateEnd
-		q.AddParameter("DateStart", dtstart);
+		q.AddParameter("DateStart", historyStart);
 		qtext = qtext + starttail;
 		
 	}
 	
-	if (dtstop != null){
+	if (historyStop != undefined){
 		var stoptail = " AND REQ.PlanStartDataTime < @DateEnd";//AND REQ.PlanStartDataTime < @DateEnd
-		q.AddParameter("DateEnd", dtstop);
+		q.AddParameter("DateEnd", historyStop);
 		qtext = qtext + stoptail;
 	}
 	
@@ -31,35 +92,34 @@ function GetAllCompleteTaskDetails(searchtext, dtstart, dtstop){
 
 function SetBeginDate() {
 	var header = Translate["#enterDateTime#"];
-    if($.Exists("filterStart") && $.filterStart != null){
-    	Dialog.ShowDateTime(header,  $.filterStart, SetBeginDateNow);
-    } else {
-    	Dialog.ShowDateTime(header, SetBeginDateNow);
-    }
-	
+	//Console.WriteLine(historyStart);
+	if(historyStart != undefined){
+		Dialog.ShowDateTime(header, historyStart, SetBeginDateNow);
+	} else {
+		Dialog.ShowDateTime(header, SetBeginDateNow);
+	}
 }
 
 function SetBeginDateNow(key) {
 	$.beginDate.Text = filterDate(key);
-	$.Remove("filterStart");
-	$.AddGlobal("filterStart", BegOfDay(key));
-	Workflow.Refresh([]);
+	historyStart = BegOfDay(key);
+	//Workflow.Refresh([]);
 }
 
 function SetEndDate() {
 	var header = Translate["#enterDateTime#"];
-	 if($.Exists("filterStop") && $.filterStop != null){
-		 Dialog.ShowDateTime(header, $.filterStop, SetEndDateNow);
-	 } else {
-		 Dialog.ShowDateTime(header, SetEndDateNow);
-	 }
+	if(historyStop != undefined){
+		Dialog.ShowDateTime(header, historyStop, SetEndDateNow);
+	} else {
+		Dialog.ShowDateTime(header, SetEndDateNow);
+	}
 }
 
 function SetEndDateNow(key) {
 	$.endDate.Text = filterDate(key);
-	$.Remove("filterStop");
-	$.AddGlobal("filterStop", EndOfDay(key));
-	Workflow.Refresh([]);
+	historyStop = EndOfDay(key);
+	//Dialog.Debug(BegOfDay(key));
+	//Workflow.Refresh([]);
 }
 
 function initvalues(){ // Инициализация переменных фильтра

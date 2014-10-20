@@ -151,7 +151,14 @@
 <bp:Workflow Name="Historylist">
 	<bp:Step Name="history" Screen="history.xml" Controller="history\history.js">
 		 <bp:Action Name="SelectItem" NextStep="Customer"></bp:Action>
+		 <bp:Action Name="EditFilter" NextStep="EditFilter"></bp:Action>
 	</bp:Step>
+	
+	<bp:Step Name="EditFilter" Screen="history\filter.xml" Controller="history\history.js">
+      
+	  
+      
+    </bp:Step>
 	
 	 <bp:Step Name="Questions" Screen="requests\Questions.xml" Controller="requests\Questions.js">
     	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
