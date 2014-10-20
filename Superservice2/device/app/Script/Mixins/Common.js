@@ -106,5 +106,9 @@ function GetQuestionsByQuestionnaires(cust) {
 
 }
 
+function makeCall(num){
+	Phone.Call(num);
+}
+
 //-----------------Dialog handlers-----------------
 

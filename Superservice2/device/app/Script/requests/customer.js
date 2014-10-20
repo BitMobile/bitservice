@@ -18,7 +18,20 @@
 	}
 }
 
+function makeContactCall(contact){
+	var tel = contact.PhoneCountryCode + contact.PhoneCityCode + contact.PhoneNumber + contact.PhoneInternalCode;
+	//Console.WriteLine(tel);
+	Phone.Call(tel);
+}
 
+function numberExists(contact){
+	var tel = contact.PhoneCountryCode + contact.PhoneCityCode + contact.PhoneNumber + contact.PhoneInternalCode;
+	if (String.IsNullOrEmpty(tel)){
+		return false;
+	} else {
+		return true;
+	}
+}
 
 function GetVal(t){
 	Dialog.Debug(t);

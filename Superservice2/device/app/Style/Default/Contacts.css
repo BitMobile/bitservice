@@ -68,18 +68,29 @@ dock-align: right;
 	}
 
 .main_row {
-    width: 100%;
+    width: 75%;
     height: 40%;
     white-space: normal;
     font: 60% Arial;
     margin-top: -5%;
+    
 }
 
 .main_rowbold {
-    width: 100%;
+    width: 75%;
     height: 40%;
     white-space: normal;
     font: 60% Arial-BoldMT;
     margin-top: -5%;
+   
+}
+
+
+.PhonePlace {
+	height: 50%;
+	width: 13%;
+    margin-left: -12.5%;
+    margin-top: 25%;
+    background-image: url(phone.png);
 }
 
