@@ -3,13 +3,13 @@
  <resource>
 
 <<<<<<< HEAD
- <version version="2.0.0.8"></version>
+ <version version="2.1.1.84"></version>
 =======
- <version version="2.0.1.7"></version>
->>>>>>> master
+ <version version="2.1.2.78"></version>
+>>>>>>> HotFix_Debug
 
  </resource>
  <client>
-  <supportedCore version="2.0.0.70" />
+  <supportedCore version="2.1.0.82" />
  </client>
 </configuration>

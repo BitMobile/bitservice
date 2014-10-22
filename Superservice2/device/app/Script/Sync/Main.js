@@ -55,13 +55,16 @@ function SyncData() {
 		
 		
 	}
+	
 	function RollBackMark(){
-		resroll = $.forrollback;
-		resroll.First();
-		while (resroll.Next()){			
-			obj = resroll.Id.GetObject();
-			obj.SyncDateTime = null;
-			obj.Save(false);
+			if ($.Exists("forrollback") == true){
+				resroll = $.forrollback;
+				resroll.First();
+				while (resroll.Next()){			
+					obj = resroll.Id.GetObject();
+					obj.SyncDateTime = null;
+					obj.Save(false);			
+			}
 		}
 		
 	}
