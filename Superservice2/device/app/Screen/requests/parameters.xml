@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack"
-	StyleSheet="Options.css">
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="Options.css">
 <c:DockLayout>
 		<s:Push Id="cust" Value="$param2"/>
 		<c:DockLayout CssClass="top_navigator">
@@ -14,7 +13,10 @@
 				<c:TextView Text="ПАРАМЕТРЫ" />
 			</c:HorizontalLayout>
 		</c:DockLayout>
-	
+		
+		<c:HorizontalLayout CssClass="spacer">
+	 </c:HorizontalLayout>
+		<c:HorizontalLine/>
 	    <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(CurrentActivities, $param2)">
 	        <c:TextView Text="Вид деятельности"></c:TextView>
 	        
@@ -56,7 +58,7 @@
            		</c:VerticalLayout>
            		
         </c:HorizontalLayout>
-		
+		<c:HorizontalLine/>
 		
 	</c:DockLayout>
 </c:Screen>
