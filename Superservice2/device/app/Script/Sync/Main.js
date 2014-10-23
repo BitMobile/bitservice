@@ -65,6 +65,7 @@ function SyncData() {
 					obj.SyncDateTime = null;
 					obj.Save(false);			
 			}
+				$.Remove("forrollback");
 		}
 		
 	}

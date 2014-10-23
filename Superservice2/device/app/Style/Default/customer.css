@@ -110,3 +110,11 @@ dock-align: right;
     font: 45% Arial;
     margin-top: -5%;
 }
+
+.PhonePlace {
+	height: 50%;
+	width: 13%;
+    margin-left: -17%;
+    margin-top: 25%;
+    background-image: url(phone.png);
+}

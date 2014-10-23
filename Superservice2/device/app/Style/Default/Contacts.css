@@ -94,3 +94,44 @@ dock-align: right;
     background-image: url(phone.png);
 }
 
+.position_row {
+    width: 50%;
+    height: 100%;
+    white-space: normal;
+    font: 70% Arial;
+    color: #8e8e93;
+}
+
+.main_contact_grid {
+	padding-top: 10%;
+	height: 15.9sp;
+    width: 100%;
+    background-color: #fff6e0;
+}
+
+
+.main_contact_container {
+	height: 100%;
+	width: 46%;
+	padding-left: 13.5%;
+	padding-top: 23%;
+	background-color: #e6891b;
+	border-radius: 5px;
+}
+
+.main_contact_caption {
+	width: 80%;
+    height: 100%;
+    white-space: normal;
+    font: 63% Arial;
+    color: #ffffff;
+}
+
+.position_and_maincontact{
+	width: 100%;
+	height: 25%;
+	margin-top: -10%;
+}
+
+
+
