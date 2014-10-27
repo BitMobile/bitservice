@@ -199,3 +199,4 @@ today	Today
 noApplicationToday	No applications for today
 expected2	Expected
 noPlans	No plans
+call	Call

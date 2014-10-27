@@ -1,8 +1,15 @@
-﻿
+
 .menu hl {
     height: 8sp;
 }
 
 .menu dl {
     height: 8sp;
+}
+
+.PhonePlaceFromConfig {
+	height: 0%;
+	width: 0%;
+    margin-left: -17%;
+    margin-top: 25%;    
 }

@@ -58,7 +58,7 @@
            		</c:VerticalLayout>
            		
         </c:HorizontalLayout>
-		
+		<c:HorizontalLine/>
 		
 	</c:DockLayout>
 </c:Screen>

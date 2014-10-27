@@ -86,7 +86,7 @@
 		  <c:TextView Text="$objCust.PhoneNumbers" CssClass="phone_numbrs"></c:TextView>
 		  
 		</c:VerticalLayout>	
-		<c:VerticalLayout CssClass="PhonePlace" OnClickAction="$makeCall($objCust.PhoneNumbers)">
+		<c:VerticalLayout CssClass="PhonePlaceFromConfig" OnClickAction="$MoreMakeContactCall($objCust.PhoneNumbers)">
 									
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>

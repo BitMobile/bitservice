@@ -59,7 +59,7 @@
 						<c:TextView Text="Телефон" CssClass="description_row"></c:TextView>
 						<c:EditText Id="telFull" Text="{$contact.PhoneCountryCode} {$contact.PhoneCityCode} {$contact.PhoneNumber} {$contact.PhoneInternalCode}" CssClass="main_row"></c:EditText>
 					</c:VerticalLayout>	
-					<c:VerticalLayout CssClass="PhonePlace" OnClickAction="$makeContactCall($contact.Id)">
+					<c:VerticalLayout CssClass="PhonePlaceFromConfig" OnClickAction="$makeContactCall($contact.Id)">
 									
 					</c:VerticalLayout>			
 				</c:HorizontalLayout>
