@@ -61,6 +61,9 @@ function SaveAnswersAndForward(p1, p2){
 			if (!IsBlankString($.TempAnswers[cnt].toString())){
 				InsertAnswer(p2, $.TempAnswers[quest], $.TempAnswers[cnt], p1);
 				changed = true;
+			}else{
+				DelAnswer(p2, $.TempAnswers[quest], $.TempAnswers[cnt], p1);
+				changed = true;
 			}		
 		}
 	}
@@ -133,6 +136,33 @@ function InsertAnswer(cust,quest, answer, visit){
 				objQuest.Question = quest;
 				objQuest.Answer = answer;
 				objQuest.Save(false);
+			}
+			SaveSurveyIntoVisit(refSR, visit);
+		}
+		
+	}
+	
+}
+
+function DelAnswer(cust,quest, answer, visit){
+	// Get SurveyResults
+	var qAnkets = new Query("SELECT DQ.Id AS Anketa " +
+			"From Document_Questionnaire DQ " +
+			"LEFT JOIN Document_Questionnaire_Questions DQQ " +
+			"ON DQQ.Ref = DQ.Id " +
+			"WHERE DQQ.Question = @quest " +
+			"AND datetime('now') BETWEEN datetime(DQ.PriodFrom, 'start of day') AND datetime(DQ.PeriodTo, 'start of day', '+1 days')");
+	
+	qAnkets.AddParameter("quest", quest);
+	
+	var res = qAnkets.Execute();
+	
+	while (res.Next()){
+		var refSR = SurveyExists(res.Anketa, cust);
+		if (refSR != null){
+			var obj =  QuestionInSurvey(refSR, quest)
+			if (obj != null){				
+				DB.Delete(obj);
 			}
 			SaveSurveyIntoVisit(refSR, visit);
 		}
