@@ -6,7 +6,7 @@
 	    <c:DockLayout CssClass="top_navigator">
 	            
 	      <c:HorizontalLayout>
-	        <c:TextView Text="#customer#" />
+	        <c:TextView Text="#period#" />
 	      </c:HorizontalLayout>
 	      <c:HorizontalLine/>
 	      
