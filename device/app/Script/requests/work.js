@@ -7,6 +7,9 @@ function isProgress(obj){
 	}
 }
 
+
+
+
 function CreateIfNotExist(work)
 {
 	if (work == null){
@@ -26,6 +29,11 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		return;
 	}
 	
+	if (!validate($.hcount.Text, "[0-9]+((\.|\,)[0-9]+)?")){
+		Dialog.Message("В поле 'Количество часов' Разрешен ввод только цифр");
+		return;
+	}
+	
 	var qc = new Query("SELECT LineNumber From Document_Visit_Result WHERE Document_Visit_Result.Ref == @r ORDER BY Document_Visit_Result.LineNumber DESC");
 	qc.AddParameter("r", request);
 	var linesCount = qc.ExecuteScalar();
@@ -38,7 +46,7 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		workid.NewVersion = nv;
 		workid.Description = "" + desc;
 		if (hcount !="" && hcount != null){
-			workid.AmountOfHours = parseFloat(hcount);			
+			workid.AmountOfHours = String.Format("{0:F2}", Converter.ToDecimal(hcount));			
 		} else {
 			workid.AmountOfHours = 0;
 		}
@@ -51,7 +59,7 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		ow.NewVersion = nv;
 		ow.Description = desc;
 		if (hcount !="" && hcount != null){
-			ow.AmountOfHours = parseFloat(hcount);
+			ow.AmountOfHours = String.Format("{0:F2}", Converter.ToDecimal(hcount));
 		}
 		ow.Save(false);
 	}
