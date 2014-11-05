@@ -20,9 +20,20 @@
 
 function makeContactCall(contact){
 	var tel = contact.PhoneCountryCode + contact.PhoneCityCode + contact.PhoneNumber + contact.PhoneInternalCode;
-	//Console.WriteLine(tel);
-	Phone.Call(tel);
+	Dialog.Question("#call# "+ tel + "?", PhoneCall, tel);	
 }
+
+function MoreMakeContactCall(tel){
+	Dialog.Question("#call# "+ tel + "?", PhoneCall, tel);
+}
+
+function PhoneCall(answ, tel){
+	if (answ == DialogResult.Yes) {
+		//Console.WriteLine(tel);
+		Phone.Call(tel);
+	}
+}
+
 
 function numberExists(contact){
 	var tel = contact.PhoneCountryCode + contact.PhoneCityCode + contact.PhoneNumber + contact.PhoneInternalCode;
@@ -250,6 +261,7 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		contact.PhoneCityCode = PhoneCityCode;
 		contact.PhoneNumber = PhoneNumber;
 		contact.PhoneInternalCode = PhoneInternalCode;
+		contact.MainContact = 0;
 	
 		contact.Save(false);
 	

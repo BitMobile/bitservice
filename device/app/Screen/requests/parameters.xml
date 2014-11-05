@@ -4,11 +4,10 @@
 		<s:Push Id="cust" Value="$param2"/>
 		<c:DockLayout CssClass="top_navigator">
 			<c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackTo(Customer)">
-         <c:Image/>
-        <c:TextView Text="#back#"/>
-      </c:HorizontalLayout>
-			<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"
-				OnClick="$CheckParamsFilling($cust, $param1)" />
+		         <c:Image/>
+		        <c:TextView Text="#back#"/>
+		     </c:HorizontalLayout>
+			<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"	OnClick="$CheckParamsFilling($cust, $param1)" />
 			<c:HorizontalLayout>
 				<c:TextView Text="ПАРАМЕТРЫ" />
 			</c:HorizontalLayout>
@@ -58,7 +57,7 @@
            		</c:VerticalLayout>
            		
         </c:HorizontalLayout>
-		
+		<c:HorizontalLine/>
 		
 	</c:DockLayout>
 </c:Screen>

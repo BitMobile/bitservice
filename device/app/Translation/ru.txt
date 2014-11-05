@@ -262,3 +262,4 @@ today	Cегодня
 noApplicationToday	Нет заявок на сегодня
 expected2	Ожидаемые
 noPlans	Нет планов
+call	Вызвать

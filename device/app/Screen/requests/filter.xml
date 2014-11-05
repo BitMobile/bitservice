@@ -6,7 +6,7 @@
 	    <c:DockLayout CssClass="top_navigator">
 	            
 	      <c:HorizontalLayout>
-	        <c:TextView Text="#customer#" />
+	        <c:TextView Text="#period#" />
 	      </c:HorizontalLayout>
 	      <c:HorizontalLine/>
 	      
@@ -29,13 +29,13 @@
 	 <c:HorizontalLine/>
 	<c:DockLayout CssClass="parameter_grid" OnClickAction="$SetBeginDate()">
         <c:TextView Text="#begin#"></c:TextView>
-        <c:TextView Id="beginDate" Text="$filterDate(@historyStart)"   CssClass="value"></c:TextView>
+        <c:TextView Id="beginDate" Text="$filterDate(@recvStartPeriod)"   CssClass="value"></c:TextView>
     </c:DockLayout>
     <c:HorizontalLine/>
     
     <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetEndDate()">
         <c:TextView Text="#end#"></c:TextView>
-        <c:TextView Id="endDate" Text="$filterDate(@historyStop)"  CssClass="value"></c:TextView>
+        <c:TextView Id="endDate" Text="$filterDate(@recvStopPeriod)"  CssClass="value"></c:TextView>
     </c:DockLayout>
     <c:HorizontalLine/>
      <c:HorizontalLayout CssClass="spacer">

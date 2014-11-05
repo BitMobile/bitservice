@@ -23,7 +23,7 @@
 				<c:HorizontalLine />					
 					
 						<c:SwipeHorizontalLayout Id="swipe_layout" CssClass="swipe_layout" Index="0">
-							<s:If Test="$contact.MainContact">
+							<s:If Test="$contact.MainContact == 1">
 							<c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(EditContact, $contact.Id, $objCust)">
 								<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 								<c:VerticalLayout>
@@ -54,7 +54,7 @@
 								</c:VerticalLayout>
 								
 							</c:HorizontalLayout>
-							</s:Else>
+							</s:Else> 
 							
 							<c:HorizontalLayout CssClass="red_swipe" OnClickAction="$KillContact($contact.Id, $objCust)">
 								<c:VerticalLayout>
