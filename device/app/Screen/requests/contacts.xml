@@ -59,7 +59,7 @@
 							<c:HorizontalLayout CssClass="red_swipe" OnClickAction="$KillContact($contact.Id, $objCust)">
 								<c:VerticalLayout>
 		             					<c:Image></c:Image>
-		              					<c:TextView Text="#Fair#"></c:TextView>
+		              					<c:TextView Text="#DeleteNow#"></c:TextView>
 		           				</c:VerticalLayout>
 							</c:HorizontalLayout>
 		
