@@ -1,4 +1,6 @@
-﻿function CheckParamsFilling(sender, cust, pr){
+﻿var swipedItem = undefined;
+
+function CheckParamsFilling(sender, cust, pr){
 	q = new Query("SELECT Id " +
 			"FROM Catalog_Customer_KindOfActivity " +
 			"WHERE Catalog_Customer_KindOfActivity.Ref == @currentCustomer");
@@ -17,6 +19,21 @@
 		Dialog.Message("Не все параметры заполнены. Необходимо заполнить для продолжения работы");
 	}
 }
+
+//+++ For hide swiped
+function HideOtherSwiped(sender) {
+	if (swipedItem != sender){
+		HideSwiped();
+		swipedItem = sender;			
+	}	
+}
+
+function HideSwiped(){
+	if (swipedItem != undefined){
+		swipedItem.Index = 0;
+	}
+}
+//--- For hide swiped
 
 function makeContactCall(contact){
 	var tel = contact.PhoneCountryCode + contact.PhoneCityCode + contact.PhoneNumber + contact.PhoneInternalCode;
