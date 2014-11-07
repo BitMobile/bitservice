@@ -235,8 +235,7 @@ function SetBoolean(control, isChange){
 	Dialog.Select("#answer#", Cunt, SetBooleanNow, [control, isChange]);
 }
 
-function SetBooleanNow(key, control){
-	Console.WriteLine("control:" + control[0] + " change " + control[1]);
+function SetBooleanNow(key, control){	
 	$.TempAnswers[control[0]] = key;
 	Variables[control[0]].Text = key;
 	$.TempAnswers[control[1]] = 1;
