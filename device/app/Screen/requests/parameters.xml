@@ -57,6 +57,7 @@
            		</c:VerticalLayout>
            		
         </c:HorizontalLayout>
+        <c:HorizontalLine Id="hlDir" Visible="$FinDirFailure($cust.FinDirExist)"/>
 		
 	</c:DockLayout>
 </c:Screen>

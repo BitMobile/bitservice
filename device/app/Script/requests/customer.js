@@ -522,8 +522,10 @@ function SetFinDirExist(Key, request){
 	
 	if (Key == "@ref[Enum_Logic3]:8b052e18-38dc-cdf9-456d-2e7a155dd06d"){
 		$.CauseOfFailure.Visible = true;
+		$.hlDir.Visible = true;
 	} else {
 		$.CauseOfFailure.Visible  = false;
+		$.hlDir.Visible  = false;
 	}
 	
 	obj = request.GetObject();
