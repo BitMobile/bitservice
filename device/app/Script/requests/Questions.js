@@ -210,8 +210,8 @@ function SetDate(cont, isChange) {
 }
 
 function SetDateNow(key, control, isChange){
-	$.TempAnswers[control[0]] = key;
-	Variables[control[0]].Text = key;
+	$.TempAnswers[control[0]] = String.Format("{0:dd.MM.yyyy} {0:HH:mm}", key);
+	Variables[control[0]].Text = String.Format("{0:dd.MM.yyyy} {0:HH:mm}", key);
 	$.TempAnswers[control[1]] = 1;
 } 
 
