@@ -14,8 +14,17 @@ function onChangeControl(sender,cntrl, isChange){
 	$.TempAnswers[isChange] = 1;
 }
 
+function onChangeControlDecimal(sender,cntrl, isChange){				
+	if (!validate($.hcount.Text, "^[-+]?[0-9]+((\.|\,)[0-9]+)?")){
+		Dialog.Message("Разрешен ввод только целых и дробных чисел");		
+	}
+	
+	$.TempAnswers[cntrl] = Variables[cntrl].Text;
+	$.TempAnswers[isChange] = 1;
+}
+
 function onChangeControlInteger(sender,cntrl, isChange){				
-	if (!validate(Variables[cntrl].Text, "[0-9]*")){
+	if (!validate(Variables[cntrl].Text, "^[-+]?[1-9]*?")){
 		Dialog.Message("Разрешен ввод только целых чисел")
 	}
 	$.TempAnswers[cntrl] = Variables[cntrl].Text;
