@@ -291,10 +291,10 @@ function MakeChoose(control, variant, parcontrol){
 	
 	if (Variables[control].Visible == true){
 		Variables[control].Visible = false;
-		$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables[variant].Text + ";", ""); 
+		$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables[variant].Text + "||", ""); 
 	} else {
 		Variables[control].Visible = true;
-		$.TempAnswers[parcontrol] = $.TempAnswers[parcontrol] + " " + Variables[variant].Text +";"; 
+		$.TempAnswers[parcontrol] = $.TempAnswers[parcontrol] + " " + Variables[variant].Text +"||"; 
 	}
 	
 }
@@ -303,7 +303,7 @@ function makeVisible(variant) {
 
 	if ($.tempString != null){
 		if (Find($.tempString, variant) > 0){
-				var rm = StrReplace($.tempString, variant + ";", "");
+				var rm = StrReplace($.tempString, variant + "||", "");
 				$.Remove("tempString");
 				$.Add("tempString", rm);
 				return true;
@@ -339,8 +339,8 @@ function OdnoglazayaZmeya(parcontrol) {
 			s = $.tempString;			
 			$.Remove("tempString");
 			$.Add("tempString", $.TempAnswers[parcontrol]);
-			ss = TrimAll(StrReplace(s, ";", ""));			
-			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], TrimAll(ss)+";", "");			
+			ss = TrimAll(StrReplace(s, "||", ""));			
+			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], TrimAll(ss)+"||", "");			
 			return ss;
 		}
 	} else {		
@@ -361,7 +361,7 @@ function FreeChoose(parcontrol){
 		Variables["FreeField"].Visible = false;
 		Variables["MemoFree"].Text = "";
 //		if($.TempAnswers[parcontrol] != null  && Variables["MemoFree"].Text != null && $.TempAnswers[parcontrol] != ""  && Variables["MemoFree"].Text != ""){
-//			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables["MemoFree"].Text + ";", "");
+//			$.TempAnswers[parcontrol] = StrReplace($.TempAnswers[parcontrol], Variables["MemoFree"].Text + "||", "");
 //		}
 		
 	} else {
@@ -388,12 +388,12 @@ function SaveValueAndBack(parcontrol, isChange){
 		if (Variables["Free"].Visible == true && !IsBlankString(Variables["MemoFree"].Text)){
 			if ($.TempAnswers[parcontrol] != null){
 				if (!IsBlankString($.TempAnswers[parcontrol])){
-					$.TempAnswers[parcontrol] = TrimAll($.TempAnswers[parcontrol]) + " " + TrimAll(Variables["MemoFree"].Text)+";";
+					$.TempAnswers[parcontrol] = TrimAll($.TempAnswers[parcontrol]) + " " + TrimAll(Variables["MemoFree"].Text)+"||";
 				} else {
-					$.TempAnswers[parcontrol] = TrimAll(Variables["MemoFree"].Text)+";";
+					$.TempAnswers[parcontrol] = TrimAll(Variables["MemoFree"].Text)+"||";
 				}
 			} else {					
-				$.TempAnswers[parcontrol] = TrimAll(Variables["MemoFree"].Text)+";";
+				$.TempAnswers[parcontrol] = TrimAll(Variables["MemoFree"].Text)+"||";
 			}
 			
 		} 
