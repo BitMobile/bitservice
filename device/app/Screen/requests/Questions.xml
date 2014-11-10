@@ -37,36 +37,37 @@
               <c:TextView Text="$question.Description" CssClass="description_row"></c:TextView>
 
                <s:If Test="$question.AnswerType=='Integer'">
-              <s:If Test="$EmptyString($AnswerValue)">
-	          		<c:MemoEdit Id="control{$index}" Text = "-" onChange="$onChangeControlInteger(control{$index}, isChange{$index})"  Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
+              <s:If Test="$IsNullOrEmpty($AnswerValue)">
+	          		<c:EditText Id="control{$index}" Placeholder="—" onChange="$onChangeControlInteger(control{$index}, isChange{$index})"  Keyboard="numeric" CssClass="main_row"></c:EditText>
 	          	</s:If>
 	            <s:Else>
-                	<c:MemoEdit Id="control{$index}"  Text = "$AnswerValue" onChange="$onChangeControlInteger(control{$index}, isChange{$index})" Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
+                	<c:EditText Id="control{$index}" Placeholder="—" Text = "$AnswerValue" onChange="$onChangeControlInteger(control{$index}, isChange{$index})" Keyboard="numeric" CssClass="main_row"></c:EditText>
               	</s:Else>
               </s:If> 
 		
                <s:If Test="$question.AnswerType=='Decimal'">
-              	<s:If Test="$EmptyString($AnswerValue)">
-	          		<c:MemoEdit Id="control{$index}" Text = "-" onChange="$onChangeControl(control{$index}, isChange{$index})"  Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
+              	<s:If Test="$IsNullOrEmpty($AnswerValue)">
+	          		<c:EditText Id="control{$index}" Placeholder="—" onChange="$onChangeControl(control{$index}, isChange{$index})"  Keyboard="numeric" CssClass="main_row"></c:EditText>
 	          	  </s:If>
 	            <s:Else>
-                	<c:MemoEdit Id="control{$index}"  Text = "$AnswerValue"  onChange="$onChangeControl(control{$index}, isChange{$index})" Keyboard="numeric" CssClass="main_row"></c:MemoEdit>
+                	<c:EditText Id="control{$index}" Placeholder="—" Text = "$AnswerValue"  onChange="$onChangeControl(control{$index}, isChange{$index})" Keyboard="numeric" CssClass="main_row"></c:EditText>
               	</s:Else>
               </s:If>
 
               <s:If Test="$question.AnswerType=='String'">
-	          	<s:If Test="$question.Answer==''">
-	          		<c:MemoEdit Id="control{$index}" Text = "-" onChange="$onChangeControl(control{$index}, isChange{$index})" CssClass="main_row"></c:MemoEdit>
+	          	<s:If Test="$IsNullOrEmpty($AnswerValue)">
+	          		<c:EditText Id="control{$index}" Placeholder="—" onChange="$onChangeControl(control{$index}, isChange{$index})" CssClass="main_row"></c:EditText>
 	          	</s:If>
 	            <s:Else>
-	            	<c:MemoEdit Id="control{$index}" Text = "$AnswerValue"  onChange="$onChangeControl(control{$index}, isChange{$index})" CssClass="main_row"></c:MemoEdit>
+	            	<c:EditText Id="control{$index}" Placeholder="—" Text = "$AnswerValue" onChange="$onChangeControl(control{$index}, isChange{$index})" CssClass="main_row"></c:EditText>
+	            	<!-- Text = "$AnswerValue" -->
 	            </s:Else>                
               </s:If>
 
               <s:If Test="$question.AnswerType=='ValueList'">
-                <s:If Test="$question.Answer==''">
+                <s:If Test="$IsNullOrEmpty($AnswerValue)">
                   <c:VerticalLayout OnClickAction="$SetSelection(control{$index}, $question.Question, isChange{$index})">
-                  <c:TextView Id="control{$index}" Text="-" CssClass="main_rowvl"></c:TextView>
+                  <c:TextView Id="control{$index}" Text="Нажми для ввода" CssClass="main_rowvl"></c:TextView>
                   </c:VerticalLayout>
                 </s:If>
                 <s:Else>
@@ -90,9 +91,9 @@
               </s:If>
 
               <s:If Test="$question.AnswerType=='Boolean'">
-               <s:If Test="$EmptyString($AnswerValue)">
+               <s:If Test="$IsNullOrEmpty($AnswerValue)">
 	          		<c:VerticalLayout OnClickAction="$SetBoolean(control{$index}, isChange{$index})">
-	          			<c:TextView Id="control{$index}" Text="-" CssClass="main_rowvl"></c:TextView>
+	          			<c:TextView Id="control{$index}" Text="Нажми для ввода" CssClass="main_rowvl"></c:TextView>
 	          		</c:VerticalLayout>
 	          	</s:If>
 	            <s:Else>
@@ -103,9 +104,9 @@
               </s:If>
 			
 			  <s:If Test="$question.AnswerType=='MultiValueList'">
-	               <s:If Test="$EmptyString($AnswerValue)">
+	               <s:If Test="$IsNullOrEmpty($AnswerValue)">
 		          		<c:VerticalLayout OnClickAction="$DoAction(MultiList, $question.Question, control{$index}, isChange{$index})">
-		          			<c:TextView Id="control{$index}" Text="-" CssClass="main_rowvl"></c:TextView>
+		          			<c:TextView Id="control{$index}" Text="Нажми для ввода" CssClass="main_rowvl"></c:TextView>
 		          		</c:VerticalLayout>
 		          	</s:If>
 		            <s:Else>
