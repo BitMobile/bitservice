@@ -82,7 +82,7 @@
           </c:HorizontalLayout>
 
         </s:Iterator>
-
+		<c:HorizontalLine/>
        
 
         <c:HorizontalLayout CssClass="end_of_block"/>
@@ -115,6 +115,7 @@
           <c:HorizontalLayout CssClass="end_of_block"/>
 
         </s:Iterator>
+        <c:HorizontalLine/>
 
       </c:ScrollView>
     </s:If>
@@ -164,7 +165,7 @@
           </c:HorizontalLayout>
 
         </s:Iterator>
-
+		<c:HorizontalLine/>
         
 
         <c:HorizontalLayout CssClass="end_of_block"/>

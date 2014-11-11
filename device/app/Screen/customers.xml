@@ -30,9 +30,10 @@
 							</c:VerticalLayout>
 							<c:Image />
 						</c:HorizontalLayout>
-
+				
 						
 				</s:Iterator>
+				<c:HorizontalLine/>
 	</c:ScrollView>
 </c:VerticalLayout>
 </c:Screen>
