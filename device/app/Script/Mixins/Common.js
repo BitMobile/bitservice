@@ -110,5 +110,9 @@ function makeCall(num){
 	Phone.Call(num);
 }
 
+function GetUnloadCount(rs){
+	return rs.Count();	
+}
+
 //-----------------Dialog handlers-----------------
 

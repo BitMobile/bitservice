@@ -13,6 +13,8 @@ function MakeFilterSettingsBackUp(){
 	
 }
 
+
+
 function RollBackAndBack(){
 	historyStart = $.BUFilterCopy.Start;
 	historyStop = $.BUFilterCopy.Stop;
@@ -87,7 +89,7 @@ function GetAllCompleteTaskDetails(searchtext){
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expired);
 	var c = q.Execute();
 	//Dialog.Debug(c);
-	return c; 
+	return c.Unload(); 
 }
 
 function SetBeginDate() {

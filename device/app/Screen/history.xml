@@ -44,35 +44,41 @@
 		</c:HorizontalLayout>
 		<c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
 		
+		<s:Push Id="allrequests" Value="$GetAllCompleteTaskDetails($searchAll, @historyStart, @historyStop)"></s:Push>
+		<s:Push Id="ItemsCount" Value="$GetUnloadCount($allrequests)"/>
+		<s:If Test="$ItemsCount > 0">
+				<c:ScrollView Id="SVHistory">
+					<s:Push Id="allrequests" Value="$GetAllCompleteTaskDetails($searchAll, @historyStart, @historyStop)"></s:Push>
+					
+					<s:Iterator Id="allrequest" Value="$allrequests">
+		          
+		          
 		
-		<c:ScrollView Id="SVHistory">
-			<s:Push Id="allrequests" Value="$GetAllCompleteTaskDetails($searchAll, @historyStart, @historyStop)"></s:Push>
-			
-			<s:Iterator Id="allrequest" Value="$allrequests">
-          
-          
+		          <c:HorizontalLine/>
+		          <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem, $allrequest.Ind)">
+		            <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		            <c:VerticalLayout>
+		              <c:TextView Text="$allrequest.CustName" CssClass="main_row"></c:TextView>
+		              <c:TextView Text="$allrequest.Addr" CssClass="description_row"></c:TextView>
+					  <c:TextView Text="$PeriodTime($allrequest.Start, $allrequest.Stop)" CssClass="description_daterow"></c:TextView>
+		            </c:VerticalLayout>
+		            <c:Image/>
+		          </c:HorizontalLayout>
+		
+		        </s:Iterator>
+				<c:HorizontalLine/>
+		        
+		
+		        <c:HorizontalLayout CssClass="end_of_block"/>
+		
+					
+		
+		      </c:ScrollView>
+      </s:If>
 
-          <c:HorizontalLine/>
-          <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem, $allrequest.Ind)">
-            <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
-            <c:VerticalLayout>
-              <c:TextView Text="$allrequest.CustName" CssClass="main_row"></c:TextView>
-              <c:TextView Text="$allrequest.Addr" CssClass="description_row"></c:TextView>
-			  <c:TextView Text="$PeriodTime($allrequest.Start, $allrequest.Stop)" CssClass="description_daterow"></c:TextView>
-            </c:VerticalLayout>
-            <c:Image/>
-          </c:HorizontalLayout>
-
-        </s:Iterator>
-		<c:HorizontalLine/>
-        
-
-        <c:HorizontalLayout CssClass="end_of_block"/>
-
-			
-
-      </c:ScrollView>
-
+	<s:Else>
+			<c:TextView Text="Нет заявок" CssClass="emptyRecordSetAllRequest"/>				
+	</s:Else>
 	
     
   </c:VerticalLayout>

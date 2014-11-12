@@ -8,7 +8,7 @@ function GetCustomerList(searchText){
 	}
 	q.Text = qt + " ORDER BY Catalog_Customer.Description";
 	
-	return q.Execute();
+	return q.Execute().Unload();
 }
 
 function initsearch() {
