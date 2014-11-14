@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="customer.css">
+	<s:Push Id="objCust" Value="$param1"></s:Push>
+	
+  <c:DockLayout>
+
+    <c:DockLayout CssClass="top_navigator">
+      <c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBack()">
+         <c:Image/>
+        <c:TextView Text="#back#"/>
+      </c:HorizontalLayout>
+      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnClickAction="$DoBackTo(customers)"/>
+      <c:HorizontalLayout>
+        <c:TextView Text="#customer#" />
+      </c:HorizontalLayout>
+    </c:DockLayout>
+	
+	<c:DockLayout CssClass="footer">
+		<c:DockLayout CssClass="btn_left_footer" OnClickAction="$Workflow.DoAction(Contacts, $objCust)">
+			<c:TextView Text="Контакты" />
+		</c:DockLayout>
+		
+		<c:DockLayout CssClass="btn_right_footer" OnClickAction="$Workflow.DoAction(Options, $objCust)">
+			<c:TextView Text="Параметры" />
+		</c:DockLayout>
+		
+	</c:DockLayout>
+	<c:ScrollView>
+	<c:HorizontalLayout CssClass="caption_grid">
+        <c:TextView Text="#main#:"></c:TextView>
+        </c:HorizontalLayout>
+
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="#descriptioncust#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.Description" CssClass="main_row_custname"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+		<c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="memo_block">		
+		<c:VerticalLayout>
+		  <c:TextView Text="#Factaddress#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.FactAddress" CssClass="main_row_reqtext"></c:TextView>		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="memo_block">		
+		<c:VerticalLayout>
+		  <c:TextView Text="#Uraddress#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.UrAddress" CssClass="main_row_reqtext"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="#WEBLogin#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.WEBLogin" CssClass="main_row"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="#WEBPassword#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.WEBPassword" CssClass="main_row"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="#PhoneNumbers#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.PhoneNumbers" CssClass="phone_numbrs"></c:TextView>
+		  
+		</c:VerticalLayout>	
+		<c:VerticalLayout CssClass="PhonePlaceFromConfig" OnClickAction="$MoreMakeContactCall($objCust.PhoneNumbers)">
+									
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="#FaxNumbers#" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.FaxNumbers" CssClass="main_row"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	<c:HorizontalLayout CssClass="end_of_block"/>
+	
+	
+	
+	</c:ScrollView>
+</c:DockLayout>
+
+
+
+</c:Screen>

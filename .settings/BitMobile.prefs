@@ -1,0 +1,6 @@
+Bitmobile.device_address=
+Bitmobile.device_debug_port=
+Bitmobile.device_deploy_script=C\:\\inetpub\\wwwroot\\bitmobile\\Utils\\utils.exe -dr -host %HOST% -sp superservice2IDDQD12321 -sn superservice2  %PATH%\r\nC\:\\inetpub\\wwwroot\\bitmobile\\Utils\\utils.exe -ar -host %HOST% -sp superservice2IDDQD12321 -sn superservice2
+Bitmobile.device_starter_port=
+Bitmobile.server_url=http\://localhost/bitmobile
+eclipse.preferences.version=1
