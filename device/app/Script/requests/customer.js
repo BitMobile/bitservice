@@ -20,6 +20,48 @@ function CheckParamsFilling(sender, cust, pr){
 	}
 }
 
+function SetBeginDate(req) {
+	var header = Translate["#enterDateTime#"];
+	Dialog.DateTime(header, req.PlanStartDataTime, CallBackBeginPlan, req);	
+}
+
+function SetEndDate(req) {
+	var header = Translate["#enterDateTime#"];
+	Dialog.ShowDateTime(header, req.PlanEndDataTime, CallBackEndPlan, req);	
+}
+
+function CallBackBeginPlan(state,args){
+	obj = state.GetObject();
+	obj.PlanStartDataTime = args.Result;
+	obj.PlanEndDataTime = args.Result;
+	$.beginDate.Text = DoFullDate(args.Result);
+	$.endDate.Text = DoFullDate(args.Result);
+	obj.Save(false);
+}
+
+function CallBackEndPlan(state,args){
+	obj = state.GetObject();
+	obj.PlanEndDataTime = args.Result;
+	$.endDate.Text = DoFullDate(args.Result);
+	obj.Save(false);
+}
+
+function isProgress(obj){
+	//Dialog.Debug(obj);
+	if (obj.ToString() == (DB.Current.Constant.VisitStatus.Processing).ToString() || obj.ToString() == (DB.Current.Constant.VisitStatus.Expected).ToString()) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function DoFullDate(dt){
+	if (dt != null){
+	return String.Format("{0:dd MMMM yyyy} {0:HH:mm}", DateTime.Parse(dt));
+	} else {
+		return "";
+	}
+}
 //+++ For hide swiped
 function HideOtherSwiped(sender) {
 	if (swipedItem != sender){
@@ -85,6 +127,7 @@ function findtext(key,pr){
 	$.AddGlobal("searchtext", key);
 	Workflow.Refresh([pr]);
 }
+
 function GetCurrentRequest(cust){
 	//Dialog.Debug(cust);
 	var q = new Query("Select * FROM Document_Visit WHERE Document_Visit.Id == @cst");

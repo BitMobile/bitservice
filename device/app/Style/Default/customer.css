@@ -7,6 +7,16 @@
 	height: 24sp;
 }
 
+.parameter_grid TextView {
+    color: #e6891b;
+    width: 50%;
+    height: 100%;
+    dock-align: left;
+    font: 36% arial;
+    margin-left: 3.5%;
+    padding-top: 30%;
+}
+
 .main_row_custname{
 	width: 100%;
     height: 54%;
@@ -110,4 +120,17 @@ dock-align: right;
     font: 45% Arial;
     margin-top: -5%;
 }
+
+.long_value {
+    width: 100%;
+    height: 100%;
+    white-space: normal;
+    margin-right: 4%;
+    font: 28% Arial;
+    color: #8e8e93;
+    dock-align: right;
+    text-align: right;
+}
+
+
 
