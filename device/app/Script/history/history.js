@@ -13,6 +13,8 @@ function MakeFilterSettingsBackUp(){
 	
 }
 
+
+
 function RollBackAndBack(){
 	historyStart = $.BUFilterCopy.Start;
 	historyStop = $.BUFilterCopy.Stop;
@@ -61,7 +63,7 @@ function filterDateCaption(dt){
 
 function GetAllCompleteTaskDetails(searchtext){
 	var q = new Query();
-	var qtext = "SELECT CUST.Description AS CustName,  ADDRS.Address AS Addr, REQ.PlanStartDataTime AS Start, REQ.PlanEndDataTime AS Stop, REQ.Id AS Ind FROM Document_Visit REQ LEFT JOIN Catalog_Customer CUST ON REQ.Customer = CUST.Id LEFT JOIN Catalog_Outlet ADDRS ON REQ.Outlet = ADDRS.Id WHERE (Status == @StatusProc OR Status == @StatusEx)";
+	var qtext = "SELECT CUST.Description AS CustName,  ADDRS.Address AS Addr, REQ.FactStartDataTime AS Start, REQ.FactEndDataTime AS Stop, REQ.Id AS Ind FROM Document_Visit REQ LEFT JOIN Catalog_Customer CUST ON REQ.Customer = CUST.Id LEFT JOIN Catalog_Outlet ADDRS ON REQ.Outlet = ADDRS.Id WHERE (Status == @StatusProc OR Status == @StatusEx)";
 	
 	if (searchtext != null && searchtext != ""){
 		var searchtail = " AND  Contains(CUST.Description, @SearchText)";
@@ -70,24 +72,24 @@ function GetAllCompleteTaskDetails(searchtext){
 	}
 	
 	if (historyStart != undefined){
-		var starttail = " AND REQ.PlanStartDataTime >= @DateStart";//AND REQ.PlanStartDataTime < @DateEnd
+		var starttail = " AND REQ.FactStartDataTime >= @DateStart";//AND REQ.PlanStartDataTime < @DateEnd
 		q.AddParameter("DateStart", historyStart);
 		qtext = qtext + starttail;
 		
 	}
 	
 	if (historyStop != undefined){
-		var stoptail = " AND REQ.PlanStartDataTime < @DateEnd";//AND REQ.PlanStartDataTime < @DateEnd
+		var stoptail = " AND REQ.FactStartDataTime < @DateEnd";//AND REQ.PlanStartDataTime < @DateEnd
 		q.AddParameter("DateEnd", historyStop);
 		qtext = qtext + stoptail;
 	}
 	
-	q.Text = qtext + " ORDER BY REQ.PlanStartDataTime";
+	q.Text = qtext + " ORDER BY REQ.FactStartDataTime";
 	q.AddParameter("StatusProc", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expired);
 	var c = q.Execute();
 	//Dialog.Debug(c);
-	return c; 
+	return c.Unload(); 
 }
 
 function SetBeginDate() {

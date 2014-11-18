@@ -67,7 +67,33 @@
     <c:TextView Text="#request#:"></c:TextView>
     </c:HorizontalLayout>
 	
-	    <c:HorizontalLine/>
+	<c:HorizontalLine/>
+	    <s:If Test="$isProgress($Curreq.Status)">
+      <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetBeginDate($Curreq.Id)">
+        <c:TextView Text="#begin#"></c:TextView>
+        <c:TextView Id="beginDate" Text="$DoFullDate($Curreq.PlanStartDataTime)"   CssClass="value"></c:TextView>
+    </c:DockLayout>
+    </s:If>
+    <s:Else>
+    <c:DockLayout CssClass="parameter_grid">
+        <c:TextView Text="#begin#" CssClass="disableItem"></c:TextView>
+        <c:TextView Id="beginDate" Text="$DoFullDate($Curreq.PlanStartDataTime)"   CssClass="value"></c:TextView>
+    </c:DockLayout>
+    </s:Else>
+    <c:HorizontalLine/>
+    <s:If Test="$isProgress($Curreq.Status)">
+    <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetEndDate($Curreq.Id)">
+        <c:TextView Text="#end#"></c:TextView>
+        <c:TextView Id="endDate" Text="$DoFullDate($Curreq.PlanEndDataTime)"  CssClass="value"></c:TextView>
+    </c:DockLayout>
+    </s:If>
+    <s:Else>
+    <c:DockLayout CssClass="parameter_grid">
+        <c:TextView Text="#end#" CssClass="disableItem"></c:TextView>
+        <c:TextView Id="endDate" Text="$DoFullDate($Curreq.PlanEndDataTime)"  CssClass="value"></c:TextView>
+    </c:DockLayout>
+    </s:Else>
+    <c:HorizontalLine/>
 
       <c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
