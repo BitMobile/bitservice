@@ -29,7 +29,6 @@ function MoreMakeContactCall(tel){
 
 function PhoneCall(answ, tel){
 	if (answ == DialogResult.Yes) {
-		//Console.WriteLine(tel);
 		Phone.Call(tel);
 	}
 }
