@@ -36,7 +36,7 @@ function ClearFilter(){
 
 function PeriodTime(dateStart, dateStop){
 
-	if (dateStop != NULL){
+	if (!IsNullOrEmpty(dateStop)){
 		var p = String.Format("{0:dd.MM.} {0:HH:mm} - {1:HH:mm}", DateTime.Parse(dateStart), DateTime.Parse(dateStop));
 		//String.Format("{0:dd.MM. 0:hh:mm - 1:hh:mm}", DateTime.Parse(dateStart), DateTime.Parse(dateStop));
 	} else {

@@ -1,4 +1,4 @@
-﻿.menu_text {
+.menu_text {
     width: 100%;
     height: 40%;
     margin-left: 4%;
@@ -276,13 +276,13 @@ svl vl {
 
     .caption_big TextView {
         height: 100%;
-        width: 18%;
+        width: 30%;
         margin-left: 2%;
         text-align: center;
-        font: 95% Arial-BoldMT;
+        font: 80% Arial-BoldMT;
         color: #43acfd;
         dock-align: left;
-    }
+     }
 
     .caption_big descr {
         height: 35%;
@@ -297,7 +297,7 @@ svl vl {
 .simple {
     width: 80%;
     height: 70%;
-    margin-left: 22%;
+    margin-left: 35%;
 }
 
     .simple TextView {
