@@ -204,7 +204,7 @@ svl vl {
     width: 100%;
     height: 100%;
     padding-top: 2%;
-    background-image: url(summary.png);
+    background-image: url(summary_yellow.png);
 }
 
     .blue dl {
@@ -323,7 +323,7 @@ svl vl {
         }
 
         .simple hl mark {
-            width: 10%;
+            width: 20%;
             margin-left: 0%;
             margin-right: 3%;
             text-align: center;
