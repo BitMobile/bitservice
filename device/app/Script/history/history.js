@@ -47,7 +47,7 @@ function PeriodTime(dateStart, dateStop){
 		if (!IsNullOrEmpty(dateStop)){
 			var p = String.Format("{0:dd.MM.} - {0:HH:mm}", DateTime.Parse(dateStop));
 		} else {
-			var p = "——";
+			var p = "-";
 		}
 	}	
 	return p;
