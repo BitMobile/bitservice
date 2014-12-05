@@ -1,5 +1,5 @@
 .parameter_grid TextView {
-    color: #000000;
+    color: #e6891b;
     width: 50%;
     height: 100%;
     dock-align: left;
@@ -10,5 +10,15 @@
 
 .parameter_grid caption{
 	color: #b96f18;	
+}
+
+.disableItem {
+	color: #000000;
+    width: 50%;
+    height: 100%;
+    dock-align: left;
+    font: 36% arial;
+    margin-left: 3.5%;
+    padding-top: 30%;	
 }
 

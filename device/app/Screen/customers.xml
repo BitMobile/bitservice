@@ -17,22 +17,29 @@
 		  </c:DockLayout>
 		  <c:Button Id="btnSearch" Text="#search#" OnClickAction="$DoSearch($edtSearch.Text)"></c:Button>
 	</c:HorizontalLayout>
-	<c:ScrollView Id="SVCustomers">
-		<s:Push Id="cst" Value="$GetCustomerList($clientsearch)" />
+	<s:Push Id="cst" Value="$GetCustomerList($clientsearch)" />
+	<s:Push Id="cstCount" Value="$GetUnloadCount($cst)"/>
+	<s:If Test="$cstCount > 0">
+		<c:ScrollView Id="SVCustomers">
 				<s:Iterator Id="client" Value="$cst">
-					<s:Push Id="hasRow" Value="true" />
-
-					<c:HorizontalLine />
-						<c:HorizontalLayout CssClass="grid" OnClickAction="$DoAction(SelectItem, $client.Id)">
-							<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
-							<c:VerticalLayout>
-								<c:TextView Text="$client.Id.Description" CssClass="main_row"></c:TextView>
-							</c:VerticalLayout>
-							<c:Image />
-						</c:HorizontalLayout>
-
-						
-				</s:Iterator>
-	</c:ScrollView>
+						<s:Push Id="hasRow" Value="true" />
+	
+						<c:HorizontalLine />
+							<c:HorizontalLayout CssClass="grid" OnClickAction="$DoAction(SelectItem, $client.Id)">
+								<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+								<c:VerticalLayout>
+									<c:TextView Text="$client.Id.Description" CssClass="main_row"></c:TextView>
+								</c:VerticalLayout>
+								<c:Image />
+							</c:HorizontalLayout>
+					
+							
+					</s:Iterator>
+					<c:HorizontalLine/>
+		</c:ScrollView>
+	</s:If>
+	<s:Else>
+		<c:TextView Text="Нет клиентов" CssClass="emptyRecordSetAllRequest"/>				
+	</s:Else>
 </c:VerticalLayout>
 </c:Screen>

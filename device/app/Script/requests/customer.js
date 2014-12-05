@@ -1,4 +1,6 @@
-﻿function CheckParamsFilling(sender, cust, pr){
+﻿var swipedItem = undefined;
+
+function CheckParamsFilling(sender, cust, pr){
 	q = new Query("SELECT Id " +
 			"FROM Catalog_Customer_KindOfActivity " +
 			"WHERE Catalog_Customer_KindOfActivity.Ref == @currentCustomer");
@@ -17,6 +19,63 @@
 		Dialog.Message("Не все параметры заполнены. Необходимо заполнить для продолжения работы");
 	}
 }
+
+function SetBeginDate(req) {
+	var header = Translate["#enterDateTime#"];
+	Dialog.DateTime(header, req.PlanStartDataTime, CallBackBeginPlan, req);	
+}
+
+function SetEndDate(req) {
+	var header = Translate["#enterDateTime#"];
+	Dialog.ShowDateTime(header, req.PlanEndDataTime, CallBackEndPlan, req);	
+}
+
+function CallBackBeginPlan(state,args){
+	obj = state.GetObject();
+	obj.PlanStartDataTime = args.Result;
+	obj.PlanEndDataTime = args.Result;
+	$.beginDate.Text = DoFullDate(args.Result);
+	$.endDate.Text = DoFullDate(args.Result);
+	obj.Save(false);
+}
+
+function CallBackEndPlan(state,args){
+	obj = state.GetObject();
+	obj.PlanEndDataTime = args.Result;
+	$.endDate.Text = DoFullDate(args.Result);
+	obj.Save(false);
+}
+
+function isProgress(obj){
+	//Dialog.Debug(obj);
+	if (obj.ToString() == (DB.Current.Constant.VisitStatus.Processing).ToString() || obj.ToString() == (DB.Current.Constant.VisitStatus.Expected).ToString()) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function DoFullDate(dt){
+	if (dt != null){
+	return String.Format("{0:dd MMMM yyyy} {0:HH:mm}", DateTime.Parse(dt));
+	} else {
+		return "";
+	}
+}
+//+++ For hide swiped
+function HideOtherSwiped(sender) {
+	if (swipedItem != sender){
+		HideSwiped();
+		swipedItem = sender;			
+	}	
+}
+
+function HideSwiped(){
+	if (swipedItem != undefined){
+		swipedItem.Index = 0;
+	}
+}
+//--- For hide swiped
 
 function makeContactCall(contact){
 	var tel = contact.PhoneCountryCode + contact.PhoneCityCode + contact.PhoneNumber + contact.PhoneInternalCode;
@@ -67,6 +126,7 @@ function findtext(key,pr){
 	$.AddGlobal("searchtext", key);
 	Workflow.Refresh([pr]);
 }
+
 function GetCurrentRequest(cust){
 	//Dialog.Debug(cust);
 	var q = new Query("Select * FROM Document_Visit WHERE Document_Visit.Id == @cst");
