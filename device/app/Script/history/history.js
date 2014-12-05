@@ -36,11 +36,19 @@ function ClearFilter(){
 
 function PeriodTime(dateStart, dateStop){
 
-	if (dateStop != NULL){
+	if (!IsNullOrEmpty(dateStart) && !IsNullOrEmpty(dateStop)){
 		var p = String.Format("{0:dd.MM.} {0:HH:mm} - {1:HH:mm}", DateTime.Parse(dateStart), DateTime.Parse(dateStop));
 		//String.Format("{0:dd.MM. 0:hh:mm - 1:hh:mm}", DateTime.Parse(dateStart), DateTime.Parse(dateStop));
 	} else {
-		var p = String.Format("{0:dd.MM.} {0:HH:mm}", DateTime.Parse(dateStart));
+		if (!IsNullOrEmpty(dateStart)){
+			var p = String.Format("{0:dd.MM.} {0:HH:mm} - ", DateTime.Parse(dateStart));
+		}
+		
+		if (!IsNullOrEmpty(dateStop)){
+			var p = String.Format("{0:dd.MM.} - {0:HH:mm}", DateTime.Parse(dateStop));
+		} else {
+			var p = "-";
+		}
 	}	
 	return p;
 }
