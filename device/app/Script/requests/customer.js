@@ -1,5 +1,32 @@
 ﻿var swipedItem = undefined;
 
+function CreateOutletIfNotExists(outlet){
+	if (outlet == "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
+		var obj = DB.Create("Catalog.Outlet");
+		obj.Save(false);
+		return obj.Id;
+	} else {
+		return outlet;
+	}
+}
+
+function DoActionAndSave(step, req, cust, outlet) {
+	
+	if (!IsNullOrEmpty($.Address.Text)){
+			outlet = outlet.GetObject();
+			outlet.Owner = cust;
+			outlet.Description = "Основная территория";
+			//outlet.Address = $.Address.Text;
+					
+			visit = req.GetObject();
+			visit.Outlet = outlet.Id;
+			visit.Save(false);
+		} 
+	outlet.Save(false);
+	Workflow.Action("GoParams",[req, cust]);	
+	
+}
+
 function CheckParamsFilling(sender, cust, pr){
 	q = new Query("SELECT Id " +
 			"FROM Catalog_Customer_KindOfActivity " +

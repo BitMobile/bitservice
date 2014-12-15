@@ -73,6 +73,15 @@
     margin-top: 0%;
 }
 
+.main_row_reqtext_edit{
+	width: 100%;
+    height: 75%;
+    white-space: normal;
+    font: 21% Arial;
+    margin-top: 0%;
+    color: #e6891b;
+}
+
 .phone_numbrs {
     width: 100%;
     height: 50%;
