@@ -2,7 +2,7 @@
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="customer.css">
 	<s:Push Id="Curreq" Value="$GetCurrentRequest($param1)"></s:Push>
 	<s:Push Id="objCust" Value="$GetQuestionsByQuestionnaires($Curreq.Customer)"></s:Push>
-	<s:Push Id="objOutlet" Value="$CreateOutletIfNotExists($Curreq.Outlet)"></s:Push>
+	<s:Push Id="objOutlet" Value="$Curreq.Outlet"></s:Push>
 	<s:Push Id="objMan" Value="$Curreq.Manager"></s:Push>
 	<s:Push Id="objMetro" Value="$objOutlet.Metro"></s:Push>
   <c:DockLayout>
@@ -47,13 +47,13 @@
 	  <c:HorizontalLayout CssClass="memo_block">
 		<c:VerticalLayout>
 		  <c:TextView Text="#address#" CssClass="description_row"></c:TextView>
-		  <c:MemoEdit Id = "Address" Value="$objOutlet.Address" CssClass="main_row_reqtext_edit"></c:MemoEdit>		  
+		  <c:MemoEdit Id = "Address" Text="$objOutlet.Address" CssClass="main_row_reqtext_edit"></c:MemoEdit>		  
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>
 	  
 	  
 	  <c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$DoAction(Metrolist)">
 		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 		<c:VerticalLayout>
 		  <c:TextView Text="#metro#" CssClass="description_row"></c:TextView>
