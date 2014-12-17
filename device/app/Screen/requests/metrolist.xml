@@ -24,7 +24,7 @@
     <c:ScrollView>   
     <s:Iterator Id="metro" Value="$GetMetro($param1.Customer, $metrosearch)">
           <c:HorizontalLine/>
-          <c:HorizontalLayout CssClass="grid">
+          <c:HorizontalLayout CssClass="grid" OnClickAction="$MetroSelect($param3, $param2, $metro.Id)">
             
             <c:VerticalLayout>
               <c:TextView Text="$metro.Description" CssClass="main_row"></c:TextView>

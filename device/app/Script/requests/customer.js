@@ -28,7 +28,7 @@ function DoActionAndSave(step, req, cust, outlet) {
 			}
 	}
 	
-	Workflow.Action("GoParams",[req, cust]);	
+	Workflow.Action(step,[req, cust, outlet]);	
 	
 }
 

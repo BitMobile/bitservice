@@ -30,3 +30,19 @@ sv {
     color: #e6891b;
     font: 70% Arial;
 }
+
+.top_navigator hl {
+        width: 100%;
+        height: 100%;
+        dock-align: top;
+    }
+
+        .top_navigator hl TextView {
+            width: 100%;
+            height: 100%;
+            margin-left: -25%;
+            padding-top: 25%;
+            text-align: center;
+            color: #000000;
+            font: 42% Arial;
+        }

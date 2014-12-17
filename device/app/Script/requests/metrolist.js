@@ -8,6 +8,36 @@ function GetMetro(outlet, searchString) {
 	return q.Execute().Unload();
 }
 
+function MetroSelect(outlet, cust, metroRef){
+    Dialog.Debug(cust);
+    Dialog.Debug(metroRef);  
+    if (outlet == "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
+				var obj = DB.Create("Catalog.Outlet");
+				obj.Owner = cust;
+				obj.Description = "Основная территория";
+				obj.Metro = metroRef;
+				obj.Save(false);		
+				
+				var visits_q = new Query("SELECT DV.Id AS Id " +
+						"FROM Document_Visit DV " +
+						"WHERE DV.Outlet = '@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000' " +
+						"AND DV.Customer = @Customer");
+				
+			    visits_q.AddParameter("Customer", cust);				
+				visits = visits_q.Execute();				
+				while (visits.Next()){
+					visit = visits.Id.GetObject();
+					visit.Outlet = obj.Id;
+					visit.Save(false);					
+				}				
+			} else {
+				var obj = outlet.GetObject();
+				obj.Metro = metroRef;
+				obj.Save(false);
+			}
+			DoBack();
+}
+
 
 function initsearch() {
 	if ($.Exists("metrosearch") == false){
