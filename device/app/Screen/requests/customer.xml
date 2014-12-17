@@ -34,13 +34,13 @@
         </c:HorizontalLayout>
 
 	  <c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(CustomerView, $objCust)">
 		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 		<c:VerticalLayout>
 		  <c:TextView Text="#descriptioncust#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objCust.Description" CssClass="main_row_custname"></c:TextView>
-		  
-		</c:VerticalLayout>		
+		  <c:TextView Text="$objCust.Description" CssClass="main_row_custname"></c:TextView>		   
+		</c:VerticalLayout>	
+		<c:Image/>	
 	  </c:HorizontalLayout>
 	  
 		<c:HorizontalLine/>

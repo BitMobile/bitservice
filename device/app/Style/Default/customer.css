@@ -1,8 +1,15 @@
 .grid vl {
 	margin-left: -3%;
+	width: 90%;
     
 	}
-	
+
+.grid img {
+        height: 15.4%;
+        margin-top: 16%;
+        margin-left: 2.5%;
+        background-image: url(arrow.png);
+    }	
 	
 .memo_block {
 	height: 24sp;
