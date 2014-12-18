@@ -31,33 +31,23 @@
 									<c:TextView Text="$contact.LastName" CssClass="main_row"></c:TextView>
 																
 									<c:TextView Text="{$contact.FirstName} {$contact.MiddleName}" CssClass="main_row"></c:TextView>
-									<s:If Test="$contact.MainContact == 1">
 										<c:VerticalLayout CssClass="position_and_maincontact_exp">
 											<c:TextView Text="$contact.Position.Description" CssClass="position_row"></c:TextView>
 											<c:HorizontalLayout CssClass="status_container">
-												<c:HorizontalLayout CssClass="main_contact_container">
-													<c:TextView Text="ОСНОВНОЙ КОНТАКТ" CssClass="main_contact_caption"></c:TextView>
-												</c:HorizontalLayout>
-												<s:If Test="$contact.MainContactDoc == 1">
-													<c:HorizontalLayout CssClass="main_contactdoc_container">
-														<c:TextView Text="ДОГОВОР" CssClass="main_contactdoc_caption"></c:TextView>
+												<s:If Test="$contact.MainContact == 1">
+													<c:HorizontalLayout CssClass="main_contact_container">
+														<c:TextView Text="ОСНОВНОЙ КОНТАКТ" CssClass="main_contact_caption"></c:TextView>
 													</c:HorizontalLayout>
 												</s:If>
+												<s:If Test="$contact.MainContactDoc == 1">
+													<c:HorizontalLayout CssClass="main_contactdoc_container">
+														<c:TextView Text="ДОГОВОР PC" CssClass="main_contactdoc_caption"></c:TextView>
+													</c:HorizontalLayout>
+												</s:If>												
 											</c:HorizontalLayout>
 										</c:VerticalLayout>
-									</s:If>
-									<s:Else>
-										<c:HorizontalLayout CssClass="position_and_maincontact_exp">
-											<c:TextView Text="$contact.Position.Description" CssClass="position_row"></c:TextView>
-											<c:HorizontalLayout CssClass="status_container">
-												<s:If Test="$contact.MainContactDoc == 1">
-														<c:HorizontalLayout CssClass="main_contactdoc_container">
-															<c:TextView Text="ДОГОВОР PC" CssClass="main_contactdoc_caption"></c:TextView>
-														</c:HorizontalLayout>
-												</s:If>	
-											</c:HorizontalLayout>											
-										</c:HorizontalLayout>
-									</s:Else> 
+									
+									 
 								</c:VerticalLayout>
 								
 							</c:HorizontalLayout>

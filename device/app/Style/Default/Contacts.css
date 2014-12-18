@@ -131,7 +131,7 @@ dock-align: right;
 
 .main_contactdoc_container {
 	height: 100%;
-	width: 18%;
+	width: 22%;
 	margin-left: 2%;
 	padding-left: 15%;
 	padding-top: 18%;
@@ -142,7 +142,7 @@ dock-align: right;
 .main_contactdoc_caption {
 	width: 100%;
     height: 100%;
-    white-space: normal;
+    white-space: nowrap;
     font: 80% Arial;
     color: #ffffff;
 }
