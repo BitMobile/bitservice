@@ -2,34 +2,45 @@
 
 function DoActionAndSave(step, req, cust, outlet) {
 	if (!IsNullOrEmpty($.Address.Text)) {
-		if (outlet == "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
-				var obj = DB.Create("Catalog.Outlet");
-				obj.Owner = cust;
-				obj.Description = "Основная территория";
-				obj.Address = $.Address.Text;
-				obj.Save(false);		
-				
-				var visits_q = new Query("SELECT DV.Id AS Id " +
-						"FROM Document_Visit DV " +
-						"WHERE DV.Outlet = '@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000' " +
-						"AND DV.Customer = @Customer");
-				
-				visits_q.AddParameter("Customer", cust);				
-				visits = visits_q.Execute();				
-				while (visits.Next()){
-					visit = visits.Id.GetObject();
-					visit.Outlet = obj.Id;
-					visit.Save(false);					
-				}				
-			} else {
-				var obj = outlet.GetObject();
-				obj.Address = $.Address.Text;
-				obj.Save(false);
-			}
+		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
+//				var obj = DB.Create("Catalog.Outlet");
+//				obj.Owner = cust;
+//				obj.Description = "Основная территория";
+//				obj.Address = $.Address.Text;
+//				obj.Save(false);		
+//				
+//				var visits_q = new Query("SELECT DV.Id AS Id " +
+//						"FROM Document_Visit DV " +
+//						"WHERE DV.Outlet = '@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000' " +
+//						"AND DV.Customer = @Customer");
+//				
+//				visits_q.AddParameter("Customer", cust);				
+//				visits = visits_q.Execute();				
+//				while (visits.Next()){
+//					visit = visits.Id.GetObject();
+//					visit.Outlet = obj.Id;
+//					visit.Save(false);
+//					Workflow.Action(step,[req, cust, obj.Id]);
+//				}				
+//			} else {
+			var obj = outlet.GetObject();
+			obj.Address = $.Address.Text;
+			obj.Save(false);
+			Workflow.Action(step,[req, cust, outlet]);
+		} else {
+			Workflow.Action(step,[req, cust, outlet]);
+		}
+	} else {
+		Workflow.Action(step,[req, cust, outlet]);
+	}	
+}
+
+function EmptyOutlet(ref){
+	if (ref == "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
+		return true;
+	} else {
+		return false;
 	}
-	
-	Workflow.Action(step,[req, cust, outlet]);	
-	
 }
 
 function CheckParamsFilling(sender, cust, pr){
