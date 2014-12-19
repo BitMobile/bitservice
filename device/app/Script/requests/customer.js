@@ -70,7 +70,7 @@ function SetBeginDate(req) {
 
 function SetEndDate(req) {
 	var header = Translate["#enterDateTime#"];
-	Dialog.ShowDateTime(header, req.PlanEndDataTime, CallBackEndPlan, req);	
+	Dialog.DateTime(header, req.PlanEndDataTime, CallBackEndPlan, req);	
 }
 
 function CallBackBeginPlan(state,args){
