@@ -12,7 +12,7 @@
          <c:Image/>
         <c:TextView Text="#back#"/>
       </c:HorizontalLayout>     
-      	<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward" OnClickAction="$DoAction(GoParams, $param1, $objCust)"/>
+      	<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward" OnClickAction="$DoActionAndSave(GoParams, $param1, $objCust, $objOutlet)"/>
       <c:HorizontalLayout>
         <c:TextView Text="#customer#" />
       </c:HorizontalLayout>
@@ -34,33 +34,55 @@
         </c:HorizontalLayout>
 
 	  <c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(CustomerView, $objCust)">
 		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 		<c:VerticalLayout>
 		  <c:TextView Text="#descriptioncust#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objCust.Description" CssClass="main_row_custname"></c:TextView>
-		  
-		</c:VerticalLayout>		
+		  <c:TextView Text="$objCust.Description" CssClass="main_row_custname"></c:TextView>		   
+		</c:VerticalLayout>	
+		<c:Image/>	
 	  </c:HorizontalLayout>
-	  
-		<c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="memo_block">
-		<c:VerticalLayout>
-		  <c:TextView Text="#address#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objOutlet.Address" CssClass="main_row_reqtext"></c:TextView>		  
-		</c:VerticalLayout>		
-	  </c:HorizontalLayout>
-	  
-	  
-	  <c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
-		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
-		<c:VerticalLayout>
-		  <c:TextView Text="#metro#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objMetro.Description" CssClass="main_row"></c:TextView>
-		  
-		</c:VerticalLayout>		
-	  </c:HorizontalLayout>
+		<s:If Test="$EmptyOutlet($objOutlet)">
+				<c:HorizontalLine/>
+			  <c:HorizontalLayout CssClass="memo_block">
+				<c:VerticalLayout>
+				  <c:TextView Text="#address#" CssClass="description_row"></c:TextView>
+				  <c:TextView Id = "Address" Text="$objOutlet.Address" CssClass="main_row_reqtext_edit"></c:TextView>		  
+				</c:VerticalLayout>		
+			  </c:HorizontalLayout>
+			  
+			  
+			  <c:HorizontalLine/>
+			  <c:HorizontalLayout CssClass="grid">
+				<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+				<c:VerticalLayout>
+				  <c:TextView Text="#metro#" CssClass="description_row"></c:TextView>
+				  <c:TextView Text="$objMetro.Description" CssClass="main_row_metro_edit"></c:TextView>
+				  
+				</c:VerticalLayout>		
+			  </c:HorizontalLayout>
+		</s:If>
+		<s:Else>
+				<c:HorizontalLine/>
+			  <c:HorizontalLayout CssClass="memo_block">
+				<c:VerticalLayout>
+				  <c:TextView Text="#address#" CssClass="description_row"></c:TextView>
+				  <c:MemoEdit Id = "Address" Text="$objOutlet.Address" CssClass="main_row_reqtext_edit"></c:MemoEdit>		  
+				</c:VerticalLayout>		
+			  </c:HorizontalLayout>
+			  
+			  
+			  <c:HorizontalLine/>
+			  <c:HorizontalLayout CssClass="grid" OnClickAction="$DoActionAndSave(Metrolist, $param1, $objCust, $objOutlet)">
+				<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+				<c:VerticalLayout>
+				  <c:TextView Text="#metro#" CssClass="description_row"></c:TextView>
+				  <c:TextView Text="$objMetro.Description" CssClass="main_row_metro_edit"></c:TextView>
+				  
+				</c:VerticalLayout>		
+			  </c:HorizontalLayout>
+		</s:Else>
+		
 	<c:HorizontalLayout CssClass="end_of_block"/>
 	
 	<c:HorizontalLayout CssClass="caption_grid">

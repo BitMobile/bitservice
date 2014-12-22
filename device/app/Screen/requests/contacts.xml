@@ -23,7 +23,7 @@
 				<c:HorizontalLine />					
 					
 						<c:SwipeHorizontalLayout Id="swipe_layout" CssClass="swipe_layout" Index="0" OnSwipe="$HideOtherSwiped()">
-							<s:If Test="$contact.MainContact == 1">
+							
 							<c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(EditContact, $contact.Id, $objCust)">
 								<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 								<c:VerticalLayout>
@@ -31,30 +31,28 @@
 									<c:TextView Text="$contact.LastName" CssClass="main_row"></c:TextView>
 																
 									<c:TextView Text="{$contact.FirstName} {$contact.MiddleName}" CssClass="main_row"></c:TextView>
-									<c:HorizontalLayout CssClass="position_and_maincontact">
-										<c:TextView Text="$contact.Position.Description" CssClass="position_row"></c:TextView>
-										<c:VerticalLayout CssClass="main_contact_container">
-											<c:TextView Text="ОСНОВНОЙ КОНТАКТ" CssClass="main_contact_caption"></c:TextView>
+										<c:VerticalLayout CssClass="position_and_maincontact_exp">
+											<c:TextView Text="$contact.Position.Description" CssClass="position_row"></c:TextView>
+											<c:HorizontalLayout CssClass="status_container">
+												<s:If Test="$contact.MainContact == 1">
+													<c:HorizontalLayout CssClass="main_contact_container">
+														<c:TextView Text="ОСНОВНОЙ КОНТАКТ" CssClass="main_contact_caption"></c:TextView>
+													</c:HorizontalLayout>
+												</s:If>
+												<s:If Test="$contact.MainContactDoc == 1">
+													<c:HorizontalLayout CssClass="main_contactdoc_container">
+														<c:TextView Text="ДОГОВОР PC" CssClass="main_contactdoc_caption"></c:TextView>
+													</c:HorizontalLayout>
+												</s:If>												
+											</c:HorizontalLayout>
 										</c:VerticalLayout>
-									</c:HorizontalLayout>
 									
+									 
 								</c:VerticalLayout>
 								
 							</c:HorizontalLayout>
-							</s:If>
-							<s:Else>
-							<c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(EditContact, $contact.Id, $objCust)">
-								<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
-								<c:VerticalLayout>
-									
-									<c:TextView Text="$contact.LastName" CssClass="main_row"></c:TextView>
-																
-									<c:TextView Text="{$contact.FirstName} {$contact.MiddleName}" CssClass="main_row"></c:TextView>
-									<c:TextView Text="$contact.Position.Description" CssClass="description_row"></c:TextView>
-								</c:VerticalLayout>
-								
-							</c:HorizontalLayout>
-							</s:Else> 
+							
+							
 							
 							<c:HorizontalLayout CssClass="red_swipe" OnClickAction="$KillContact($contact.Id, $objCust)">
 								<c:VerticalLayout>

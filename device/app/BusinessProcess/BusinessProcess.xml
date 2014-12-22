@@ -70,7 +70,19 @@
     	<bp:Action Name="GoParams" NextStep="Parameters"></bp:Action>
 		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
 		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+		<bp:Action Name="Metrolist" NextStep="Metrolist"></bp:Action>
+		<bp:Action Name="CustomerView" NextStep="CustomerView"></bp:Action>
 	</bp:Step>
+	
+	 <bp:Step Name="CustomerView" Screen="customers\customer.xml" Controller="requests\customer.js">
+    	<bp:Action Name="Ready" NextStep="customers"></bp:Action>
+    	<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Metrolist" Screen="requests\metrolist.xml" Controller="requests\metrolist.js">
+    	
+    </bp:Step>
 	
 	<bp:Step Name="Contacts" Screen="requests\contacts.xml" Controller="requests\customer.js">
 		<bp:Action Name="EditContact" NextStep="EditContact"></bp:Action>

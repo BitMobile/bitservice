@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="metrolist.css">
+<c:VerticalLayout>	
+	  <c:DockLayout CssClass="top_navigator">
+      <c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBack()">
+         <c:Image/>
+        
+      </c:HorizontalLayout>     
+      	
+      <c:HorizontalLayout>
+        <c:TextView Text="Метро" />
+      </c:HorizontalLayout>
+    </c:DockLayout>
+	 <c:HorizontalLayout CssClass="search">
+	 <s:Push Id="val" Value="$initsearch()"/>
+      <c:DockLayout >
+        <c:Image />
+        <c:EditText Id="edtSearch" Text="$metrosearch" Placeholder="#search#"></c:EditText>
+      </c:DockLayout>
+      <c:Button Id="btnSearch" Text="#search#" OnClickAction="$DoSearch($edtSearch.Text, $param1, $param2, $param3)"></c:Button>
+    </c:HorizontalLayout>    
+    <c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
+    
+    <c:ScrollView>   
+    <s:Iterator Id="metro" Value="$GetMetro($param1.Customer, $metrosearch)">
+          <c:HorizontalLine/>
+          <c:HorizontalLayout CssClass="grid" OnClickAction="$MetroSelect($param3, $param2, $metro.Id)">
+            
+            <c:VerticalLayout>
+              <c:TextView Text="$metro.Description" CssClass="main_row"></c:TextView>
+             
+            </c:VerticalLayout>
+            <c:Image/>
+          </c:HorizontalLayout>
+
+     </s:Iterator>
+   </c:ScrollView>
+      
+</c:VerticalLayout>
+</c:Screen>
