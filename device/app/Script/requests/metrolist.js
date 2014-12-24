@@ -27,7 +27,7 @@ function MetroSelect(outlet, cust, metroRef){
 //					visit = visits.Id.GetObject();
 //					visit.Outlet = obj.Id;
 //					visit.Save(false);					
-				}				
+								
 			} else {
 				var obj = outlet.GetObject();
 				obj.Metro = metroRef;
