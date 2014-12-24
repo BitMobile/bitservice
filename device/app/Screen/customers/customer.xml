@@ -9,7 +9,7 @@
          <c:Image/>
         <c:TextView Text="#back#"/>
       </c:HorizontalLayout>
-      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnClickAction="$DoBackTo(customers)"/>
+      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnClickAction="$DoBack()"/>
       <c:HorizontalLayout>
         <c:TextView Text="#customer#" />
       </c:HorizontalLayout>
