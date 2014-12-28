@@ -39,7 +39,7 @@ dock-align: right;
 }
 
 .swipe_layout {
-    height: 15.9sp;
+    height: 15sp;
 }
 
 .red_swipe vl {
@@ -63,17 +63,27 @@ dock-align: right;
             font: 100% Arial;
         }
 
+.grid {
+	height: 15sp;
+	padding-top: 7%;
+}
+
 .grid vl {
 	margin-left: -3%;
 	}
 
 .main_row {
-    width: 75%;
-    height: 40%;
+    width: 100%;
+    height: 35%;
     white-space: normal;
-    font: 60% Arial;
-    margin-top: -5%;
+    font: 70% Arial;
+    margin-top: -10%;
     
+}
+.status_container {
+	width: 100%;
+	height: 40%;
+	margin-top: 10%;		
 }
 
 .main_rowbold {
@@ -95,10 +105,10 @@ dock-align: right;
 }
 
 .position_row {
-    width: 50%;
-    height: 100%;
+    width: 100%;
+    height: 40%;
     white-space: normal;
-    font: 70% Arial;
+    font: 90% Arial;
     color: #8e8e93;
 }
 
@@ -112,24 +122,48 @@ dock-align: right;
 
 .main_contact_container {
 	height: 100%;
-	width: 46%;
-	padding-left: 13.5%;
-	padding-top: 23%;
+	width: 35%;
+	padding-left: 10%;
+	padding-top: 18%;
 	background-color: #e6891b;
 	border-radius: 5px;
 }
 
+.main_contactdoc_container {
+	height: 100%;
+	width: 22%;
+	margin-left: 2%;
+	padding-left: 15%;
+	padding-top: 18%;
+	background-color: #9a9a9a;
+	border-radius: 5px;
+}
+
+.main_contactdoc_caption {
+	width: 100%;
+    height: 100%;
+    white-space: nowrap;
+    font: 80% Arial;
+    color: #ffffff;
+}
+
 .main_contact_caption {
-	width: 80%;
+	width: 100%;
     height: 100%;
     white-space: normal;
-    font: 63% Arial;
+    font: 80% Arial;
     color: #ffffff;
 }
 
 .position_and_maincontact{
 	width: 100%;
 	height: 25%;
+	margin-top: -10%;
+}
+
+.position_and_maincontact_exp{
+	width: 100%;
+	height: 40%;
 	margin-top: -10%;
 }
 

@@ -9,7 +9,7 @@
          <c:Image/>
         <c:TextView Text="#back#"/>
       </c:HorizontalLayout>
-      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnClickAction="$DoBackTo(customers)"/>
+      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnClickAction="$DoBack()"/>
       <c:HorizontalLayout>
         <c:TextView Text="#customer#" />
       </c:HorizontalLayout>
@@ -36,6 +36,26 @@
 		<c:VerticalLayout>
 		  <c:TextView Text="#descriptioncust#" CssClass="description_row"></c:TextView>
 		  <c:TextView Text="$objCust.Description" CssClass="main_row_custname"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Основной рег. номер" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.RSNumber" CssClass="main_row_custname"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Период действия договора РС" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.RSPeriod" CssClass="main_row_custname"></c:TextView>
 		  
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>
