@@ -83,7 +83,7 @@
 		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 		<c:VerticalLayout>
 		  <c:TextView Text="#WEBLogin#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objCust.WEBLogin" CssClass="main_row"></c:TextView>
+		 <c:TextView Text="$objCust.WebLogin" CssClass="main_row"></c:TextView>
 		  
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>
