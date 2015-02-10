@@ -1,5 +1,12 @@
 ﻿var swipedItem = undefined;
 
+function checkWebLogin(atr){
+	if (atr != null) {
+		return atr;
+	}
+	
+}
+
 function DoActionAndSave(step, req, cust, outlet) {
 	if (!IsNullOrEmpty($.Address.Text)) {
 		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
@@ -653,4 +660,9 @@ function CheckPeopleCount(){
 		Dialog.Message("Разрешен ввод только целых чисел");
 	}
 	
+}
+
+function test(p){
+	Console.WriteLine(p);
+	return p;
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="customer.css">
-	<s:Push Id="objCust" Value="$param1"></s:Push>
+	<s:Push Id="objCust" Value="$test($param1)"></s:Push>
 	
   <c:DockLayout>
 
@@ -83,7 +83,7 @@
 		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 		<c:VerticalLayout>
 		  <c:TextView Text="#WEBLogin#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objCust.WEBLogin" CssClass="main_row"></c:TextView>
+		 <c:TextView Text="$objCust.WebLogin" CssClass="main_row"></c:TextView>
 		  
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>
