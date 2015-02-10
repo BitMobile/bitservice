@@ -1,11 +1,5 @@
 ﻿var swipedItem = undefined;
 
-function checkWebLogin(atr){
-	if (atr != null) {
-		return atr;
-	}
-	
-}
 
 function DoActionAndSave(step, req, cust, outlet) {
 	if (!IsNullOrEmpty($.Address.Text)) {
