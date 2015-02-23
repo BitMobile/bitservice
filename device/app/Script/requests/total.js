@@ -1,4 +1,59 @@
+function gamingOnLoad(req){
+	obj 
+	if (req.AngryClient == true) {
+		$.AngryImageFalse.Visible = false;
+		$.AngryImageTrue.Visible = true;
+		$.AngryCaption.Text = 'Найден недовольный клиент!';
+	} else {
+		$.AngryImageTrue.Visible = false;
+		$.AngryImageFalse.Visible = true;
+		$.AngryCaption.Text = 'Клиент недоволен?';
+		
+	}
 	
+	if (req.HungryClient == true){
+		$.HungryImageFalse.Visible = false;
+		$.HungryImageTrue.Visible = true;
+		$.HungryCaption.Text = 'Подобрана денежка!';
+	} else {
+		$.HungryImageTrue.Visible = false;
+		$.HungryImageFalse.Visible = true;
+		$.HungryCaption.Text = 'Можно совершить продажу';
+	}
+	Dialog.Debug(req.Status);
+//	if (isProgress(req.Status)){
+//		$.VisitComment.Value =  req.AHComment;
+//	} else {
+//		$.VisitComment.Text =  req.AHComment;
+//	}	
+}
+
+function isHungry(req){
+	if ($.HungryImageFalse.Visible == true){
+		$.HungryImageFalse.Visible = false;
+		$.HungryImageTrue.Visible = true;
+		$.HungryCaption.Text = 'Подобрана денежка!';
+	} else {
+		$.HungryImageTrue.Visible = false;
+		$.HungryImageFalse.Visible = true;
+		$.HungryCaption.Text = 'Можно совершить продажу';
+	}
+	
+}
+
+function isAngry(req){
+	if ($.AngryImageFalse.Visible == true){
+		$.AngryImageFalse.Visible = false;
+		$.AngryImageTrue.Visible = true;
+		$.AngryCaption.Text = 'Найден недовольный клиент!';
+	} else {
+		$.AngryImageTrue.Visible = false;
+		$.AngryImageFalse.Visible = true;
+		$.AngryCaption.Text = 'Клиент недоволен?';
+	}
+	
+}
+
 function FillValue(param){
 	//$.beginDate.Text = param.FactStartDataTime;
 	$.Add("faktStart", param.FactStartDataTime);
@@ -74,7 +129,7 @@ function  DoCallBackToBack(key,v){
 	}
 	obj.Status = key;
 	//Dialog.Debug($.faktEnd);
-	// �������� ������� ���� ����� �� �����������
+	// Фиксация времени если иного не установлено
 	if ($.Exists("faktEnd") == true){
 		if ($.faktEnd == null){		
 			$.endDate.Text = DoFullDate(DateTime.Now);
@@ -92,7 +147,7 @@ function  DoCallBackToBack(key,v){
 	}
 	
 	
-	// �������� ������� ������ ���� ����� �� �����������
+	// Фиксация времени начала если иного не установлено
 	if ($.Exists("faktStart") == true){
 		if ($.faktStart == null){
 			$.beginDate.Text = DoFullDate(DateTime.Now);

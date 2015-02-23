@@ -17,7 +17,8 @@
 
     <bp:Step Name="requests" Screen="requests.xml" Controller="requests\Main.js">
       
-	  <bp:Action Name="SelectItem" NextStep="Customer"></bp:Action>
+	 <!--<bp:Action Name="SelectItem" NextStep="Customer"></bp:Action>Заглушка для тестирования Геймификации--> 
+	  <bp:Action Name="SelectItem" NextStep="Total"></bp:Action>
 	  <bp:Action Name="EditFilter" NextStep="EditFilter"></bp:Action>
       
     </bp:Step>
