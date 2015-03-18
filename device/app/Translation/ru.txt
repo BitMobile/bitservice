@@ -124,6 +124,7 @@ newOutlet	Создать новую торговую точку
 messageNulls	Все поля на экране должны быть заполнены.
 countPrice	Пересчитать цену
 SelectAnswer	Выбор вариантов
+NoBigEndDate	Дата окончания не может быть больше сегодняшней даты!
 
 description	Наименование
 coordinates	Координаты

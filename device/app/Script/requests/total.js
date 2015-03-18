@@ -41,6 +41,11 @@ function SetEndDate(v) {
 }
 
 function SetEndDateNow(key,v) {
+	if (key > DateTime.Now) {
+		Dialog.Message(Translate["#NoBigEndDate#"]);
+		key = DateTime.Now;
+	}
+	
 	$.endDate.Text = DoFullDate(key);
 	if ($.Exists("faktEnd") == true){
 		$.Remove("faktEnd");
