@@ -1,55 +1,67 @@
 function gamingOnLoad(req){
-	obj 
+	obj = req.GetObject();
+	Dialog.Debug('AngryClient:' + obj.AngryClient);
 	if (req.AngryClient == true) {
 		$.AngryImageFalse.Visible = false;
 		$.AngryImageTrue.Visible = true;
-		$.AngryCaption.Text = 'Найден недовольный клиент!';
+		//$.AngryCaption.Text = 'Найден недовольный клиент!';
 	} else {
 		$.AngryImageTrue.Visible = false;
 		$.AngryImageFalse.Visible = true;
-		$.AngryCaption.Text = 'Клиент недоволен?';
+		//$.AngryCaption.Text = 'Клиент недоволен?';
 		
 	}
-	
+	Dialog.Debug('HungryClient:' + obj.HungryClient);
 	if (req.HungryClient == true){
 		$.HungryImageFalse.Visible = false;
 		$.HungryImageTrue.Visible = true;
-		$.HungryCaption.Text = 'Подобрана денежка!';
+		//$.HungryCaption.Text = 'Подобрана денежка!';
 	} else {
 		$.HungryImageTrue.Visible = false;
 		$.HungryImageFalse.Visible = true;
-		$.HungryCaption.Text = 'Можно совершить продажу';
+		//$.HungryCaption.Text = 'Можно совершить продажу';
 	}
-	Dialog.Debug(req.Status);
-//	if (isProgress(req.Status)){
-//		$.VisitComment.Value =  req.AHComment;
-//	} else {
-//		$.VisitComment.Text =  req.AHComment;
-//	}	
+	
+	
+	if (isProgress(req.Status)){
+		$.VisitComment.Value =  req.AHComment;
+	} else {
+		$.VisitComment.Text =  req.AHComment;
+	}	
 }
 
-function isHungry(req){
+function isHungry(sender, req){
+	obj = req.GetObject();
 	if ($.HungryImageFalse.Visible == true){
 		$.HungryImageFalse.Visible = false;
 		$.HungryImageTrue.Visible = true;
-		$.HungryCaption.Text = 'Подобрана денежка!';
+		obj.HungryClient = true;
+		obj.Save(false);
+		//$.HungryCaption.Text = 'Подобрана денежка!';
 	} else {
 		$.HungryImageTrue.Visible = false;
 		$.HungryImageFalse.Visible = true;
-		$.HungryCaption.Text = 'Можно совершить продажу';
+		obj.HungryClient = false;
+		obj.Save(false);
+		//$.HungryCaption.Text = 'Можно совершить продажу';
 	}
 	
 }
 
-function isAngry(req){
+function isAngry(sender, req){
+	obj = req.GetObject();
 	if ($.AngryImageFalse.Visible == true){
 		$.AngryImageFalse.Visible = false;
 		$.AngryImageTrue.Visible = true;
-		$.AngryCaption.Text = 'Найден недовольный клиент!';
+		obj.AngryClient = true;
+		obj.Save(false);
+		//$.AngryCaption.Text = 'Найден недовольный клиент!';
 	} else {
 		$.AngryImageTrue.Visible = false;
 		$.AngryImageFalse.Visible = true;
-		$.AngryCaption.Text = 'Клиент недоволен?';
+		obj.AngryClient = true;
+		obj.Save(false);
+		//$.AngryCaption.Text = 'Клиент недоволен?';
 	}
 	
 }
