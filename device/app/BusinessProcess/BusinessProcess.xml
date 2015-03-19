@@ -17,8 +17,8 @@
 
     <bp:Step Name="requests" Screen="requests.xml" Controller="requests\Main.js">
       
-	 <!--<bp:Action Name="SelectItem" NextStep="Customer"></bp:Action>Заглушка для тестирования Геймификации--> 
-	  <bp:Action Name="SelectItem" NextStep="Total"></bp:Action>
+	 <bp:Action Name="SelectItem" NextStep="Customer"></bp:Action> 
+	  <!--<bp:Action Name="SelectItem" NextStep="Total"></bp:Action>Заглушка для тестирования Геймификации-->
 	  <bp:Action Name="EditFilter" NextStep="EditFilter"></bp:Action>
       
     </bp:Step>
@@ -28,6 +28,10 @@
 	  
       
     </bp:Step>
+    
+    <bp:Step Name="req_sync" Screen="requests\request_sync.xml" Controller="requests\Sync.js">
+    	<bp:Action Name="DoCommit" NextStep="requests"></bp:Action>
+	</bp:Step>
     
     <bp:Step Name="MultiList" Screen="requests\MultiList.xml" Controller="requests\Questions.js">
     	
@@ -64,6 +68,7 @@
     
     <bp:Step Name="Total" Screen="requests\total.xml" Controller="requests\total.js">
     	<bp:Action Name="DoCommit" NextStep="requests"></bp:Action>
+    	<bp:Action Name="DoSync" NextStep="req_sync"></bp:Action>
     </bp:Step>
     
     <bp:Step Name="Customer" Screen="requests\customer.xml" Controller="requests\customer.js">
