@@ -1,4 +1,71 @@
+function gamingOnLoad(req){
+	obj = req.GetObject();
+	//Dialog.Debug('AngryClient:' + obj.AngryClient);
+	if (req.AngryClient == true) {
+		$.AngryImageFalse.Visible = false;
+		$.AngryImageTrue.Visible = true;
+		//$.AngryCaption.Text = 'Найден недовольный клиент!';
+	} else {
+		$.AngryImageTrue.Visible = false;
+		$.AngryImageFalse.Visible = true;
+		//$.AngryCaption.Text = 'Клиент недоволен?';
+		
+	}
+	//Dialog.Debug('HungryClient:' + obj.HungryClient);
+	if (req.HungryClient == true){
+		$.HungryImageFalse.Visible = false;
+		$.HungryImageTrue.Visible = true;
+		//$.HungryCaption.Text = 'Подобрана денежка!';
+	} else {
+		$.HungryImageTrue.Visible = false;
+		$.HungryImageFalse.Visible = true;
+		//$.HungryCaption.Text = 'Можно совершить продажу';
+	}
 	
+	$.VisitComment.Text =  req.AHComment;
+//	if (isProgress(req.Status)){
+//		
+//	} else {
+//		$.VisitComment.Text =  req.AHComment;
+//	}	
+}
+
+function isHungry(sender, req){
+	obj = req.GetObject();
+	if ($.HungryImageFalse.Visible == true){
+		$.HungryImageFalse.Visible = false;
+		$.HungryImageTrue.Visible = true;
+		obj.HungryClient = true;
+		obj.Save(false);
+		//$.HungryCaption.Text = 'Подобрана денежка!';
+	} else {
+		$.HungryImageTrue.Visible = false;
+		$.HungryImageFalse.Visible = true;
+		obj.HungryClient = false;
+		obj.Save(false);
+		//$.HungryCaption.Text = 'Можно совершить продажу';
+	}
+	
+}
+
+function isAngry(sender, req){
+	obj = req.GetObject();
+	if ($.AngryImageFalse.Visible == true){
+		$.AngryImageFalse.Visible = false;
+		$.AngryImageTrue.Visible = true;
+		obj.AngryClient = true;
+		obj.Save(false);
+		//$.AngryCaption.Text = 'Найден недовольный клиент!';
+	} else {
+		$.AngryImageTrue.Visible = false;
+		$.AngryImageFalse.Visible = true;
+		obj.AngryClient = true;
+		obj.Save(false);
+		//$.AngryCaption.Text = 'Клиент недоволен?';
+	}
+	
+}
+
 function FillValue(param){
 	//$.beginDate.Text = param.FactStartDataTime;
 	$.Add("faktStart", param.FactStartDataTime);
@@ -79,7 +146,7 @@ function  DoCallBackToBack(key,v){
 	}
 	obj.Status = key;
 	//Dialog.Debug($.faktEnd);
-	// �������� ������� ���� ����� �� �����������
+	// Фиксация времени если иного не установлено
 	if ($.Exists("faktEnd") == true){
 		if ($.faktEnd == null){		
 			$.endDate.Text = DoFullDate(DateTime.Now);
@@ -87,7 +154,8 @@ function  DoCallBackToBack(key,v){
 			$.Remove("faktEnd");
 			$.Add("faktEnd", DateTime.Now);
 		} 
-	} else {
+	} 
+		else {
 			//Dialog.Debug("New!!!");
 	if ($.faktEnd == null){		
 		$.endDate.Text = DoFullDate(DateTime.Now);
@@ -97,7 +165,7 @@ function  DoCallBackToBack(key,v){
 	}
 	
 	
-	// �������� ������� ������ ���� ����� �� �����������
+	// Фиксация времени начала если иного не установлено
 	if ($.Exists("faktStart") == true){
 		if ($.faktStart == null){
 			$.beginDate.Text = DoFullDate(DateTime.Now);
@@ -118,10 +186,102 @@ function  DoCallBackToBack(key,v){
 
 
 function CommitRequest(request, fStart, fStop, refStatus){
-	obj = request.GetObject();
+	//Dialog.Debug($.refStatus);
+	if ($.refStatus == "@ref[Enum_VisitStatus]:a726738c-984b-adc0-4d64-909dd0ababe3" && $.workflow.name != "Historylist"){//DB.Current.Constant.VisitStatus.Completed
+		Dialog.Alert("Выполнить синхронизацию?", commitAndSync, [request, fStart, fStop, refStatus], "Да", "Нет", "Отмена");
+	} else if (request.Status == "@ref[Enum_VisitStatus]:be6494bc-d2a1-f680-400e-c22c2ab9c87e" && $.workflow.name != "Historylist")  { //DB.Current.Constant.VisitStatus.Expired
+		Dialog.Alert("Выполнить синхронизацию?", commitAndSync, [request, fStart, fStop, refStatus], "Да", "Нет", "Отмена");	
+	} else if (request.Status == "@ref[Enum_VisitStatus]:88babd68-1d49-88cd-4baf-dc75168a172f" && $.workflow.name != "Historylist") {
+		Dialog.Alert("Завершить визит и выполнить синхронизацию?", commitAndSync, [request, fStart, fStop, refStatus], "Да", "Нет", "Отмена");
+	} else {
+		Workflow.Action("DoCommit", []);
+	}
+	
+	
+}
+
+function syncOnly(state, args){
+	
+	obj = state[0].GetObject();
+	if (args.Result == 0){
+		obj.FactStartDataTime = $.faktStart;
+		if ($.Exists("faktEnd") == true){
+			if ($.faktEnd == null){		
+				obj.FactEndDataTime = DateTime.Now;
+			} else {
+				obj.FactEndDataTime = $.faktEnd;
+			}
+		}		
+		obj.Status =  DB.Current.Constant.VisitStatus.Completed;
+		obj.AHComment = $.VisitComment.Text;
+		obj.Save();	
+		DB.Commit();
+		$.Remove("refStatus");
+		$.Remove("faktEnd");
+		$.Remove("faktStart");	
+		$.Remove("ResQuery");
+		ClearMyGlobal();
+		Workflow.Action("DoSync", []);
+	} else if (args.Result == 1) {
+		obj.FactStartDataTime = $.faktStart;
+		obj.FactEndDataTime = $.faktEnd;
+		obj.Status = $.refStatus;
+		obj.AHComment = $.VisitComment.Text;
+		obj.Save();	
+		DB.Commit();
+		$.Remove("refStatus");
+		$.Remove("faktEnd");
+		$.Remove("faktStart");	
+		$.Remove("ResQuery");
+		ClearMyGlobal();
+		Workflow.Action("DoCommit", []);
+	} 	
+}
+
+
+function commitAndSync(state, args) {
+	obj = state[0].GetObject();
+	if (args.Result == 0){		
+		obj.FactStartDataTime = $.faktStart;
+		if ($.Exists("faktEnd") == true){
+			if ($.faktEnd == null){		
+				obj.FactEndDataTime = DateTime.Now;
+			} else {
+				obj.FactEndDataTime = $.faktEnd;
+			}
+		}		
+		obj.Status =  DB.Current.Constant.VisitStatus.Completed;
+		obj.AHComment = $.VisitComment.Text;
+		obj.Save();	
+		DB.Commit();
+		$.Remove("refStatus");
+		$.Remove("faktEnd");
+		$.Remove("faktStart");	
+		$.Remove("ResQuery");
+		ClearMyGlobal();
+		Workflow.Action("DoSync", []);
+	} else if (args.Result == 1) {
+		obj.FactStartDataTime = $.faktStart;
+		obj.FactEndDataTime = $.faktEnd;
+		obj.Status = $.refStatus;
+		obj.AHComment = $.VisitComment.Text;
+		obj.Save();	
+		DB.Commit();
+		$.Remove("refStatus");
+		$.Remove("faktEnd");
+		$.Remove("faktStart");	
+		$.Remove("ResQuery");
+		ClearMyGlobal();
+		Workflow.Action("DoCommit", []);
+	} 	
+}
+
+function doOnlyCommit(state, args){
+	obj = state[0].GetObject();
 	obj.FactStartDataTime = $.faktStart;
 	obj.FactEndDataTime = $.faktEnd;
 	obj.Status = $.refStatus;
+	obj.AHComment = $.VisitComment.Text;
 	obj.Save();	
 	DB.Commit();
 	$.Remove("refStatus");

@@ -34,7 +34,7 @@ function DoActionAndSave(step, req, cust, outlet) {
 function TryStart(step, req, cust, outlet){
 	var obj = req.GetObject();
 	//Dialog.Debug(obj.FactStartDataTime);
-	if (obj.FactStartDataTime == null){
+	if (obj.FactStartDataTime == null && $.workflow.name != "Historylist"){
 		Dialog.Ask("Зафиксировать время начала работ?", StartWork, [step, obj, cust, outlet]);
 	} else {
 		Workflow.Action(step,[req, cust, outlet]);
