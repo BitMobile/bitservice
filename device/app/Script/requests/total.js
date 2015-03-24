@@ -188,11 +188,11 @@ function  DoCallBackToBack(key,v){
 function CommitRequest(request, fStart, fStop, refStatus){
 	//Dialog.Debug($.refStatus);
 	if ($.refStatus == "@ref[Enum_VisitStatus]:a726738c-984b-adc0-4d64-909dd0ababe3" && $.workflow.name != "Historylist"){//DB.Current.Constant.VisitStatus.Completed
-		Dialog.Alert("Выполнить синхронизацию?", commitAndSync, [request, fStart, fStop, refStatus], "Да", "Нет", "Отмена");
+		syncOnly(request, fStart, fStop, refStatus);
 	} else if (request.Status == "@ref[Enum_VisitStatus]:be6494bc-d2a1-f680-400e-c22c2ab9c87e" && $.workflow.name != "Historylist")  { //DB.Current.Constant.VisitStatus.Expired
-		Dialog.Alert("Выполнить синхронизацию?", commitAndSync, [request, fStart, fStop, refStatus], "Да", "Нет", "Отмена");	
+		syncOnly(request, fStart, fStop, refStatus);	
 	} else if (request.Status == "@ref[Enum_VisitStatus]:88babd68-1d49-88cd-4baf-dc75168a172f" && $.workflow.name != "Historylist") {
-		Dialog.Alert("Завершить визит и выполнить синхронизацию?", commitAndSync, [request, fStart, fStop, refStatus], "Да", "Нет", "Отмена");
+		Dialog.Alert("Завершить визит?", commitAndSync, [request, fStart, fStop, refStatus], "Да", "Нет", "Отмена");
 	} else {
 		Workflow.Action("DoCommit", []);
 	}
@@ -200,10 +200,9 @@ function CommitRequest(request, fStart, fStop, refStatus){
 	
 }
 
-function syncOnly(state, args){
+function syncOnly(request, fStart, fStop, refStatus){
 	
-	obj = state[0].GetObject();
-	if (args.Result == 0){
+	obj = request.GetObject();
 		obj.FactStartDataTime = $.faktStart;
 		if ($.Exists("faktEnd") == true){
 			if ($.faktEnd == null){		
@@ -212,19 +211,6 @@ function syncOnly(state, args){
 				obj.FactEndDataTime = $.faktEnd;
 			}
 		}		
-		obj.Status =  DB.Current.Constant.VisitStatus.Completed;
-		obj.AHComment = $.VisitComment.Text;
-		obj.Save();	
-		DB.Commit();
-		$.Remove("refStatus");
-		$.Remove("faktEnd");
-		$.Remove("faktStart");	
-		$.Remove("ResQuery");
-		ClearMyGlobal();
-		Workflow.Action("DoSync", []);
-	} else if (args.Result == 1) {
-		obj.FactStartDataTime = $.faktStart;
-		obj.FactEndDataTime = $.faktEnd;
 		obj.Status = $.refStatus;
 		obj.AHComment = $.VisitComment.Text;
 		obj.Save();	
@@ -234,8 +220,8 @@ function syncOnly(state, args){
 		$.Remove("faktStart");	
 		$.Remove("ResQuery");
 		ClearMyGlobal();
-		Workflow.Action("DoCommit", []);
-	} 	
+		Workflow.Action("DoSync", []);
+	
 }
 
 
@@ -272,7 +258,7 @@ function commitAndSync(state, args) {
 		$.Remove("faktStart");	
 		$.Remove("ResQuery");
 		ClearMyGlobal();
-		Workflow.Action("DoCommit", []);
+		Workflow.Action("DoSync", []);
 	} 	
 }
 
