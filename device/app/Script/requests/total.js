@@ -258,7 +258,8 @@ function commitAndSync(state, args) {
 		$.Remove("faktStart");	
 		$.Remove("ResQuery");
 		ClearMyGlobal();
-		Workflow.Action("DoSync", []);
+		//Workflow.Action("DoSync", []);
+		Workflow.Action("DoCommit", []);
 	} 	
 }
 
