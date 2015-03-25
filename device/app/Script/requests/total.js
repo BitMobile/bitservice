@@ -59,7 +59,7 @@ function isAngry(sender, req){
 	} else {
 		$.AngryImageTrue.Visible = false;
 		$.AngryImageFalse.Visible = true;
-		obj.AngryClient = true;
+		obj.AngryClient = false;
 		obj.Save(false);
 		//$.AngryCaption.Text = 'Клиент недоволен?';
 	}
@@ -212,7 +212,7 @@ function syncOnly(request, fStart, fStop, refStatus){
 			}
 		}		
 		obj.Status = $.refStatus;
-		obj.AHComment = $.VisitComment.Text;
+		obj.AHComment = Left($.VisitComment.Text, 255);
 		obj.Save();	
 		DB.Commit();
 		$.Remove("refStatus");
@@ -237,7 +237,7 @@ function commitAndSync(state, args) {
 			}
 		}		
 		obj.Status =  DB.Current.Constant.VisitStatus.Completed;
-		obj.AHComment = $.VisitComment.Text;
+		obj.AHComment = Left($.VisitComment.Text, 255);
 		obj.Save();	
 		DB.Commit();
 		$.Remove("refStatus");
@@ -250,7 +250,7 @@ function commitAndSync(state, args) {
 		obj.FactStartDataTime = $.faktStart;
 		obj.FactEndDataTime = $.faktEnd;
 		obj.Status = $.refStatus;
-		obj.AHComment = $.VisitComment.Text;
+		obj.AHComment = Left($.VisitComment.Text, 255);
 		obj.Save();	
 		DB.Commit();
 		$.Remove("refStatus");
