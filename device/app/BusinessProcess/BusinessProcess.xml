@@ -69,6 +69,11 @@
     <bp:Step Name="Total" Screen="requests\total.xml" Controller="requests\total.js">
     	<bp:Action Name="DoCommit" NextStep="requests"></bp:Action>
     	<bp:Action Name="DoSync" NextStep="req_sync"></bp:Action>
+    	<bp:Action Name="gamificationHelp" NextStep="gamificationHelp"></bp:Action>
+    </bp:Step>
+    
+     <bp:Step Name="gamificationHelp" Screen="requests\gamificationHelp.xml" Controller="requests\total.js">
+    	
     </bp:Step>
     
     <bp:Step Name="Customer" Screen="requests\customer.xml" Controller="requests\customer.js">
