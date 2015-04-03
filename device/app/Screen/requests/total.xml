@@ -78,16 +78,16 @@
 		</s:If>
 		
 		<s:Else>
-			<c:HorizontalLayout CssClass="buttonBlock">
+			<c:VerticalLayout CssClass="buttonBlock">
 				<c:Image Id="HungryImageFalse" CssClass="iconFalseMoney"/>
 				<c:Image Id="HungryImageTrue" CssClass="iconTrueMoney" Visible="false"/>			
-			</c:HorizontalLayout>
+			</c:VerticalLayout>
 		
 			
-			<c:HorizontalLayout CssClass="buttonBlock">
+			<c:VerticalLayout CssClass="buttonBlock">
 				<c:Image Id="AngryImageFalse" CssClass="iconFalseFace"/>
 				<c:Image Id="AngryImageTrue" CssClass="iconTrueFace" Visible="false"/>
-			</c:HorizontalLayout>
+			</c:VerticalLayout>
 		
 		</s:Else>
 	</c:HorizontalLayout>
