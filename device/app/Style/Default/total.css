@@ -87,7 +87,6 @@
 	margin-left: 5%;    
     dock-align: top;
     horizontal-align: central;
-    padding-top: 1mm;
         
 }
 
@@ -129,33 +128,33 @@
 
 .iconFalseMoney {
 	width:  24.5mm;
-	height: 19.8mm;
+	height: 100%;
 	background-image: url(falseMoney.png);
 	horizontal-align: central;
-	margin-top: -1mm;
+	
 }
 
 .iconTrueMoney {
 	width:  24.5mm;
-	height: 25.8mm;
+	height: 100%;
 	background-image: url(trueMoney.png);
-	margin-top: -17mm;
+	margin-top: -100%;
 	horizontal-align: central;
 }
 
 .iconFalseFace {
 	width: 24.5mm;
-	height: 19.8mm auto;
+	height: 100%;
 	background-image: url(falseFace.png);
 	horizontal-align: central;
-	margin-top: -1mm;
+	
 }
 
 .iconTrueFace {
 	width: 24.5mm;
 	height: 19.8mm auto;
 	background-image: url(trueFace.png);
-	margin-top: -17mm;
+	margin-top: -100%;
 	horizontal-align: central;
 }
 
