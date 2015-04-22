@@ -46,6 +46,12 @@ function isHungry(sender, req){
 		//$.HungryCaption.Text = 'Можно совершить продажу';
 	}
 	
+	if ($.Exists("HungryTap")){		
+		$.Remove("HungryTap");		
+	} else {
+		$.Add("HungryTap",true);
+	}
+	
 }
 
 function isAngry(sender, req){
@@ -62,6 +68,12 @@ function isAngry(sender, req){
 		obj.AngryClient = false;
 		obj.Save(false);
 		//$.AngryCaption.Text = 'Клиент недоволен?';
+	}
+	
+	if ($.Exists("AngryTap")){		
+		$.Remove("AngryTap");		
+	} else {
+		$.Add("AngryTap",true);
 	}
 	
 }
@@ -193,11 +205,42 @@ function CommitRequest(request, fStart, fStop, refStatus){
 		syncOnly(request, fStart, fStop, refStatus);	
 	} else if (request.Status == "@ref[Enum_VisitStatus]:88babd68-1d49-88cd-4baf-dc75168a172f" && $.workflow.name != "Historylist") {
 		Dialog.Alert("Завершить визит?", commitAndSync, [request, fStart, fStop, refStatus], "Да", "Нет", "Отмена");
-	} else {
+	} else if ($.workflow.name == "Historylist"){
+		if (CheckAHStauses(request)){
+			obj = request.GetObject();
+			obj.AHComment = Left($.VisitComment.Text, 255);
+			obj.Save(false);
+			Workflow.Action("DoSync", []);
+		} else {
+			Workflow.Action("DoCommit", []);
+		}
+	}
+	else {
+		removeTapVars();
 		Workflow.Action("DoCommit", []);
+	}		
+		
+}
+
+function removeTapVars(){
+	if ($.Exists("AngryTap")){ 
+		$.Remove("AngryTap");		
 	}
 	
-	
+	if ($.Exists("HungryTap")){ 
+		$.Remove("HungryTap");		
+	}
+}
+
+function CheckAHStauses(request){
+	if (!$.Exists("AngryTap") && !$.Exists("HungryTap") 
+			&& request.AHComment == Left($.VisitComment.Text, 255)){
+		removeTapVars();
+		return false;
+	} else{
+		removeTapVars();
+		return true;
+	}
 }
 
 function syncOnly(request, fStart, fStop, refStatus){
@@ -268,7 +311,7 @@ function doOnlyCommit(state, args){
 	obj.FactStartDataTime = $.faktStart;
 	obj.FactEndDataTime = $.faktEnd;
 	obj.Status = $.refStatus;
-	obj.AHComment = $.VisitComment.Text;
+	obj.AHComment = Left($.VisitComment.Text,255);
 	obj.Save();	
 	DB.Commit();
 	$.Remove("refStatus");

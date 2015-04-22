@@ -114,5 +114,13 @@ function GetUnloadCount(rs){
 	return rs.Count();	
 }
 
+function Inversion(val){
+	if (val){
+		return false;
+	} else {
+		return true;
+	}
+}
+
 //-----------------Dialog handlers-----------------
 

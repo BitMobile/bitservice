@@ -214,7 +214,17 @@
     
     <bp:Step Name="Total" Screen="requests\total.xml" Controller="requests\total.js">
     	<bp:Action Name="DoCommit" NextStep="history"></bp:Action>
+    	<bp:Action Name="DoSync" NextStep="req_sync"></bp:Action>
+    	<bp:Action Name="gamificationHelp" NextStep="gamificationHelp"></bp:Action>
     </bp:Step>
+    
+     <bp:Step Name="gamificationHelp" Screen="requests\gamificationHelp.xml" Controller="requests\total.js">
+    	
+    </bp:Step>
+    
+     <bp:Step Name="req_sync" Screen="requests\request_sync.xml" Controller="requests\Sync.js">
+    	<bp:Action Name="DoCommit" NextStep="history"></bp:Action>
+	</bp:Step>
     
     <bp:Step Name="Customer" Screen="requests\customer.xml" Controller="requests\customer.js">
     	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
