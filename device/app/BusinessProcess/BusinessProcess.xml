@@ -79,6 +79,7 @@
     <bp:Step Name="Customer" Screen="requests\customer.xml" Controller="requests\customer.js">
     	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
     	<bp:Action Name="GoParams" NextStep="Parameters"></bp:Action>
+    	<bp:Action Name="WorkList" NextStep="WorkList"></bp:Action>
 		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
 		<bp:Action Name="Options" NextStep="Options"></bp:Action>
 		<bp:Action Name="Metrolist" NextStep="Metrolist"></bp:Action>
