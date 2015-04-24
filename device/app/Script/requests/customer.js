@@ -37,17 +37,26 @@ function TryStart(step, req, cust, outlet){
 	if (obj.FactStartDataTime == null && $.workflow.name != "Historylist"){
 		Dialog.Ask("Зафиксировать время начала работ?", StartWork, [step, obj, cust, outlet]);
 	} else {
-		Workflow.Action(step,[req, cust, outlet]);
+		if (checkUsr()){
+			Workflow.Action("WorkList",[req, cust, outlet]);
+		} else{
+			Workflow.Action(step,[req, cust, outlet]);
+		}		
 	}
 	
 }
 
-function StartWork(state, args){
+function StartWork(state, args){	
 	var obj = state[1];
 	obj.FactStartDataTime = DateTime.Now;
 	obj.Save(false);
 	req = obj.Id;
-	Workflow.Action(state[0],[req, state[2], state[3]]);
+	if (checkUsr()){
+		Workflow.Action("WorkList",[req, state[2], state[3]]);
+	} else{
+		Console.WriteLine('state[0]' + state[0]);
+		Workflow.Action(state[0],[req, state[2], state[3]]);
+	}		
 }
 
 function EmptyOutlet(ref){
@@ -666,6 +675,6 @@ function DoBackAndCleanAct(){
 function CheckPeopleCount(){
 	if (!validate(Variables["PeopleCountField"].Text, "[0-9]*")){
 		Dialog.Message("Разрешен ввод только целых чисел");
-	}
-	
+	}	
 }
+

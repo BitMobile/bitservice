@@ -57,6 +57,10 @@ function DoBackToQuestionOrNot(){
 	if ($.ResQuery.Count() > 0 && $.workflow.name != "Historylist"){
 		Workflow.BackTo("Questions");
 	} else {
-		Workflow.BackTo("Parameters");
-	}
+		if (checkUsr()){
+			Workflow.BackTo("Customer");
+		} else {
+			Workflow.BackTo("Parameters");
+		}
+		}
 }

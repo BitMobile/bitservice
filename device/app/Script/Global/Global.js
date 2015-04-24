@@ -10,3 +10,27 @@ function DateTimeDialog(entity, attribute, date, control) {
     var header = Translate["#enterDateTime#"];
     Dialog.ShowDateTime(header, date, DoSelectCallback2, [entity, attribute, control]);
 }
+
+function checkUsr(){
+	var mskCO = '@ref[Catalog_Departments]:4859e3db-e14d-11dc-93e2-000e0c3ec513';
+	var userObject = $.common.UserRef;
+	return isInDepartment(mskCO, userObject.Department);	
+}
+
+function isInDepartment(valCheck, val){
+	Console.WriteLine("valCheck " + valCheck);
+	Console.WriteLine("val " + val);
+	if (val != valCheck){
+		if (val.Parent !=  DB.EmptyRef("Catalog_Departments")){
+			if (val.Parent == valCheck){
+				return true;
+			} else {
+				isInDepartment(valCheck, val.Parent);
+			}
+		} else {
+			return false;
+		}
+	} else{
+		return true;
+	}		
+}
