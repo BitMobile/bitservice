@@ -132,11 +132,9 @@ function checkUsr(){
 }
 
 function isInDepartment(valCheck, val){
-	Console.WriteLine("valCheck " + valCheck);
-	Console.WriteLine("val " + val);
-	if (val != valCheck){
+	if (val.ToString() != valCheck){
 		if (val.Parent !=  DB.EmptyRef("Catalog_Departments") && val !=  DB.EmptyRef("Catalog_Departments")){
-			if (val.Parent == valCheck){
+			if (val.Parent.ToString() == valCheck){
 				return true;
 			} else {
 				isInDepartment(valCheck, val.Parent);
@@ -144,7 +142,7 @@ function isInDepartment(valCheck, val){
 		} else {
 			return false;
 		}
-	} else{
+	} else {
 		return true;
 	}		
 }

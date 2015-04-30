@@ -18,8 +18,6 @@ function checkUsr(){
 }
 
 function isInDepartment(valCheck, val){
-	Console.WriteLine("valCheck " + valCheck);
-	Console.WriteLine("val " + val);
 	if (val != valCheck){
 		if (val.Parent !=  DB.EmptyRef("Catalog_Departments")){
 			if (val.Parent == valCheck){
