@@ -1,21 +1,5 @@
 ﻿var swipedItem = undefined;
 
-//function TryStartVisit(step, req, cust, outlet){
-//	if (!IsNullOrEmpty($.Address.Text)) {
-//		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
-//			var obj = outlet.GetObject();
-//			obj.Address = $.Address.Text;
-//			obj.Save(false);
-//			Workflow.Action(step,[req, cust, outlet]);
-//		} else {
-//			Workflow.Action(step,[req, cust, outlet]);
-//		}
-//	} else {
-//		Workflow.Action(step,[req, cust, outlet]);
-//	}
-//	Dialog.Ask("Зафиксировать время начала работ?",DoActionAndSave,[step, req, cust, outlet]);
-//}
-
 function DoActionAndSave(step, req, cust, outlet) {
 	if (!IsNullOrEmpty($.Address.Text)) {
 		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
@@ -38,7 +22,12 @@ function TryStart(step, req, cust, outlet){
 		Dialog.Ask("Зафиксировать время начала работ?", StartWork, [step, obj, cust, outlet]);
 	} else {
 		if (checkUsr()){
-			Workflow.Action("WorkList",[req, cust, outlet]);
+			if ($.ResQuery.Count() > 0){
+				Workflow.Action("GoForwardQ",[req, cust]);
+			} else {
+				Workflow.Action("WorkList",[req, cust, outlet]);
+			}
+			
 		} else{
 			Workflow.Action(step,[req, cust, outlet]);
 		}		
