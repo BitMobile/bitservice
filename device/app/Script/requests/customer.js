@@ -35,7 +35,7 @@ function TryStart(step, req, cust, outlet){
 	
 }
 
-function StartWork(state, args){	
+function StartWork(state, args){
 	var obj = state[1];
 	obj.FactStartDataTime = DateTime.Now;
 	obj.Save(false);

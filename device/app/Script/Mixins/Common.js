@@ -114,5 +114,35 @@ function GetUnloadCount(rs){
 	return rs.Count();	
 }
 
+function Inversion(val){
+	if (val){
+		return false;
+	} else {
+		return true;
+	}
+}
+
 //-----------------Dialog handlers-----------------
 
+//Нужно перенести эту проверку в событие при старте приложения
+function checkUsr(){
+	var mskCO = '@ref[Catalog_Departments]:4859e3db-e14d-11dc-93e2-000e0c3ec513';
+	var userObject = $.common.UserRef;
+	return isInDepartment(mskCO, userObject.Department);	
+}
+
+function isInDepartment(valCheck, val){
+	if (val.ToString() != valCheck){
+		if (val.Parent !=  DB.EmptyRef("Catalog_Departments") && val !=  DB.EmptyRef("Catalog_Departments")){
+			if (val.Parent.ToString() == valCheck){
+				return true;
+			} else {
+				isInDepartment(valCheck, val.Parent);
+			}
+		} else {
+			return false;
+		}
+	} else {
+		return true;
+	}		
+}

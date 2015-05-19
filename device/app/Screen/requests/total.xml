@@ -98,7 +98,6 @@
         <c:VerticalLayout>
           <c:TextView Text="Комментарий" CssClass="description_row"></c:TextView>
       	 <s:If Test="$isProgress($requestId.Status)">  
-          	<c:MemoEdit Id="VisitComment"  CssClass="main_row"></c:MemoEdit>
           	<c:MemoEdit Id="VisitComment" Value = "$requestId.AHComment"  CssClass="main_row"></c:MemoEdit>
        	 </s:If> 
          <s:Else>
