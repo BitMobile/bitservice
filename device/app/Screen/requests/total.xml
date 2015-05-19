@@ -64,7 +64,7 @@
 		<c:Image CssClass="linkImage"/> 
 	</c:HorizontalLayout>
 	<c:HorizontalLayout CssClass="buttonBox"> 
-		<s:If Test="$isProgress($requestId.Status)">
+		<s:If Test="$isProgress($requestId.Status)"> 
 			<c:VerticalLayout CssClass="buttonBlock" OnClick="$isHungry($requestId)">
 				<c:Image Id="HungryImageFalse" CssClass="iconFalseMoney"/>
 				<c:Image Id="HungryImageTrue" CssClass="iconTrueMoney" Visible="false"/>
@@ -97,12 +97,13 @@
      <c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
           <c:TextView Text="Комментарий" CssClass="description_row"></c:TextView>
-      	  <s:If Test="$isProgress($requestId.Status)"> 
+      	 <s:If Test="$isProgress($requestId.Status)">  
           	<c:MemoEdit Id="VisitComment"  CssClass="main_row"></c:MemoEdit>
-        </s:If>
-          <s:Else>
-          	<c:TextView Id="VisitComment" Text = ""  CssClass="main_row"></c:TextView>
-          </s:Else> 
+          	<c:MemoEdit Id="VisitComment" Value = "$requestId.AHComment"  CssClass="main_row"></c:MemoEdit>
+       	 </s:If> 
+         <s:Else>
+          	<c:TextView Id="VisitComment" Text = "$requestId.AHComment"  CssClass="main_row"></c:TextView>
+         </s:Else>
         </c:VerticalLayout>
     </c:HorizontalLayout>
     <c:HorizontalLine/> 

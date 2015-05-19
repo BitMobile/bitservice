@@ -1,21 +1,5 @@
 ﻿var swipedItem = undefined;
 
-//function TryStartVisit(step, req, cust, outlet){
-//	if (!IsNullOrEmpty($.Address.Text)) {
-//		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
-//			var obj = outlet.GetObject();
-//			obj.Address = $.Address.Text;
-//			obj.Save(false);
-//			Workflow.Action(step,[req, cust, outlet]);
-//		} else {
-//			Workflow.Action(step,[req, cust, outlet]);
-//		}
-//	} else {
-//		Workflow.Action(step,[req, cust, outlet]);
-//	}
-//	Dialog.Ask("Зафиксировать время начала работ?",DoActionAndSave,[step, req, cust, outlet]);
-//}
-
 function DoActionAndSave(step, req, cust, outlet) {
 	if (!IsNullOrEmpty($.Address.Text)) {
 		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
@@ -37,17 +21,31 @@ function TryStart(step, req, cust, outlet){
 	if (obj.FactStartDataTime == null && $.workflow.name != "Historylist"){
 		Dialog.Ask("Зафиксировать время начала работ?", StartWork, [step, obj, cust, outlet]);
 	} else {
-		Workflow.Action(step,[req, cust, outlet]);
+		if (checkUsr()){
+			if ($.ResQuery.Count() > 0){
+				Workflow.Action("GoForwardQ",[req, cust]);
+			} else {
+				Workflow.Action("WorkList",[req, cust, outlet]);
+			}
+			
+		} else{
+			Workflow.Action(step,[req, cust, outlet]);
+		}		
 	}
 	
 }
 
-function StartWork(state, args){
+function StartWork(state, args){	
 	var obj = state[1];
 	obj.FactStartDataTime = DateTime.Now;
 	obj.Save(false);
 	req = obj.Id;
-	Workflow.Action(state[0],[req, state[2], state[3]]);
+	if (checkUsr()){
+		Workflow.Action("WorkList",[req, state[2], state[3]]);
+	} else{
+		Console.WriteLine('state[0]' + state[0]);
+		Workflow.Action(state[0],[req, state[2], state[3]]);
+	}		
 }
 
 function EmptyOutlet(ref){
@@ -666,6 +664,6 @@ function DoBackAndCleanAct(){
 function CheckPeopleCount(){
 	if (!validate(Variables["PeopleCountField"].Text, "[0-9]*")){
 		Dialog.Message("Разрешен ввод только целых чисел");
-	}
-	
+	}	
 }
+
