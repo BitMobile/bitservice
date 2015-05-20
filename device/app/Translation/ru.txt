@@ -242,7 +242,7 @@ more1000	Более 1000
 WorkDetail	Описание выполненных работ
 HoursCount	Количество часов
 Product	Продукт
-BaseCount	Кол-во баз
+OldVer	Старая версия
 NewVer	Новая версия
 requeststatus	Статус заявки
 Completed	Закончен

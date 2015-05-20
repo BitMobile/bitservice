@@ -7,31 +7,7 @@ function isProgress(obj){
 	}
 }
 
-function checkIsNumeric(sender){
-	if (!validate(sender.Text, "[0-9]+((\.|\,)[0-9]+)?")){
-		Dialog.Message("Разрешен ввод только цифр");
-		sender.Text = "";
-	}
-	
-	if (StrLen(sender.Text)> 3) {
-		Dialog.Message("Разрешен ввод не более 3-х знаков");
-		sender.Text = "";
-	}
-	
-}
 
-function checkIsNumericOnWrite(value, length){
-	if (!validate(sender.Text, "[0-9]+((\.|\,)[0-9]+)?")){
-		Dialog.Message("Разрешен ввод только цифр");
-		return false;
-	}
-	
-	if (StrLen(sender.Text)> length) {
-		Dialog.Message("Разрешен ввод не более " + length + " цифр");
-		return false;
-	}
-	return true;
-}
 
 
 function CreateIfNotExist(work)
@@ -66,7 +42,7 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		workid.Ref = request;
 		workid.LineNumber = linesCount + 1;
 		workid.SKU = prod;		
-		workid.BaseCount = ov;
+		workid.OldVersion = ov;
 		workid.NewVersion = nv;
 		workid.Description = "" + desc;
 		if (hcount !="" && hcount != null){
@@ -79,7 +55,7 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 	} else {
 		ow = workid.GetObject();
 		ow.SKU = prod;
-		ow.BaseCount = ov;
+		ow.OldVersion = ov;
 		ow.NewVersion = nv;
 		ow.Description = desc;
 		if (hcount !="" && hcount != null){

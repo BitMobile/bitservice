@@ -43,6 +43,7 @@ function StartWork(state, args){
 	if (checkUsr()){
 		Workflow.Action("WorkList",[req, state[2], state[3]]);
 	} else{
+		Console.WriteLine('state[0]' + state[0]);
 		Workflow.Action(state[0],[req, state[2], state[3]]);
 	}		
 }
