@@ -131,6 +131,20 @@ function checkUsr(){
 	return isInDepartment(mskCO, userObject.Department);	
 }
 
+function canSkip() {
+	var spbCO = '@ref[Catalog_Departments]:1cb3cb02-43f9-458a-94ed-3e15de6dc3e0';
+	var spbMSK = '@ref[Catalog_Departments]:cc77365c-4034-11dc-b98c-00173178e026';
+	var spbGork = '@ref[Catalog_Departments]:bcafc3e5-8d0f-11e0-b2f6-00155dd29113';
+	
+	var userObject = $.common.UserRef;
+	
+	if (isInDepartment(spbCO, userObject.Department) || isInDepartment(spbMSK, userObject.Department) || isInDepartment(spbGork, userObject.Department)){
+		return false;
+	}
+	
+	return true;
+}
+
 function isInDepartment(valCheck, val){
 	if (val.ToString() != valCheck){
 		if (val.Parent !=  DB.EmptyRef("Catalog_Departments") && val !=  DB.EmptyRef("Catalog_Departments")){
