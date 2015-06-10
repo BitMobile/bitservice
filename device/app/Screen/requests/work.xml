@@ -86,6 +86,17 @@
     </c:DockLayout>
     </s:Else>
     <c:HorizontalLine/>
+    
+     <c:DockLayout CssClass="parameter_grid">
+        <c:TextView Text="#BaseCount#"></c:TextView>
+        <s:If Test="$isProgress($visit.Status)">	
+        	<c:EditText Id = "ov" Value = "$curwork.BaseCount"  CssClass="value" Keyboard="numeric"  OnChange="$checkIsNumeric()"></c:EditText>
+        </s:If>
+        <s:Else>
+        	<c:TextView Id = "ov" Text = "$curwork.BaseCount"  CssClass="value" ></c:TextView>
+        </s:Else>
+    </c:DockLayout>
+    <c:HorizontalLine/>
      
      <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="#NewVer#"></c:TextView>
@@ -121,6 +132,12 @@
        
        
         
+    </c:DockLayout>
+    <c:HorizontalLine/>
+    
+     <c:DockLayout CssClass="parameter_grid">
+        <c:TextView Text="#BaseCount#"></c:TextView>
+        <c:EditText Id = "ov"   CssClass="value" Keyboard="numeric" OnChange="$checkIsNumeric()"></c:EditText>
     </c:DockLayout>
     <c:HorizontalLine/>
      
