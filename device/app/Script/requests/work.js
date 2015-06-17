@@ -57,6 +57,18 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		return;
 	}
 	
+	var querySKU = new Query("SELECT Id FROM Document_Visit_Result WHERE Document_Visit_Result.SKU == @sku AND Document_Visit_Result.Ref = @r");
+	querySKU.AddParameter("r", request);
+	querySKU.AddParameter("sku", prod);
+	
+	var querySKUResult = querySKU.Execute().Unload().Count();
+	
+	if (querySKUResult > 0){
+		Dialog.Message("Нельзя добавить две работы с одинаковым продуктом");
+		return;
+	}
+	
+	
 	var qc = new Query("SELECT LineNumber From Document_Visit_Result WHERE Document_Visit_Result.Ref == @r ORDER BY Document_Visit_Result.LineNumber DESC");
 	qc.AddParameter("r", request);
 	var linesCount = qc.ExecuteScalar();
@@ -82,7 +94,14 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 	} else {
 		ow = workid.GetObject();
 		ow.SKU = prod;
-		ow.BaseCount = ov;
+		
+		if (IsNullOrEmpty(ov)){
+			ow.BaseCount = 0;
+		} else {
+			ow.BaseCount = ov;
+		}
+			
+		
 		ow.NewVersion = nv;
 		ow.Description = desc;
 		if (hcount !="" && hcount != null){
