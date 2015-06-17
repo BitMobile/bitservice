@@ -65,7 +65,11 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		workid.Ref = request;
 		workid.LineNumber = linesCount + 1;
 		workid.SKU = prod;		
-		workid.BaseCount = ov;
+		if (IsNullOrEmpty(ov)){
+			workid.BaseCount = 0;
+		} else {
+			workid.BaseCount = ov;
+		}		
 		workid.NewVersion = nv;
 		workid.Description = "" + desc;
 		if (hcount !="" && hcount != null){
