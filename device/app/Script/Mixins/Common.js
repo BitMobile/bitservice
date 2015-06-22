@@ -160,3 +160,9 @@ function isInDepartment(valCheck, val){
 		return true;
 	}		
 }
+
+function checkFieldLength(sender, cutlength){
+	if (StrLen(sender.Text)> cutlength) {
+		sender.Text = Left(sender.Text, cutlength);
+	}
+}
