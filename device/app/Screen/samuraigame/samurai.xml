@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="samuraigame.css">
+<c:DockLayout>
+		<c:DockLayout CssClass="footer">
+			<c:DockLayout CssClass="btn_left_footer">
+				<c:TextView Text="#ready#"></c:TextView>
+			</c:DockLayout>
+			
+			<c:DockLayout CssClass="btn_right_footer">
+				<c:TextView Text="#cancel#"></c:TextView>
+			</c:DockLayout>		
+		</c:DockLayout>	
+
+	
+<c:ScrollView>    
+    <c:DockLayout CssClass="parameter_grid">
+        <c:TextView Text="Ваша фамилия и имя"></c:TextView>
+               <c:EditText Id = "hcount"  CssClass="value" Keyboard="numeric"></c:EditText>
+	</c:DockLayout>
+    <c:HorizontalLine/>
+    <c:DockLayout CssClass="parameter_grid">
+        <c:TextView Text="Наименование клиента"></c:TextView>
+               <c:EditText Id = "lkj"   CssClass="value" Keyboard="numeric"></c:EditText>
+	</c:DockLayout>
+    <c:HorizontalLine/>
+    <c:DockLayout CssClass="parameter_grid">
+        <c:TextView Text="Комментарий"></c:TextView>
+               <c:EditText Id = "uyt"  CssClass="value" Keyboard="numeric"></c:EditText>
+	</c:DockLayout>
+    <c:HorizontalLine/>
+     
+</c:ScrollView>	
+	
+</c:DockLayout>
+</c:Screen>

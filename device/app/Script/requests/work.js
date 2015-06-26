@@ -19,6 +19,8 @@ function checkIsNumeric(sender){
 	
 }
 
+
+
 function checkIsNumericOnWrite(value, length){
 	if (!validate(sender.Text, "[0-9]+((\.|\,)[0-9]+)?")){
 		Dialog.Message("Разрешен ввод только цифр");
