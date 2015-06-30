@@ -58,6 +58,11 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		Dialog.Message("В поле 'Количество часов' Разрешен ввод только цифр");
 		return;
 	}
+	
+	if (StrLen($.desc.Text) > 200){
+		Dialog.Message("Описание работ не может превышать 200 символов.");
+		return;
+	}
 		
 	var qc = new Query("SELECT LineNumber From Document_Visit_Result WHERE Document_Visit_Result.Ref == @r ORDER BY Document_Visit_Result.LineNumber DESC");
 	qc.AddParameter("r", request);

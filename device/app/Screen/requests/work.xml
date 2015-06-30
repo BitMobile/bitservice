@@ -40,7 +40,7 @@
         <c:VerticalLayout>
           <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
           <s:If Test="$isProgress($visit.Status)">
-          	<c:MemoEdit Id="desc" Value = "$curwork.Description"  CssClass="main_row" OnChange="$checkFieldLength(200)"></c:MemoEdit>
+          	<c:MemoEdit Id="desc" Value = "$curwork.Description"  CssClass="main_row" ></c:MemoEdit>
           </s:If>
           <s:Else>
           	<c:TextView Id="desc" Text = "$curwork.Description"  CssClass="main_row"></c:TextView>
