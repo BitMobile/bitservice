@@ -18,7 +18,7 @@
 	<s:Push Id="inw" Value="$param5"></s:Push>
 	<s:If Test="$isProgress($visit.Status)">
 		<c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_left_footer" OnClickAction="$WriteWorkOrEdit($visit, $curwork, $desc.Text, $hcount.Text, $prod, $ov.Text, $nv.Text, $inw)">
+			<c:DockLayout CssClass="btn_left_footer" OnClickAction="$WriteWorkOrEdit($visit, $curwork, $desc.Text, $hcount.Text, $prod, $ov.Text, $nv.Text, $inw)"> 
 				<c:TextView Text="#ready#"></c:TextView>
 			</c:DockLayout>
 			
@@ -40,7 +40,7 @@
         <c:VerticalLayout>
           <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
           <s:If Test="$isProgress($visit.Status)">
-          	<c:MemoEdit Id="desc" Value = "$curwork.Description"  CssClass="main_row" OnChange="$checkFieldLength(200)"></c:MemoEdit>
+          	<c:MemoEdit Id="desc" Value = "$curwork.Description"  CssClass="main_row" Length="200"></c:MemoEdit>
           </s:If>
           <s:Else>
           	<c:TextView Id="desc" Text = "$curwork.Description"  CssClass="main_row"></c:TextView>
@@ -115,7 +115,7 @@
 	<c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
           <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
-          <c:MemoEdit Id = "desc"  CssClass="main_row"></c:MemoEdit>
+          <c:MemoEdit Id = "desc"  CssClass="main_row" Length="200"></c:MemoEdit>
         </c:VerticalLayout>
     </c:HorizontalLayout>
     <c:HorizontalLine/>

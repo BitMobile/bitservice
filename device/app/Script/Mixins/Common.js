@@ -166,3 +166,11 @@ function checkFieldLength(sender, cutlength){
 		sender.Text = Left(sender.Text, cutlength);
 	}
 }
+
+function isGemeBoy() {
+	if ($.common.UserRef == '@ref[Catalog_User]:20187ead-1a66-11e5-994e-005056880e6b'){
+		DoAction('samurai');		
+	}
+	return false;
+
+}

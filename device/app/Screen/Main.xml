@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="Main.css">
-
+	<s:Push Id="isGameboy" Value="$isGemeBoy()"/>
   <c:SwipeHorizontalLayout Id="swipe_layout" Index="1">
     <c:VerticalLayout CssClass="menu">
 
