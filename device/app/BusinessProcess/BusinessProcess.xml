@@ -6,8 +6,8 @@
     <bp:Step Name="Menu" Screen="Main.xml" Controller="Main\Main.js">
       <bp:Action Name="requests" NextWorkflow="requests"></bp:Action>
       <bp:Action Name="customerlist" NextWorkflow="customerlist"></bp:Action>
-      <bp:Action Name="historylist" NextWorkflow="Historylist"></bp:Action>
-      
+      <bp:Action Name="historylist" NextWorkflow="Historylist"></bp:Action>  
+      <bp:Action Name="samurai" NextWorkflow="samuraiGame"></bp:Action>    
       <bp:Action Name="Sync" NextWorkflow="Sync"/>
     </bp:Step>
 
@@ -275,5 +275,12 @@
 	<bp:Step Name="AddContact" Screen="requests\contact.xml" Controller="requests\customer.js">
 		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
 	</bp:Step>
+</bp:Workflow>
+
+<bp:Workflow Name="samuraiGame">
+	<bp:Step Name="samurai" Screen="samuraigame\samurai.xml" Controller="samuraigame\samurai.js">
+		<bp:Action Name="DirtyHack" NextStep="DirtyHack"></bp:Action>
+	</bp:Step>
+	<bp:Step Name="DirtyHack" Screen="samuraigame\samurai.xml" Controller="samuraigame\samurai.js"></bp:Step>
 </bp:Workflow>
 </bp:BusinessProcess>

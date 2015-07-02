@@ -19,3 +19,57 @@ function OnWorkflowStart(name) {
 	
 }
 
+function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
+	if (nextStep == "DirtyHack") {
+		sendRequest($.sStaffName.Text, $.sClientName.Text, $.sComment.Text);
+		$.submitButton.Text = "Отправить запрос";
+		$.done_message.Visible = true;
+		$.sClientName.Text = "";
+		$.sComment.Text = "";
+		setCookie($.sStaffName.Text, "", "");
+		 Workflow.Refresh([]);
+		return false;
+	}
+}
+
+function sendRequest(staffName, clientName, comment){
+	var req = new HttpRequest("http://192.168.104.24"); //develop
+	if (!IsNullOrEmpty(staffName) && !IsNullOrEmpty(clientName) && !IsNullOrEmpty(comment)){
+		setCookie(staffName, clientName, comment);
+		try {							
+			req.Post("/leadmarketing/hs/sending", 'from=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop			
+		} catch (e){
+			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже.");
+			setCookie(staffName, clientName, comment);
+		}		
+	} else {
+		Dialog.Message("Пожалуйста заполните все поля.");
+	}
+}
+
+function IsNullOrEmpty(val1) {
+    return String.IsNullOrEmpty(val1);
+}
+
+function setCookie(staffName, clientName, comment) {
+	var data = "";
+	if (!IsNullOrEmpty(staffName)){
+		data = data + staffName + "|";
+	}
+	
+	if (!IsNullOrEmpty(clientName)){
+		data = data + clientName + "|";
+	}
+	
+	if (!IsNullOrEmpty(comment)){
+		data = data + comment + "|";
+	}
+	
+	if (FileSystem.Exists("/private/cookie.bmf")){
+		FileSystem.Delete("/private/cookie.bmf");
+		FileSystem.CreateTextFile("/private/cookie.bmf", data);
+	} else {
+		FileSystem.CreateTextFile("/private/cookie.bmf", data);
+	}
+}
+

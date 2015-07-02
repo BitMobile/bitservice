@@ -18,7 +18,7 @@
 	<s:Push Id="inw" Value="$param5"></s:Push>
 	<s:If Test="$isProgress($visit.Status)">
 		<c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_left_footer" OnClickAction="$WriteWorkOrEdit($visit, $curwork, $desc.Text, $hcount.Text, $prod, $ov.Text, $nv.Text, $inw)">
+			<c:DockLayout CssClass="btn_left_footer" OnClickAction="$WriteWorkOrEdit($visit, $curwork, $desc.Text, $hcount.Text, $prod, $ov.Text, $nv.Text, $inw)"> 
 				<c:TextView Text="#ready#"></c:TextView>
 			</c:DockLayout>
 			
