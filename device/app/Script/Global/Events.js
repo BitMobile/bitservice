@@ -33,11 +33,13 @@ function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 }
 
 function sendRequest(staffName, clientName, comment){
-	var req = new HttpRequest("http://192.168.104.24"); //develop
+	// var req = new HttpRequest("http://192.168.104.24"); //develop
+	var req = new HttpRequest("http://web-server.ru.com:30015"); //production
 	if (!IsNullOrEmpty(staffName) && !IsNullOrEmpty(clientName) && !IsNullOrEmpty(comment)){
 		setCookie(staffName, clientName, comment);
 		try {							
-			req.Post("/leadmarketing/hs/sending", 'from=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop			
+			//req.Post("/leadmarketing/hs/sending", 'from=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop	
+			req.Post("/samurai1/hs/sending", 'from=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
 		} catch (e){
 			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже.");
 			setCookie(staffName, clientName, comment);
