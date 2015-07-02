@@ -32,6 +32,14 @@
 		</c:HorizontalLayout>
       </c:DockLayout>
       <c:HorizontalLine/>
+      
+      <c:DockLayout OnClickAction="$DoAction(samurai)">
+        <c:HorizontalLayout>
+          <c:Image CssClass="btn_samurai"/>			  
+		  <c:TextView CssClass="menu_text" Text="Акция Путь самурая"></c:TextView>
+		</c:HorizontalLayout>
+      </c:DockLayout>
+      <c:HorizontalLine/>
 	  
 	  <c:DockLayout OnClickAction="$DoAction(Sync)">
         <c:HorizontalLayout>
