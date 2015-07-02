@@ -78,6 +78,10 @@ function sendRequest(staffName, clientName, comment){
 function clickSend(){
 	$.done_message.Visible = false;
 	$.submitButton.Text = "Идет отправка...";
-	sendRequest($.sStaffName.Text, $.sClientName.Text, $.sComment.Text);
+	
+	Workflow.Action("DirtyHack", []);
+	
+	
+	//sendRequest($.sStaffName.Text, $.sClientName.Text, $.sComment.Text);
 }
 

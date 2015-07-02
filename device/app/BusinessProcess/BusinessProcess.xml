@@ -278,6 +278,9 @@
 </bp:Workflow>
 
 <bp:Workflow Name="samuraiGame">
-	<bp:Step Name="samurai" Screen="samuraigame\samurai.xml" Controller="samuraigame\samurai.js"></bp:Step>
+	<bp:Step Name="samurai" Screen="samuraigame\samurai.xml" Controller="samuraigame\samurai.js">
+		<bp:Action Name="DirtyHack" NextStep="DirtyHack"></bp:Action>
+	</bp:Step>
+	<bp:Step Name="DirtyHack" Screen="samuraigame\samurai.xml" Controller="samuraigame\samurai.js"></bp:Step>
 </bp:Workflow>
 </bp:BusinessProcess>
