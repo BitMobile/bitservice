@@ -1,5 +1,10 @@
 function OnLoad(){
-	
+	if ($.Exists("sent")){
+		$.Remove("sent");
+		$.AddGlobal("sent", false);		
+	} else {
+		$.AddGlobal("sent", false);
+	}
 	getCookie();
 }
 
@@ -85,3 +90,9 @@ function clickSend(){
 	//sendRequest($.sStaffName.Text, $.sClientName.Text, $.sComment.Text);
 }
 
+function DoExit(){
+	if ($.Exists("sent")){
+		$.Remove("sent");
+	}
+	Workflow.Rollback();
+}

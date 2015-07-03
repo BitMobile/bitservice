@@ -22,18 +22,26 @@ function OnWorkflowStart(name) {
 function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 	if (nextStep == "DirtyHack") {
 		sendRequest($.sStaffName.Text, $.sClientName.Text, $.sComment.Text);
-		$.submitButton.Text = "Отправить запрос";
-		$.done_message.Visible = true;
+		if ($.Exists("sent")){
+			$.Remove("sent");
+			$.AddGlobal("sent", true);		
+		} else {
+			$.AddGlobal("sent", true);
+		}
+		$.submitButton.Text = "Отправить запрос";		
 		$.sClientName.Text = "";
 		$.sComment.Text = "";
 		setCookie($.sStaffName.Text, "", "");
-		 Workflow.Refresh([]);
+		Workflow.Refresh([]);
+		
 		return false;
+		
 	}
+	return true;
 }
 
 function sendRequest(staffName, clientName, comment){
-	// var req = new HttpRequest("http://192.168.104.24"); //develop
+	//var req = new HttpRequest("http://192.168.104.24"); //develop
 	var req = new HttpRequest("http://web-server.ru.com:30015"); //production
 	if (!IsNullOrEmpty(staffName) && !IsNullOrEmpty(clientName) && !IsNullOrEmpty(comment)){
 		setCookie(staffName, clientName, comment);

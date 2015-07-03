@@ -17,7 +17,7 @@
     <c:DockLayout CssClass="footer">
     <c:VerticalLayout>
     	<c:Button Text="Отправить запрос" Id="submitButton" CssClass="submitButton" OnClick="$clickSend()"/>
-    	<c:HorizontalLayout Id="done_message" Visible="false"> <c:Image CssClass="icon_check"/><c:TextView  Text="Запрос успешно отправлен"/> </c:HorizontalLayout>
+    	<c:HorizontalLayout Id="done_message" Visible="$sent"> <c:Image CssClass="icon_check"/><c:TextView  Text="Запрос успешно отправлен"/> </c:HorizontalLayout>
     </c:VerticalLayout>				
 	</c:DockLayout>
 	
