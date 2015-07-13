@@ -57,23 +57,13 @@ function EmptyOutlet(ref){
 
 function CheckParamsFilling(sender, cust, pr){
 	if (!canSkip()){
-		q = new Query("SELECT Id " +
-				"FROM Catalog_Customer_KindOfActivity " +
-				"WHERE Catalog_Customer_KindOfActivity.Ref == @currentCustomer");
-		q.AddParameter("currentCustomer", cust);
-		res = q.ExecuteCount();
-		if (!isITS(pr)||(res > 0 && cust.FinDirExist != DB.EmptyRef("Enum_LogicType") && cust.DigitPeopleCount > 0)){//&& cust.PeapleCount != DB.EmptyRef("Enum_PeopleCountVarint")
 			obj = cust.GetObject();
 			obj.Save(false);
 			if ($.ResQuery.Count() > 0 && $.workflow.name != "Historylist"){
 				Workflow.Action("GoForwardQ",[pr, cust]);
 			} else {
 				Workflow.Action("GoForward",[pr, cust]);
-			}
-			
-		} else {
-			Dialog.Message("Не все параметры заполнены. Необходимо заполнить для продолжения работы");
-		}
+			}			
 	} else {
 		obj = cust.GetObject();
 		obj.Save(false);
