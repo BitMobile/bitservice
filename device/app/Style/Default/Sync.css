@@ -2,9 +2,23 @@
     margin-left: 0%;
 }
 
+dl {
+	 background-color: #efeff4;
+}
+
+.footer {
+	height: 7.6sp;
+    dock-align: bottom;
+	background-color: #ffffff;
+}
+
 .grid vl dl Button {
     width: 45%;
     margin-left: -45%;
+}
+
+.grid vl dl {
+	background-color: #ffffff;
 }
 
 .grid vl hl {
@@ -30,6 +44,22 @@
 .main_row {
     margin-top: 20%;
 }
+
+.btn_one_footer {
+	width: 100%;
+	height: 100%;
+}
+
+.btn_one_footer TextView {
+            width: 100%;
+            height: 100%;
+            margin-left: 0%;
+            padding-top: 25%;
+            text-align: center;
+            color: #e6891b;
+            font: 38% Arial;
+        }
+
 
 .red_row {
 	width: 100%;
