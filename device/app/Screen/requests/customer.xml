@@ -116,7 +116,18 @@
     </c:DockLayout>
     </s:Else>
     <c:HorizontalLine/>
+    
 
+	  <c:HorizontalLayout CssClass="grid">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Номер Наряда" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$Curreq.Number" CssClass="main_row_custname"></c:TextView>
+		  
+		</c:VerticalLayout>	
+	 </c:HorizontalLayout>
+		
+		<c:HorizontalLine/>
       <c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
           <c:TextView Text="#requesttext#" CssClass="description_row"></c:TextView>
