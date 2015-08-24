@@ -128,11 +128,12 @@
 	 </c:HorizontalLayout>
 		
 		<c:HorizontalLine/>
-      <c:HorizontalLayout CssClass="memo_block">
-        <c:VerticalLayout>
+      <c:HorizontalLayout CssClass="memo_block" OnClickAction="$Workflow.DoAction(GetFulltext, $Curreq.TextTask)">
+        <c:VerticalLayout CssClass="requestTextBox">
           <c:TextView Text="#requesttext#" CssClass="description_row"></c:TextView>
 		  <c:TextView Text="$Curreq.TextTask" CssClass="main_row_reqtext"></c:TextView>
 		</c:VerticalLayout>
+		<c:Image/>
 	  </c:HorizontalLayout>
 	  
 	  <c:HorizontalLine/>

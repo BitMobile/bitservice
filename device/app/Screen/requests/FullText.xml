@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="fulltext.css">
+<s:Push Id="requestFullText" Value="$param1"></s:Push>
+
+  <c:VerticalLayout>
+
+    <c:DockLayout CssClass="top_navigator">
+      <c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBack()">
+        <c:Image/>
+        <c:TextView Text="#back#"/>
+      </c:HorizontalLayout>
+      <c:HorizontalLayout>
+        <c:TextView Text="Текст заявки" CssClass="haederCaption"/>
+      </c:HorizontalLayout>
+    </c:DockLayout>
+
+    
+
+    <c:ScrollView Id="grScrollView">
+		<c:TextView Text="$requestFullText" CssClass="gamingHelpText"/>
+   
+     
+
+    </c:ScrollView>
+
+  </c:VerticalLayout>
+</c:Screen>
+
+
+

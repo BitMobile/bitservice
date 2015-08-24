@@ -85,6 +85,11 @@
 		<bp:Action Name="Options" NextStep="Options"></bp:Action>
 		<bp:Action Name="Metrolist" NextStep="Metrolist"></bp:Action>
 		<bp:Action Name="CustomerView" NextStep="CustomerView"></bp:Action>
+		<bp:Action Name="GetFulltext" NextStep="GetFulltext"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="GetFulltext" Screen="requests\FullText.xml" Controller="requests\customer.js">
+    	
 	</bp:Step>
 	
 	 <bp:Step Name="CustomerView" Screen="customers\customer.xml" Controller="requests\customer.js">
