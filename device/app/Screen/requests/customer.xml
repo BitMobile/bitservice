@@ -42,6 +42,17 @@
 		</c:VerticalLayout>	
 		<c:Image/>	
 	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(GetContact, $Curreq.MainContact.Id, $objCust)">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Контактное лицо" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$Curreq.MainContact.Description" CssClass="main_row_custname"></c:TextView>		   
+		</c:VerticalLayout>	
+		<c:Image/>	
+	  </c:HorizontalLayout>
+	  
 		<s:If Test="$EmptyOutlet($objOutlet)">
 				<c:HorizontalLine/>
 			  <c:HorizontalLayout CssClass="memo_block">
