@@ -59,8 +59,8 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		return;
 	}
 	
-	if (StrLen($.desc.Text) > 200){
-		Dialog.Message("Описание работ не может превышать 200 символов.");
+	if (StrLen($.desc.Text) > 1000){
+		Dialog.Message("Описание работ не может превышать 1000 символов.");
 		return;
 	}
 		

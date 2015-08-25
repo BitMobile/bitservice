@@ -208,7 +208,7 @@ function CommitRequest(request, fStart, fStop, refStatus){
 	} else if ($.workflow.name == "Historylist"){
 		if (CheckAHStauses(request)){
 			obj = request.GetObject();
-			obj.AHComment = Left($.VisitComment.Text, 255);
+			obj.AHComment = Left($.VisitComment.Text, 1000);
 			obj.Save(false);
 			Workflow.Action("DoSync", []);
 		} else {
@@ -234,7 +234,7 @@ function removeTapVars(){
 
 function CheckAHStauses(request){
 	if (!$.Exists("AngryTap") && !$.Exists("HungryTap") 
-			&& request.AHComment == Left($.VisitComment.Text, 255)){
+			&& request.AHComment == Left($.VisitComment.Text, 1000)){
 		removeTapVars();
 		return false;
 	} else{
@@ -255,7 +255,7 @@ function syncOnly(request, fStart, fStop, refStatus){
 			}
 		}		
 		obj.Status = $.refStatus;
-		obj.AHComment = Left($.VisitComment.Text, 255);
+		obj.AHComment = Left($.VisitComment.Text, 1000);
 		obj.Save();	
 		DB.Commit();
 		$.Remove("refStatus");
@@ -280,7 +280,7 @@ function commitAndSync(state, args) {
 			}
 		}		
 		obj.Status =  DB.Current.Constant.VisitStatus.Completed;
-		obj.AHComment = Left($.VisitComment.Text, 255);
+		obj.AHComment = Left($.VisitComment.Text, 1000);
 		obj.Save();	
 		DB.Commit();
 		$.Remove("refStatus");
@@ -293,7 +293,7 @@ function commitAndSync(state, args) {
 		obj.FactStartDataTime = $.faktStart;
 		obj.FactEndDataTime = $.faktEnd;
 		obj.Status = $.refStatus;
-		obj.AHComment = Left($.VisitComment.Text, 255);
+		obj.AHComment = Left($.VisitComment.Text, 1000);
 		obj.Save();	
 		DB.Commit();
 		$.Remove("refStatus");
@@ -311,7 +311,7 @@ function doOnlyCommit(state, args){
 	obj.FactStartDataTime = $.faktStart;
 	obj.FactEndDataTime = $.faktEnd;
 	obj.Status = $.refStatus;
-	obj.AHComment = Left($.VisitComment.Text,255);
+	obj.AHComment = Left($.VisitComment.Text,1000);
 	obj.Save();	
 	DB.Commit();
 	$.Remove("refStatus");
