@@ -22,7 +22,7 @@
 				<c:TextView Text="#ready#"></c:TextView>
 			</c:DockLayout>
 			
-			<c:DockLayout CssClass="btn_right_footer" OnClickAction="$DoCancel(WorkList, $curwork)">
+			<c:DockLayout CssClass="btn_right_footer" OnEvent="Back" OnClickAction="$DoCancel(WorkList, $curwork)">
 				<c:TextView Text="#cancel#"></c:TextView>
 			</c:DockLayout>		
 		</c:DockLayout>	
