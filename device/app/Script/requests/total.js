@@ -255,6 +255,9 @@ function syncOnly(request, fStart, fStop, refStatus){
 			}
 		}		
 		obj.Status = $.refStatus;
+		if ($.refStatus == DB.Current.Constant.VisitStatus.Completed && obj.DoneTime == null){
+			obj.DoneTime = DateTime.Now;
+		}
 		obj.AHComment = Left($.VisitComment.Text, 1000);
 		obj.Save();	
 		DB.Commit();
@@ -280,6 +283,7 @@ function commitAndSync(state, args) {
 			}
 		}		
 		obj.Status =  DB.Current.Constant.VisitStatus.Completed;
+		obj.DoneTime = DateTime.Now;
 		obj.AHComment = Left($.VisitComment.Text, 1000);
 		obj.Save();	
 		DB.Commit();
@@ -293,6 +297,9 @@ function commitAndSync(state, args) {
 		obj.FactStartDataTime = $.faktStart;
 		obj.FactEndDataTime = $.faktEnd;
 		obj.Status = $.refStatus;
+		if ($.refStatus == DB.Current.Constant.VisitStatus.Completed && obj.DoneTime == null){
+			obj.DoneTime = DateTime.Now;
+		}
 		obj.AHComment = Left($.VisitComment.Text, 1000);
 		obj.Save();	
 		DB.Commit();
@@ -311,6 +318,9 @@ function doOnlyCommit(state, args){
 	obj.FactStartDataTime = $.faktStart;
 	obj.FactEndDataTime = $.faktEnd;
 	obj.Status = $.refStatus;
+	if ($.refStatus == DB.Current.Constant.VisitStatus.Completed && obj.DoneTime == null){
+		obj.DoneTime = DateTime.Now;
+	}
 	obj.AHComment = Left($.VisitComment.Text,1000);
 	obj.Save();	
 	DB.Commit();

@@ -19,11 +19,19 @@
 
     <c:ScrollView Id="grScrollView">
 
+    <s:If Test="$isProgress($requestId.Status)">
+	<c:DockLayout CssClass="parameter_grid" OnClickAction="$SetBeginDate($requestId)">
+        <c:TextView Text="#begin#"></c:TextView>
+        <c:TextView Id="beginDate" Text="$DoFullDate($requestId.FactStartDataTime)"   CssClass="value"></c:TextView>
+    </c:DockLayout>
+    </s:If>
     
-	<c:DockLayout CssClass="parameter_grid">
+    <s:Else>
+    <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="#begin#" CssClass="disableItem">></c:TextView>
         <c:TextView Id="beginDate" Text="$DoFullDate($requestId.FactStartDataTime)"   CssClass="value"></c:TextView>
     </c:DockLayout>
+    </s:Else>
     
     <c:HorizontalLine/>
     <s:If Test="$isProgress($requestId.Status)">
