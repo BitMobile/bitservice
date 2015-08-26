@@ -24,9 +24,11 @@
     </bp:Step>
     
     <bp:Step Name="EditFilter" Screen="filter.xml" Controller="requests\Main.js">
-      
-	  
-      
+         
+    </bp:Step>
+    
+    <bp:Step Name="UserDetails" Screen="requests\userdetails.xml" Controller="requests\userdetails.js">
+         
     </bp:Step>
     
     <bp:Step Name="req_sync" Screen="requests\request_sync.xml" Controller="requests\Sync.js">
@@ -87,6 +89,7 @@
 		<bp:Action Name="CustomerView" NextStep="CustomerView"></bp:Action>
 		<bp:Action Name="GetFulltext" NextStep="GetFulltext"></bp:Action>
 		<bp:Action Name="GetContact" NextStep="EditContact"></bp:Action>
+		<bp:Action Name="UserDetails" NextStep="UserDetails"></bp:Action>
 	</bp:Step>
 	
 	<bp:Step Name="GetFulltext" Screen="requests\FullText.xml" Controller="requests\customer.js">
@@ -191,6 +194,10 @@
       
     </bp:Step>
     
+    <bp:Step Name="UserDetails" Screen="requests\userdetails.xml" Controller="requests\userdetails.js">
+         
+    </bp:Step>
+    
     <bp:Step Name="GetFulltext" Screen="requests\FullText.xml" Controller="requests\customer.js">
     	
 	</bp:Step>
@@ -247,6 +254,7 @@
 		<bp:Action Name="CustomerView" NextStep="CustomerView"></bp:Action>
 		<bp:Action Name="GetFulltext" NextStep="GetFulltext"></bp:Action>
 		<bp:Action Name="GetContact" NextStep="EditContact"></bp:Action>
+		<bp:Action Name="UserDetails" NextStep="UserDetails"></bp:Action>
 	</bp:Step>
 	
 	 <bp:Step Name="CustomerView" Screen="customers\customer.xml" Controller="requests\customer.js">

@@ -376,6 +376,7 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		contact.PhoneNumber = PhoneNumber;
 		contact.PhoneInternalCode = PhoneInternalCode;
 		contact.MainContact = 0;
+		contact.Email = $.email.Text;
 	
 		contact.Save(false);
 	
@@ -462,7 +463,8 @@ function EditContact(customer, lastName, firstName_middleName, telFull, position
 	contactObj.PhoneCityCode = PhoneCityCode;
 	contactObj.PhoneNumber = PhoneNumber;
 	contactObj.PhoneInternalCode = PhoneInternalCode;
-
+	contactObj.Email = $.email.Text;
+	
 	contactObj.Save(false);
 	Workflow.Back();
 	} else {

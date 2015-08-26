@@ -148,14 +148,14 @@
 	  </c:HorizontalLayout>
 	  
 	  <c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(UserDetails, $objMan.Id)">
 		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 		<c:VerticalLayout>
 		  <c:TextView Text="#manager#" CssClass="description_row"></c:TextView>
 		  <c:TextView Text="$objMan.Description" CssClass="main_row_manager"></c:TextView>
 		  
 		</c:VerticalLayout>	
-		
+		<c:Image/>
 			
 	  </c:HorizontalLayout>
 	<c:HorizontalLayout CssClass="end_of_block"/>
