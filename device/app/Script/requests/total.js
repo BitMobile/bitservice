@@ -142,21 +142,21 @@ function DoStatusSelect(v){
 	var st = [];
 	st.push([DB.Current.Constant.VisitStatus.Completed, Translate["#Completed#"]]);
 	st.push([DB.Current.Constant.VisitStatus.Expired, Translate["#Expired#"]]);	
-	Dialog.Select("#requeststatus#", st, DoCallBackToBack, v);
+	Dialog.Choose("#requeststatus#", st, DoCallBackToBack, v);
 }
 
-function  DoCallBackToBack(key,v){
+function  DoCallBackToBack(v, key){
 	obj = v.GetObject();
-	var st = "#" + key.Description + "#";
+	var st = "#" + key.Result.Description + "#";
 	$.rStatus.Text = Translate[st];
 	if ($.Exists("refStatus") == true){
 		$.Remove("refStatus");
-		$.Add("refStatus", key);
+		$.Add("refStatus", key.Result);
 	} else {
 		//Dialog.Debug("New!!!");
-		$.Add("refStatus", key);
+		$.Add("refStatus", key.Result);
 	}
-	obj.Status = key;
+	obj.Status = key.Result;
 	//Dialog.Debug($.faktEnd);
 	// Фиксация времени если иного не установлено
 	if ($.Exists("faktEnd") == true){
