@@ -15,10 +15,11 @@ function SyncData() {
 	}
 
 	function SyncDataFinish() {
-	 $.dataSyncIndicator.Stop();
-	 $.dataSyncLayout.Visible = false;
+	
+		$.dataSyncIndicator.Stop();
+		$.dataSyncLayout.Visible = false;
 	 
-	 DrawDataReport();
+		DrawDataReport();
 	}
 
 	function DrawDataReport() {
@@ -31,6 +32,12 @@ function SyncData() {
 	  $.dataSyncReport.Visible = true;
 	  $.dataSyncError.Visible = false;
 	  $.buttonSendLog.Visible = false;
+	  
+	  var curUser = $.common.UserRef;		
+	  if (curUser.Disabled) {
+		  cleanBase();
+	  }
+		
 	 } else {
 	  RollBackMark(); 
 	  $.dataSyncError.Text = Translate["#error#"] + ": " + date + at + time;

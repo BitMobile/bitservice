@@ -174,3 +174,23 @@ function isGemeBoy() {
 	return false;
 
 }
+
+function cleanBase(){
+	var tablesquery = new Query("Select name " +
+			"FROM sqlite_master Where type = 'table' " +
+			"AND (name Like '_Catalog%' " +
+					"OR name Like '_Document%') " +
+			"AND NOT name = '_Catalog_User'");
+	var resTables = tablesquery.Execute();
+	
+	while (resTables.Next()) {
+		var qDelete = new Query("DELETE FROM " + resTables.name);
+		qDelete.Execute();
+	}
+	
+	var curUser = $.common.UserRef;
+	qDelete = new Query("DELETE FROM _Catalog_User WHERE NOT Id = @usr");
+	qDelete.AddParameter("usr", curUser.Id);
+	qDelete.Execute();
+	
+}

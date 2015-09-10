@@ -1,4 +1,11 @@
-﻿// ------------------------ Main screen module ------------------------
+﻿function OnLoading() {
+	 var curUser = $.common.UserRef;		
+	  if (curUser.Disabled) {
+		  cleanBase();
+	  }
+}
+
+// ------------------------ Main screen module ------------------------
 
 function CloseMenu() {
     var sl = Variables["swipe_layout"];
