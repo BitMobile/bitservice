@@ -27,6 +27,10 @@
          
     </bp:Step>
     
+    <bp:Step Name="KKM" Screen="KKMlist.xml" Controller="requests\kkmlist.js">
+         
+    </bp:Step>
+    
     <bp:Step Name="UserDetails" Screen="requests\userdetails.xml" Controller="requests\userdetails.js">
          
     </bp:Step>
@@ -56,6 +60,7 @@
 	<bp:Step Name="WorkList" Screen="requests\worklist.xml" Controller="requests\worklist.js">
 		<bp:Action Name="DoNew" NextStep="Work"></bp:Action>
 		<bp:Action Name="GoForward" NextStep="Total"></bp:Action>
+		<bp:Action Name="GoKKM" NextStep="KKM"></bp:Action>
 	</bp:Step>
 
     <bp:Step Name="Work" Screen="requests\work.xml" Controller="requests\work.js">

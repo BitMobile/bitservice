@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="Options.css">
+<c:DockLayout>
+		<s:Push Id="vs" Value="$param1"/>
+		<s:Push Id="KKMs" Value="$param2"/>
+		<c:DockLayout CssClass="top_navigator">
+			<c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackTo(Customer)">
+		         <c:Image/>
+		        <c:TextView Text="#back#"/>
+		     </c:HorizontalLayout>
+			<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward" />
+			<c:HorizontalLayout>
+				<c:TextView Text="Кассы" />
+			</c:HorizontalLayout>
+		</c:DockLayout>
+		
+		<c:ScrollView>
+			<s:Iterator Id="kkmItem" Value="$KKMs">
+				<c:DockLayout CssClass="parameter_grid">
+			        <c:TextView Text="$kkmItem.KKM" ></c:TextView>	                
+			    </c:DockLayout>
+		    	<c:HorizontalLine/>
+			</s:Iterator> 
+		</c:ScrollView>		
+	</c:DockLayout>
+</c:Screen>

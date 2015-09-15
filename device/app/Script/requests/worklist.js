@@ -9,6 +9,27 @@ function GetWorkList(vs){//(vs -передается id визита,gc - 0: в�
 	arr.push(rs.Count());	
 	return arr;	
 }
+
+function KKMExists(Ref){
+	var q = new Query("SELECT KM.Id AS Id, CK.Description AS KKM, KM.RegNum, KM.PasswordNI " +
+			"From Document_Visit_KKM KM " +
+			"LEFT JOIN Catalog_CustomerKKM CK " +
+			"ON KM.KKM = CK.Id " +
+			"Where KM.Ref == @Ref");
+	q.AddParameter('Ref', Ref);
+	
+	var res = q.Execute();
+		
+	var ares = [];
+	ares.push(res);
+	if (q.ExecuteCount()>0) {
+		ares.push(true);
+	} else {
+		ares.push(false);
+	}		
+	return  ares;	
+} 
+
 //+++ For hide swiped
 function HideOtherSwiped(sender) {
 	if (swipedItem != sender){
