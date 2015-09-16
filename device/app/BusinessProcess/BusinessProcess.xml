@@ -28,7 +28,12 @@
     </bp:Step>
     
     <bp:Step Name="KKM" Screen="KKMlist.xml" Controller="requests\kkmlist.js">
-         
+    	<bp:Action Name="GoForward" NextStep="Total"></bp:Action>
+        <bp:Action Name="SelectItem" NextStep="KKMDetails"></bp:Action>
+    </bp:Step>
+    
+    <bp:Step Name="KKMDetails" Screen="KKMDetails.xml" Controller="requests\KKMDetails.js">
+        
     </bp:Step>
     
     <bp:Step Name="UserDetails" Screen="requests\userdetails.xml" Controller="requests\userdetails.js">

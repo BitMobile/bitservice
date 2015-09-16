@@ -16,18 +16,13 @@ function KKMExists(Ref){
 			"LEFT JOIN Catalog_CustomerKKM CK " +
 			"ON KM.KKM = CK.Id " +
 			"Where KM.Ref == @Ref");
-	q.AddParameter('Ref', Ref);
+	q.AddParameter('Ref', Ref);		
 	
-	var res = q.Execute();
-		
-	var ares = [];
-	ares.push(res);
 	if (q.ExecuteCount()>0) {
-		ares.push(true);
+		return true;
 	} else {
-		ares.push(false);
+		return false;
 	}		
-	return  ares;	
 } 
 
 //+++ For hide swiped

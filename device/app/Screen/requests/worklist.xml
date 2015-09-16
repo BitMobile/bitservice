@@ -3,8 +3,7 @@
 	StyleSheet="worklist.css">
 	<s:Push Id="rs" Value="$GetWorkList($param1)"></s:Push>
 	<s:Push Id="vl" Value="$PullArray($rs,1)"></s:Push>
-	<s:Push Id="request" Value="$param1"></s:Push>
-	<s:Push Id="kkm" Value="$KKMExists($param1)"></s:Push>	
+	<s:Push Id="request" Value="$param1"></s:Push>	
 	<c:DockLayout>
 
 		<c:DockLayout CssClass="top_navigator">
@@ -14,9 +13,9 @@
 	        		 <c:TextView Text="#back#"/>
       			</c:HorizontalLayout>						
        		
-       		<s:If Test="$PullArray($kkm, 1)">
+       		<s:If Test="$KKMExists($param1)">
        		<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"
-				OnClickAction="$Workflow.DoAction(GoKKM, $param1, $PullArray($kkm, 0))" />
+				OnClickAction="$Workflow.DoAction(GoKKM, $param1)" />
        		</s:If> 
        		<s:Else>
        			<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"

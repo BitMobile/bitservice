@@ -85,6 +85,7 @@ function FillValue(param){
 	$.Add("faktEnd", param.FactEndDataTime);
 	//$.rStatus.Text = Translate["#" + param.Status.Description + "#"];
 	$.Add("refStatus", param.Status);
+	Console.WriteLine('=====' + param);
 	return param;
 }
 function SetBeginDate(v) {
@@ -102,7 +103,6 @@ function SetBeginDateNow(key,v) {
 		$.Remove("faktStart");
 		$.Add("faktStart", key);
 	} else {
-		Dialog.Debug("New!!!");
 		$.Add("faktStart", key);
 	}
 	obj = v.GetObject();
