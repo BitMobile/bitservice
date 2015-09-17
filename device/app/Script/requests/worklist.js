@@ -18,7 +18,7 @@ function KKMExists(Ref){
 			"Where KM.Ref == @Ref");
 	q.AddParameter('Ref', Ref);		
 	
-	if (q.ExecuteCount()>0) {
+	if (q.ExecuteCount() > 0 && $.workflow.name != "Historylist") {
 		return true;
 	} else {
 		return false;

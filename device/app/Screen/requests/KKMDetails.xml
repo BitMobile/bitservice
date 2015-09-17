@@ -4,6 +4,11 @@
 <c:DockLayout>
 	<s:Push Id="visit" Value="$param1"></s:Push>
 	
+<c:DockLayout CssClass="top_navigator">			
+			<c:HorizontalLayout>
+				<c:TextView Id="caption"/>
+			</c:HorizontalLayout>
+</c:DockLayout>
 <c:DockLayout CssClass="footer">
 			<c:DockLayout CssClass="btn_left_footer"  OnClickAction="$saveChenges($param2)"> 
 				<c:TextView Text="#ready#"></c:TextView>
@@ -12,12 +17,11 @@
 			<c:DockLayout CssClass="btn_right_footer" OnEvent="Back" OnClickAction="$DoBack()">
 				<c:TextView Text="#cancel#"></c:TextView>
 			</c:DockLayout>		
-		</c:DockLayout>	
+</c:DockLayout>	
 	
 
-<c:ScrollView>
-	
-    
+<c:ScrollView>	
+    <c:HorizontalLine/>
     <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="Рег.номер"></c:TextView>
        
@@ -26,9 +30,6 @@
     </c:DockLayout>
     <c:HorizontalLine/>
      
-        
-    
-    <c:HorizontalLine/>
     
      <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="Пароль НИ"></c:TextView>
