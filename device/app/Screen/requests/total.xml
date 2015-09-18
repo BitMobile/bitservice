@@ -17,7 +17,7 @@
 
     
 
-    <c:ScrollView Id="grScrollView">
+    <c:SwipeVerticalLayout Id="grScrollView">
 
     <s:If Test="$isProgress($requestId.Status)">
 	<c:DockLayout CssClass="parameter_grid" OnClickAction="$SetBeginDate($requestId)">
@@ -118,7 +118,7 @@
    
      
 
-    </c:ScrollView>
+    </c:SwipeVerticalLayout>
 
   </c:VerticalLayout>
 <s:Push Id="OnLoadgaming" Value="$gamingOnLoad($requestId)"></s:Push>
