@@ -38,7 +38,7 @@ function getCookie() {
 
 function setCookie(staffName, clientName, comment) {
 	var data = "";
-	if (!IsNullOrEmpty(staffName)){
+	if (!IsNullOrEmpty(phone)){
 		data = data + staffName + "|";
 	}
 	

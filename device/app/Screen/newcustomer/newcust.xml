@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="samuraigame.css">
+  <s:Push Id="Cookie" Value="$getCookie()"/>
+  
+  <c:DockLayout>
+
+    <c:DockLayout CssClass="top_navigator">
+      <c:HorizontalLayout CssClass="btn_menu" OnEvent="Back" OnClickAction="$Workflow.DoRollback()">
+         <c:Image CssClass="menuIcon"/>
+      </c:HorizontalLayout>     
+      	
+      <c:HorizontalLayout>
+        <c:TextView Text="#newcustomerHeader#" />
+      </c:HorizontalLayout>
+    </c:DockLayout>	
+    
+    <c:DockLayout CssClass="footer">
+    <c:VerticalLayout>
+    	<c:Button Text="Отправить запрос" Id="submitButton" CssClass="submitButton" OnClick="$clickSend()"/>
+    	<c:HorizontalLayout Id="done_message" Visible="$sent"> <c:Image CssClass="icon_check"/><c:TextView  Text="Запрос успешно отправлен"/> </c:HorizontalLayout>
+    </c:VerticalLayout>				
+	</c:DockLayout>
+	
+	
+	<c:ScrollView>
+	<c:HorizontalLine/>
+	<c:HorizontalLayout CssClass="grid">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Контактное лицо" CssClass="description_row"></c:TextView>
+		  <c:EditText Id = "contact" CssClass="main_row_metro_edit"></c:EditText>		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" >
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Телефон" CssClass="description_row"></c:TextView>
+		  <c:EditText Id = "phone" CssClass="main_row_custname"></c:EditText>		   
+		</c:VerticalLayout>	
+	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	<c:HorizontalLayout CssClass="grid">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Наименование клиента" CssClass="description_row"></c:TextView>
+		  <c:EditText Id = "sClientName" CssClass="main_row_metro_edit"></c:EditText>		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	
+	
+	 
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="memo_block">
+		<c:VerticalLayout>
+		  <c:TextView Text="Комментарий" CssClass="description_row"></c:TextView>
+		  <c:MemoEdit Id = "sComment" CssClass="main_row_reqtext_edit"></c:MemoEdit>		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
+	  
+	 	
+		<c:HorizontalLine/>
+	</c:ScrollView>
+</c:DockLayout>
+
+</c:Screen>

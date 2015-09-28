@@ -37,6 +37,25 @@ function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 		return false;
 		
 	}
+	
+	if (nextStep == "DirtyHackClient") {
+		sendClientRequest($.phone.Text, $.sClientName.Text, $.sComment.Text, $.contact.Text);
+		if ($.Exists("sent")){
+			$.Remove("sent");
+			$.AddGlobal("sent", true);		
+		} else {
+			$.AddGlobal("sent", true);
+		}
+		$.submitButton.Text = "Отправить запрос";		
+		$.sClientName.Text = "";
+		$.sComment.Text = "";
+		$.contact.Text = "";
+		//setCookie($.sStaffName.Text, "", "");
+		Workflow.Refresh([]);
+		
+		return false;
+		
+	}
 	return true;
 }
 
@@ -50,6 +69,25 @@ function sendRequest(staffName, clientName, comment){
 			req.Post("/samurai1/hs/sending", 'from=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
 		} catch (e){
 			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже.");
+			setCookie(staffName, clientName, comment);
+		}		
+	} else {
+		Dialog.Message("Пожалуйста заполните все поля.");
+	}
+}
+
+function sendClientRequest(staffName, clientName, comment, contact){
+	var req = new HttpRequest("http://192.168.104.24"); //develop
+	//var req = new HttpRequest("http://web-server.ru.com:30015"); //production
+	if (!IsNullOrEmpty(staffName) && !IsNullOrEmpty(clientName) && !IsNullOrEmpty(comment)){
+		setCookie(staffName, clientName, comment);
+		try {	
+			var curUser = $.common.UserRef;
+			req.Post("/bits/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop	
+			//req.Post("/bits/hs/sending" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
+		} catch (e){
+			Dialog.Debug(e);
+			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже*.");
 			setCookie(staffName, clientName, comment);
 		}		
 	} else {

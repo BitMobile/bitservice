@@ -7,7 +7,8 @@
       <bp:Action Name="requests" NextWorkflow="requests"></bp:Action>
       <bp:Action Name="customerlist" NextWorkflow="customerlist"></bp:Action>
       <bp:Action Name="historylist" NextWorkflow="Historylist"></bp:Action>  
-      <bp:Action Name="samurai" NextWorkflow="samuraiGame"></bp:Action>    
+      <bp:Action Name="samurai" NextWorkflow="samuraiGame"></bp:Action> 
+      <bp:Action Name="newcustomer" NextWorkflow="newcustomer"></bp:Action>   
       <bp:Action Name="Sync" NextWorkflow="Sync"/>
     </bp:Step>
 
@@ -313,4 +314,12 @@
 	</bp:Step>
 	<bp:Step Name="DirtyHack" Screen="samuraigame\samurai.xml" Controller="samuraigame\samurai.js"></bp:Step>
 </bp:Workflow>
+
+<bp:Workflow Name="newcustomer">
+	<bp:Step Name="newcust" Screen="newcustomer\newcust.xml" Controller="newcustomer\newcust.js">
+		<bp:Action Name="DirtyHackClient" NextStep="DirtyHackClient"></bp:Action>
+	</bp:Step>
+	<bp:Step Name="DirtyHackClient" Screen="newcustomer\newcust.xml" Controller="newcustomer\newcust.js"></bp:Step>
+</bp:Workflow>
+
 </bp:BusinessProcess>
