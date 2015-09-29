@@ -18,11 +18,11 @@
 	<s:Push Id="inw" Value="$param5"></s:Push>
 	<s:If Test="$isProgress($visit.Status)">
 		<c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_left_footer" OnClickAction="$WriteWorkOrEdit($visit, $curwork, $desc.Text, $hcount.Text, $prod, $ov.Text, $nv.Text, $inw)">
+			<c:DockLayout CssClass="btn_left_footer" OnClickAction="$WriteWorkOrEdit($visit, $curwork, $desc.Text, $hcount.Text, $prod, $ov.Text, $nv.Text, $inw)"> 
 				<c:TextView Text="#ready#"></c:TextView>
 			</c:DockLayout>
 			
-			<c:DockLayout CssClass="btn_right_footer" OnClickAction="$DoCancel(WorkList, $curwork)">
+			<c:DockLayout CssClass="btn_right_footer" OnEvent="Back" OnClickAction="$DoCancel(WorkList, $curwork)">
 				<c:TextView Text="#cancel#"></c:TextView>
 			</c:DockLayout>		
 		</c:DockLayout>	
@@ -35,12 +35,12 @@
 		</c:DockLayout>
 	</s:Else>
 <s:If Test = "$curwork != NULL">
-<c:ScrollView>
+<c:SwipeVerticalLayout Id="grScrollView">
 	<c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
           <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
           <s:If Test="$isProgress($visit.Status)">
-          	<c:MemoEdit Id="desc" Value = "$curwork.Description"  CssClass="main_row"></c:MemoEdit>
+          	<c:MemoEdit Id="desc" Value = "$curwork.Description"  CssClass="main_row" ></c:MemoEdit>
           </s:If>
           <s:Else>
           	<c:TextView Id="desc" Text = "$curwork.Description"  CssClass="main_row"></c:TextView>
@@ -88,12 +88,12 @@
     <c:HorizontalLine/>
     
      <c:DockLayout CssClass="parameter_grid">
-        <c:TextView Text="#OldVer#"></c:TextView>
+        <c:TextView Text="#BaseCount#"></c:TextView>
         <s:If Test="$isProgress($visit.Status)">	
-        	<c:EditText Id = "ov" Value = "$curwork.OldVersion"  CssClass="value" ></c:EditText>
+        	<c:EditText Id = "ov" Value = "$curwork.BaseCount"  CssClass="value" Keyboard="numeric"  OnChange="$checkIsNumeric()"></c:EditText>
         </s:If>
         <s:Else>
-        	<c:TextView Id = "ov" Text = "$curwork.OldVersion"  CssClass="value" ></c:TextView>
+        	<c:TextView Id = "ov" Text = "$curwork.BaseCount"  CssClass="value" ></c:TextView>
         </s:Else>
     </c:DockLayout>
     <c:HorizontalLine/>
@@ -108,10 +108,10 @@
         </s:Else>
     </c:DockLayout>
     <c:HorizontalLine/>
-</c:ScrollView>
+</c:SwipeVerticalLayout>
 </s:If>
 <s:Else>
-		<c:ScrollView>
+		<c:SwipeVerticalLayout Id="grScrollView">
 	<c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
           <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
@@ -136,8 +136,8 @@
     <c:HorizontalLine/>
     
      <c:DockLayout CssClass="parameter_grid">
-        <c:TextView Text="#OldVer#"></c:TextView>
-        <c:EditText Id = "ov"   CssClass="value" Keyboard="numeric"></c:EditText>
+        <c:TextView Text="#BaseCount#"></c:TextView>
+        <c:EditText Id = "ov"   CssClass="value" Keyboard="numeric" OnChange="$checkIsNumeric()"></c:EditText>
     </c:DockLayout>
     <c:HorizontalLine/>
      
@@ -146,7 +146,7 @@
         <c:EditText Id = "nv"  CssClass="value" Keyboard="numeric"></c:EditText>
     </c:DockLayout>
     <c:HorizontalLine/>
-</c:ScrollView>
+</c:SwipeVerticalLayout>
 
 
 </s:Else>	

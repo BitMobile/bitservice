@@ -42,6 +42,17 @@
 		</c:VerticalLayout>	
 		<c:Image/>	
 	  </c:HorizontalLayout>
+	  
+	  <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(GetContact, $Curreq.MainContact.Id, $objCust)">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Контактное лицо" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$Curreq.MainContact.Description" CssClass="main_row_custname"></c:TextView>		   
+		</c:VerticalLayout>	
+		<c:Image/>	
+	  </c:HorizontalLayout>
+	  
 		<s:If Test="$EmptyOutlet($objOutlet)">
 				<c:HorizontalLine/>
 			  <c:HorizontalLayout CssClass="memo_block">
@@ -116,23 +127,35 @@
     </c:DockLayout>
     </s:Else>
     <c:HorizontalLine/>
+    
 
-      <c:HorizontalLayout CssClass="memo_block">
-        <c:VerticalLayout>
+	  <c:HorizontalLayout CssClass="grid">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Номер Наряда" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$Curreq.Number" CssClass="main_row_custname"></c:TextView>
+		  
+		</c:VerticalLayout>	
+	 </c:HorizontalLayout>
+		
+		<c:HorizontalLine/>
+      <c:HorizontalLayout CssClass="memo_block" OnClickAction="$Workflow.DoAction(GetFulltext, $Curreq.TextTask)">
+        <c:VerticalLayout CssClass="requestTextBox">
           <c:TextView Text="#requesttext#" CssClass="description_row"></c:TextView>
 		  <c:TextView Text="$Curreq.TextTask" CssClass="main_row_reqtext"></c:TextView>
 		</c:VerticalLayout>
+		<c:Image/>
 	  </c:HorizontalLayout>
 	  
 	  <c:HorizontalLine/>
-	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
+	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(UserDetails, $objMan.Id)">
 		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 		<c:VerticalLayout>
 		  <c:TextView Text="#manager#" CssClass="description_row"></c:TextView>
 		  <c:TextView Text="$objMan.Description" CssClass="main_row_manager"></c:TextView>
 		  
 		</c:VerticalLayout>	
-		
+		<c:Image/>
 			
 	  </c:HorizontalLayout>
 	<c:HorizontalLayout CssClass="end_of_block"/>

@@ -359,11 +359,7 @@ function OdnoglazayaZmeya(parcontrol) {
 }
 
 function FreeChoose(parcontrol){
-	Console.WriteLine(Variables["Free"].Visible);
-	Console.WriteLine($.TempAnswers[parcontrol]);
-	Console.WriteLine(Variables["MemoFree"].Text);
-	//Console.WriteLine(IsBlankString($.TempAnswers[parcontrol]));
-	//Console.WriteLine(IsBlankString(Variables["MemoFree"].Text));
+	
 	if (Variables["Free"].Visible == true){
 		
 		Variables["Free"].Visible = false;

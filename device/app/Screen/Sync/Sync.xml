@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="Sync.css">
-  <c:VerticalLayout>
+
+	
+  <c:DockLayout>
 
     <c:DockLayout CssClass="top_navigator">
       <c:HorizontalLayout CssClass="btn_menu" OnEvent="Back" OnClick="$DoRollback()">
@@ -12,7 +14,13 @@
       </c:HorizontalLayout>
     </c:DockLayout>
     <c:HorizontalLine/>
-
+	
+	<c:DockLayout Id="buttonSendLog" CssClass="footer" OnClick="$SendLog()">
+		<c:DockLayout CssClass="btn_one_footer">
+			<c:TextView Text="Отправить лог" />
+		</c:DockLayout>			
+	</c:DockLayout>
+	
     <c:HorizontalLayout CssClass="caption_grid">
       <c:TextView Text="#synchronizationData#:"/>
     </c:HorizontalLayout>
@@ -41,5 +49,6 @@
 
     <c:HorizontalLayout CssClass="free_space"/>
 
-  </c:VerticalLayout>
+
+  </c:DockLayout>
 </c:Screen>

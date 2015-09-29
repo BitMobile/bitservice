@@ -12,7 +12,7 @@
     <c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
     
     <c:ScrollView>   
-    <s:Iterator Id="product" Value="$GetProducts($param1.Customer, $prodsearch)">
+    <s:Iterator Id="product" Value="$GetProducts($param1.Customer, $prodsearch, $param1.Id)">
           <c:HorizontalLine/>
           <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $product.Product, 1, $param3)">
             <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
@@ -27,7 +27,7 @@
    </c:ScrollView>
    
    <c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_bottom_footer " OnClickAction="$DoBackAndClean()">
+			<c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$DoBackAndClean()">
 				<c:TextView Text="Назад" />
 			</c:DockLayout>
 	</c:DockLayout>

@@ -9,6 +9,22 @@ function GetWorkList(vs){//(vs -передается id визита,gc - 0: в�
 	arr.push(rs.Count());	
 	return arr;	
 }
+
+function KKMExists(Ref){
+	var q = new Query("SELECT KM.Id AS Id, CK.Description AS KKM, KM.RegNum, KM.PasswordNI " +
+			"From Document_Visit_KKM KM " +
+			"LEFT JOIN Catalog_CustomerKKM CK " +
+			"ON KM.KKM = CK.Id " +
+			"Where KM.Ref == @Ref");
+	q.AddParameter('Ref', Ref);		
+	
+	if (q.ExecuteCount() > 0 && $.workflow.name != "Historylist") {
+		return true;
+	} else {
+		return false;
+	}		
+} 
+
 //+++ For hide swiped
 function HideOtherSwiped(sender) {
 	if (swipedItem != sender){
@@ -57,6 +73,10 @@ function DoBackToQuestionOrNot(){
 	if ($.ResQuery.Count() > 0 && $.workflow.name != "Historylist"){
 		Workflow.BackTo("Questions");
 	} else {
-		Workflow.BackTo("Parameters");
-	}
+		if (checkUsr()){
+			Workflow.BackTo("Customer");
+		} else {
+			Workflow.BackTo("Parameters");
+		}
+		}
 }

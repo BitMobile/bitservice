@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="Main.css">
-
+	<s:Push Id="isGameboy" Value="$isGemeBoy()"/>
   <c:SwipeHorizontalLayout Id="swipe_layout" Index="1">
     <c:VerticalLayout CssClass="menu">
 
@@ -32,6 +32,22 @@
 		</c:HorizontalLayout>
       </c:DockLayout>
       <c:HorizontalLine/>
+      
+      <c:DockLayout OnClickAction="$DoAction(samurai)">
+        <c:HorizontalLayout>
+          <c:Image CssClass="btn_samurai"/>			  
+		  <c:TextView CssClass="menu_text" Text="Акция Путь самурая"></c:TextView>
+		</c:HorizontalLayout>
+      </c:DockLayout>
+      <c:HorizontalLine/>
+      
+       <c:DockLayout OnClickAction="$DoAction(newcustomer)">
+        <c:HorizontalLayout>
+          <c:Image CssClass="btn_samurai"/>			  
+		  <c:TextView CssClass="menu_text" Text="Новый клиент"></c:TextView>
+		</c:HorizontalLayout>
+      </c:DockLayout>
+      <c:HorizontalLine/>
 	  
 	  <c:DockLayout OnClickAction="$DoAction(Sync)">
         <c:HorizontalLayout>
@@ -41,7 +57,7 @@
       </c:DockLayout>
       <c:HorizontalLine/>
 
-      <c:DockLayout>
+      <c:DockLayout OnClickAction="$DoAction(help)">
         <c:HorizontalLayout>
           <c:Image CssClass="btn_info"/>
           <c:TextView CssClass="menu_text" Text="#info#"></c:TextView>

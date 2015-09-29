@@ -102,7 +102,6 @@ function GetAllCompleteTaskDetails(searchtext){
 
 function SetBeginDate() {
 	var header = Translate["#enterDateTime#"];
-	//Console.WriteLine(historyStart);
 	if(historyStart != undefined){
 		Dialog.ShowDateTime(header, historyStart, SetBeginDateNow);
 	} else {

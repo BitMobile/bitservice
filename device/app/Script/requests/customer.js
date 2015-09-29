@@ -3,36 +3,48 @@
 function DoActionAndSave(step, req, cust, outlet) {
 	if (!IsNullOrEmpty($.Address.Text)) {
 		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
-//				var obj = DB.Create("Catalog.Outlet");
-//				obj.Owner = cust;
-//				obj.Description = "Основная территория";
-//				obj.Address = $.Address.Text;
-//				obj.Save(false);		
-//				
-//				var visits_q = new Query("SELECT DV.Id AS Id " +
-//						"FROM Document_Visit DV " +
-//						"WHERE DV.Outlet = '@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000' " +
-//						"AND DV.Customer = @Customer");
-//				
-//				visits_q.AddParameter("Customer", cust);				
-//				visits = visits_q.Execute();				
-//				while (visits.Next()){
-//					visit = visits.Id.GetObject();
-//					visit.Outlet = obj.Id;
-//					visit.Save(false);
-//					Workflow.Action(step,[req, cust, obj.Id]);
-//				}				
-//			} else {
 			var obj = outlet.GetObject();
 			obj.Address = $.Address.Text;
 			obj.Save(false);
-			Workflow.Action(step,[req, cust, outlet]);
+			TryStart(step, req, cust, outlet);
 		} else {
-			Workflow.Action(step,[req, cust, outlet]);
+			TryStart(step, req, cust, outlet);
 		}
 	} else {
-		Workflow.Action(step,[req, cust, outlet]);
+		TryStart(step, req, cust, outlet);
 	}	
+}
+
+function TryStart(step, req, cust, outlet){
+	var obj = req.GetObject();
+	//Dialog.Debug(obj.FactStartDataTime);
+	if (obj.FactStartDataTime == null && $.workflow.name != "Historylist"){
+		Dialog.Ask("Зафиксировать время начала работ?", StartWork, [step, obj, cust, outlet]);
+	} else {
+		if (checkUsr()){
+			if ($.ResQuery.Count() > 0){
+				Workflow.Action("GoForwardQ",[req, cust]);
+			} else {
+				Workflow.Action("WorkList",[req, cust, outlet]);
+			}
+			
+		} else{
+			Workflow.Action(step,[req, cust, outlet]);
+		}		
+	}
+	
+}
+
+function StartWork(state, args){
+	var obj = state[1];
+	obj.FactStartDataTime = DateTime.Now;
+	obj.Save(false);
+	req = obj.Id;
+	if (checkUsr()){
+		Workflow.Action("WorkList",[req, state[2], state[3]]);
+	} else{
+		Workflow.Action(state[0],[req, state[2], state[3]]);
+	}		
 }
 
 function EmptyOutlet(ref){
@@ -44,12 +56,15 @@ function EmptyOutlet(ref){
 }
 
 function CheckParamsFilling(sender, cust, pr){
-	q = new Query("SELECT Id " +
-			"FROM Catalog_Customer_KindOfActivity " +
-			"WHERE Catalog_Customer_KindOfActivity.Ref == @currentCustomer");
-	q.AddParameter("currentCustomer", cust);
-	res = q.ExecuteCount();
-	if (!isITS(pr)||(res > 0 && cust.FinDirExist != DB.EmptyRef("Enum_LogicType") && cust.DigitPeopleCount > 0)){//&& cust.PeapleCount != DB.EmptyRef("Enum_PeopleCountVarint")
+	if (!canSkip()){
+			obj = cust.GetObject();
+			obj.Save(false);
+			if ($.ResQuery.Count() > 0 && $.workflow.name != "Historylist"){
+				Workflow.Action("GoForwardQ",[pr, cust]);
+			} else {
+				Workflow.Action("GoForward",[pr, cust]);
+			}			
+	} else {
 		obj = cust.GetObject();
 		obj.Save(false);
 		if ($.ResQuery.Count() > 0 && $.workflow.name != "Historylist"){
@@ -57,9 +72,6 @@ function CheckParamsFilling(sender, cust, pr){
 		} else {
 			Workflow.Action("GoForward",[pr, cust]);
 		}
-		
-	} else {
-		Dialog.Message("Не все параметры заполнены. Необходимо заполнить для продолжения работы");
 	}
 }
 
@@ -131,7 +143,6 @@ function MoreMakeContactCall(tel){
 
 function PhoneCall(answ, tel){
 	if (answ == DialogResult.Yes) {
-		//Console.WriteLine(tel);
 		Phone.Call(tel);
 	}
 }
@@ -365,6 +376,7 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		contact.PhoneNumber = PhoneNumber;
 		contact.PhoneInternalCode = PhoneInternalCode;
 		contact.MainContact = 0;
+		contact.Email = $.email.Text;
 	
 		contact.Save(false);
 	
@@ -451,7 +463,8 @@ function EditContact(customer, lastName, firstName_middleName, telFull, position
 	contactObj.PhoneCityCode = PhoneCityCode;
 	contactObj.PhoneNumber = PhoneNumber;
 	contactObj.PhoneInternalCode = PhoneInternalCode;
-
+	contactObj.Email = $.email.Text;
+	
 	contactObj.Save(false);
 	Workflow.Back();
 	} else {
@@ -652,6 +665,6 @@ function DoBackAndCleanAct(){
 function CheckPeopleCount(){
 	if (!validate(Variables["PeopleCountField"].Text, "[0-9]*")){
 		Dialog.Message("Разрешен ввод только целых чисел");
-	}
-	
+	}	
 }
+

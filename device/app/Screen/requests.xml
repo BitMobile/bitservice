@@ -57,8 +57,9 @@
 		  <c:Button Id="btnSearch" Text="#search#" OnClickAction="$findtodaytext($edtSearchToDay.Text)"></c:Button>
 		</c:HorizontalLayout>
 		<c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
+		<s:Push Id="cv" Value="$GetToDayDoneRequestsWithSearch($searchToDay, 1)"></s:Push>
       <c:ScrollView Id="SVToDay">
-    <s:If Test="$sv > 0">   
+    <s:If Test="$sv > 0 || $cv > 0">   
 	<s:Push Id="sv" Value="$GetToDayUnDoneRequestsWithSearch($searchToDay, 1)"></s:Push>
 	<s:If Test="$sv > 0">	
         <c:HorizontalLayout CssClass="caption_grid">
@@ -89,7 +90,7 @@
         <c:HorizontalLayout CssClass="end_of_block"/>
         
 		</s:If>
-        <s:Push Id="cv" Value="$GetToDayDoneRequestsWithSearch($searchToDay, 1)"></s:Push>
+        
         <s:If Test="$cv > 0">
         <c:HorizontalLayout CssClass="caption_grid">
           <s:Push Id="commitedrequests" Value="$GetToDayDoneRequestsWithSearch($searchToDay, 0)"></s:Push>          

@@ -9,7 +9,7 @@
          <c:Image/>
         <c:TextView Text="#back#"/>
       </c:HorizontalLayout>
-      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnClickAction="$DoBackTo(customers)"/>
+      <c:Button Id="btnForward" Text="#ready#" CssClass="btn_forward" OnClickAction="$DoBack()"/>
       <c:HorizontalLayout>
         <c:TextView Text="#customer#" />
       </c:HorizontalLayout>
@@ -60,6 +60,16 @@
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>
 	  
+	   <c:HorizontalLine/>
+	  <c:HorizontalLayout CssClass="grid">
+		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+		<c:VerticalLayout>
+		  <c:TextView Text="Количество БД" CssClass="description_row"></c:TextView>
+		  <c:TextView Text="$objCust.Bases" CssClass="main_row"></c:TextView>
+		  
+		</c:VerticalLayout>		
+	  </c:HorizontalLayout>
+	  
 		<c:HorizontalLine/>
 	  <c:HorizontalLayout CssClass="memo_block">		
 		<c:VerticalLayout>
@@ -83,7 +93,7 @@
 		<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
 		<c:VerticalLayout>
 		  <c:TextView Text="#WEBLogin#" CssClass="description_row"></c:TextView>
-		  <c:TextView Text="$objCust.WEBLogin" CssClass="main_row"></c:TextView>
+		 <c:TextView Text="$objCust.WebLogin" CssClass="main_row"></c:TextView>
 		  
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>
@@ -120,6 +130,8 @@
 		  
 		</c:VerticalLayout>		
 	  </c:HorizontalLayout>
+	   
+	 
 	<c:HorizontalLayout CssClass="end_of_block"/>
 	
 	

@@ -95,7 +95,6 @@ function GetToDayDoneRequestsWithSearch(searchText, getCount){//(searchText - с
 	
 function SetBeginDate() {
 	var header = Translate["#enterDateTime#"];
-	//Console.WriteLine(recvStartPeriod);
 	if(recvStartPeriod != undefined){
 		Dialog.ShowDateTime(header, recvStartPeriod, SetBeginDateNow);
 	} else {

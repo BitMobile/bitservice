@@ -15,10 +15,11 @@ function SyncData() {
 	}
 
 	function SyncDataFinish() {
-	 $.dataSyncIndicator.Stop();
-	 $.dataSyncLayout.Visible = false;
-
-	 DrawDataReport();
+	
+		$.dataSyncIndicator.Stop();
+		$.dataSyncLayout.Visible = false;
+	 
+		DrawDataReport();
 	}
 
 	function DrawDataReport() {
@@ -30,11 +31,19 @@ function SyncData() {
 	  $.dataSyncReport.Text = date + at + time;
 	  $.dataSyncReport.Visible = true;
 	  $.dataSyncError.Visible = false;
+	  $.buttonSendLog.Visible = false;
+	  
+	  var curUser = $.common.UserRef;		
+	  if (curUser.Disabled) {
+		  cleanBase();
+	  }
+		
 	 } else {
 	  RollBackMark(); 
 	  $.dataSyncError.Text = Translate["#error#"] + ": " + date + at + time;
 	  $.dataSyncError.Visible = true;
 	  $.dataSyncReport.Visible = false;
+	  $.buttonSendLog.Visible = true;
 	 }
 	}
 
@@ -118,4 +127,14 @@ function DrawFtpReport() {
 		$.ftpSyncError.Visible = true;
 		$.ftpSyncReport.Visible = false;
 	}
+}
+
+function SendLog() {
+	var result = Application.SendDatabase();
+
+	if (result)
+		Dialog.Message("Отправлено");
+	else
+		Dialog.Message("Произошла ошибка во время отправки. Данные не отправлены");
+
 }

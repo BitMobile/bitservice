@@ -5,7 +5,7 @@
   <c:VerticalLayout>
 
     <c:DockLayout CssClass="top_navigator">
-      <c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBackTo(WorkList)">
+      <c:HorizontalLayout CssClass="btn_back" OnEvent="Back" OnClickAction="$DoBack()">
         <c:Image/>
         <c:TextView Text="#back#"/>
       </c:HorizontalLayout>
@@ -17,21 +17,22 @@
 
     
 
-    <c:ScrollView Id="grScrollView">
+    <c:SwipeVerticalLayout Id="grScrollView">
 
-    
-	<s:If Test="$isProgress($requestId.Status)">
-      <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetBeginDate($requestId)">
+    <s:If Test="$isProgress($requestId.Status)">
+	<c:DockLayout CssClass="parameter_grid" OnClickAction="$SetBeginDate($requestId)">
         <c:TextView Text="#begin#"></c:TextView>
         <c:TextView Id="beginDate" Text="$DoFullDate($requestId.FactStartDataTime)"   CssClass="value"></c:TextView>
     </c:DockLayout>
     </s:If>
+    
     <s:Else>
     <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="#begin#" CssClass="disableItem">></c:TextView>
         <c:TextView Id="beginDate" Text="$DoFullDate($requestId.FactStartDataTime)"   CssClass="value"></c:TextView>
     </c:DockLayout>
     </s:Else>
+    
     <c:HorizontalLine/>
     <s:If Test="$isProgress($requestId.Status)">
     <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetEndDate($requestId)">
@@ -61,14 +62,66 @@
 	</c:DockLayout>
 	</s:Else>
 	<c:HorizontalLine/>
-        
+	
+	<c:DockLayout CssClass="gameBox">
+	<c:TextView Text="ИНФОРМАЦИЯ ДЛЯ МЕНЕДЖЕРА:" CssClass="titleInfo"/>
+	
+	<c:TextView Text="Нажмите кнопку, если клиент требует внимания менеджера. Поясните в комментарии." CssClass="infoText"/>
+	<c:HorizontalLayout CssClass="linkBox" OnClickAction="$DoAction(gamificationHelp)">
+		<c:TextView Text="Для чего эти кнопки" CssClass="helpText"/> 
+		<c:Image CssClass="linkImage"/> 
+	</c:HorizontalLayout>
+	<c:HorizontalLayout CssClass="buttonBox"> 
+		<!--  <s:If Test="$isProgress($requestId.Status)"> -->
+			<c:VerticalLayout CssClass="buttonBlock" OnClick="$isHungry($requestId)">
+				<c:Image Id="HungryImageFalse" CssClass="iconFalseMoney"/>
+				<c:Image Id="HungryImageTrue" CssClass="iconTrueMoney" Visible="false"/>
+			</c:VerticalLayout>
+		
+			
+			<c:VerticalLayout CssClass="buttonBlock" OnClick="$isAngry($requestId)">
+				<c:Image Id="AngryImageFalse" CssClass="iconFalseFace"/>
+				<c:Image Id="AngryImageTrue" CssClass="iconTrueFace" Visible="false"/>			
+			</c:VerticalLayout>
+		<!-- </s:If> -->
+		
+		<!--<s:Else>
+			<c:VerticalLayout CssClass="buttonBlock">
+				<c:Image Id="HungryImageFalse" CssClass="iconFalseMoney"/>
+				<c:Image Id="HungryImageTrue" CssClass="iconTrueMoney" Visible="false"/>			
+			</c:VerticalLayout>
+		
+			
+			<c:VerticalLayout CssClass="buttonBlock">
+				<c:Image Id="AngryImageFalse" CssClass="iconFalseFace"/>
+				<c:Image Id="AngryImageTrue" CssClass="iconTrueFace" Visible="false"/>
+			</c:VerticalLayout>
+		
+		</s:Else> -->
+	</c:HorizontalLayout>
+	</c:DockLayout>    
+     
+     <c:HorizontalLine/>
+     <c:HorizontalLayout CssClass="memo_block">
+        <c:VerticalLayout>
+          <c:TextView Text="Комментарий" CssClass="description_row"></c:TextView>
+      	<!--  <s:If Test="$isProgress($requestId.Status)">  --> 
+          	<c:MemoEdit Id="VisitComment" Value = "$requestId.AHComment"  CssClass="main_row"></c:MemoEdit>
+       	 <!-- </s:If>  --> 
+     <!-- <s:Else>
+          	<c:TextView Id="VisitComment" Text = "$requestId.AHComment"  CssClass="main_row"></c:TextView>
+         </s:Else> -->
+        </c:VerticalLayout>
+    </c:HorizontalLayout>
+    <c:HorizontalLine/> 
+    
    
      
 
-    </c:ScrollView>
+    </c:SwipeVerticalLayout>
 
   </c:VerticalLayout>
-
+<s:Push Id="OnLoadgaming" Value="$gamingOnLoad($requestId)"></s:Push>
 </c:Screen>
 
 

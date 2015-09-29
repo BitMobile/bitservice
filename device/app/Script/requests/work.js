@@ -7,7 +7,32 @@ function isProgress(obj){
 	}
 }
 
+function checkIsNumeric(sender){
+	if (!validate(sender.Text, "[0-9]+((\.|\,)[0-9]+)?") && StrLen(sender.Text)> 0){
+		//Dialog.Message("Разрешен ввод только цифр");
+		sender.Text = Left(sender.Text, StrLen(sender.Text) - 1);
+	}
+	
+	if (StrLen(sender.Text)> 3) {
+		sender.Text = Left(sender.Text, 3);
+	}
+	
+}
 
+
+
+function checkIsNumericOnWrite(value, length){
+	if (!validate(sender.Text, "[0-9]+((\.|\,)[0-9]+)?")){
+		Dialog.Message("Разрешен ввод только цифр");
+		return false;
+	}
+	
+	if (StrLen(sender.Text)> length) {
+		Dialog.Message("Разрешен ввод не более " + length + " цифр");
+		return false;
+	}
+	return true;
+}
 
 
 function CreateIfNotExist(work)
@@ -34,6 +59,11 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		return;
 	}
 	
+	if (StrLen($.desc.Text) > 1000){
+		Dialog.Message("Описание работ не может превышать 1000 символов.");
+		return;
+	}
+		
 	var qc = new Query("SELECT LineNumber From Document_Visit_Result WHERE Document_Visit_Result.Ref == @r ORDER BY Document_Visit_Result.LineNumber DESC");
 	qc.AddParameter("r", request);
 	var linesCount = qc.ExecuteScalar();
@@ -42,7 +72,11 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		workid.Ref = request;
 		workid.LineNumber = linesCount + 1;
 		workid.SKU = prod;		
-		workid.OldVersion = ov;
+		if (IsNullOrEmpty(ov)){
+			workid.BaseCount = 0;
+		} else {
+			workid.BaseCount = ov;
+		}		
 		workid.NewVersion = nv;
 		workid.Description = "" + desc;
 		if (hcount !="" && hcount != null){
@@ -55,7 +89,14 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 	} else {
 		ow = workid.GetObject();
 		ow.SKU = prod;
-		ow.OldVersion = ov;
+		
+		if (IsNullOrEmpty(ov)){
+			ow.BaseCount = 0;
+		} else {
+			ow.BaseCount = ov;
+		}
+			
+		
 		ow.NewVersion = nv;
 		ow.Description = desc;
 		if (hcount !="" && hcount != null){

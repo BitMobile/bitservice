@@ -13,7 +13,10 @@ function S4() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 }
 
-
+function test(a){
+	Console.WriteLine('===== test = ' + a);
+	return a;
+}
 
 function Trans(txt){
 	return Translate["#" + txt + "#"];
@@ -114,5 +117,83 @@ function GetUnloadCount(rs){
 	return rs.Count();	
 }
 
+function Inversion(val){
+	if (val){
+		return false;
+	} else {
+		return true;
+	}
+}
+
 //-----------------Dialog handlers-----------------
 
+//Нужно перенести эту проверку в событие при старте приложения
+function checkUsr(){
+	var mskCO = '@ref[Catalog_Departments]:4859e3db-e14d-11dc-93e2-000e0c3ec513';
+	var userObject = $.common.UserRef;
+	return isInDepartment(mskCO, userObject.Department);	
+}
+
+function canSkip() {
+	var spbCO = '@ref[Catalog_Departments]:1cb3cb02-43f9-458a-94ed-3e15de6dc3e0';
+	var spbMSK = '@ref[Catalog_Departments]:cc77365c-4034-11dc-b98c-00173178e026';
+	var spbGork = '@ref[Catalog_Departments]:bcafc3e5-8d0f-11e0-b2f6-00155dd29113';
+	
+	var userObject = $.common.UserRef;
+	
+	if (isInDepartment(spbCO, userObject.Department) || isInDepartment(spbMSK, userObject.Department) || isInDepartment(spbGork, userObject.Department)){
+		return false;
+	}
+	
+	return true;
+}
+
+function isInDepartment(valCheck, val){
+	if (val.ToString() != valCheck){
+		if (val.Parent !=  DB.EmptyRef("Catalog_Departments") && val !=  DB.EmptyRef("Catalog_Departments")){
+			if (val.Parent.ToString() == valCheck){
+				return true;
+			} else {
+				isInDepartment(valCheck, val.Parent);
+			}
+		} else {
+			return false;
+		}
+	} else {
+		return true;
+	}		
+}
+
+function checkFieldLength(sender, cutlength){
+	if (StrLen(sender.Text)> cutlength) {
+		sender.Text = Left(sender.Text, cutlength);
+	}
+}
+
+function isGemeBoy() {
+	if ($.common.UserRef == '@ref[Catalog_User]:20187ead-1a66-11e5-994e-005056880e6b'){
+		DoAction('samurai');		
+	}
+	return false;
+
+}
+
+function cleanBase(){
+	var tablesquery = new Query("Select name " +
+			"FROM sqlite_master Where type = 'table' " +
+			"AND (name Like '_Catalog%' " +
+					"OR name Like '_Document%') " +
+			"AND NOT name = '_Catalog_User'");
+	var resTables = tablesquery.Execute();
+	
+	while (resTables.Next()) {
+		var qDelete = new Query("DELETE FROM " + resTables.name);
+		qDelete.Execute();
+	}
+	
+	var curUser = $.common.UserRef;
+	qDelete = new Query("DELETE FROM _Catalog_User WHERE NOT Id = @usr");
+	qDelete.AddParameter("usr", curUser.Id);
+	qDelete.Execute();
+	
+}

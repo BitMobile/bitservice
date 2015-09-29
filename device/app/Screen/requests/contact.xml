@@ -13,7 +13,7 @@
 					<c:TextView Text="Готово"/>
 				</c:DockLayout>
 	
-				<c:DockLayout CssClass="btn_right_footer" OnClickAction="$Workflow.DoBack()">
+				<c:DockLayout CssClass="btn_right_footer" OnEvent="Back" OnClickAction="$Workflow.DoBack()">
 					<c:TextView Text="Отмена"/>
 				</c:DockLayout>
 			</c:DockLayout>
@@ -64,6 +64,17 @@
 					</c:VerticalLayout>			
 				</c:HorizontalLayout>
 				
+				<c:HorizontalLine />
+				
+				<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="E-mail" CssClass="description_row"></c:TextView>
+						<c:EditText Id="email" Text="$contact.Email" CssClass="main_row"></c:EditText>
+					</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
 							
 				<c:HorizontalLayout CssClass="end_of_block" />
 	
@@ -77,7 +88,7 @@
 					<c:TextView Text="Готово"/>
 				</c:DockLayout>
 	
-				<c:DockLayout CssClass="btn_right_footer" OnClickAction="$Workflow.DoBack()">
+				<c:DockLayout CssClass="btn_right_footer" OnEvent="Back" OnClickAction="$Workflow.DoBack()">
 					<c:TextView Text="Отмена"/>
 				</c:DockLayout>
 			</c:DockLayout>
@@ -123,6 +134,17 @@
 					<c:VerticalLayout>
 						<c:TextView Text="Телефон" CssClass="description_row"></c:TextView>
 						<c:EditText Id="telFull" CssClass="main_row"></c:EditText>
+					</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
+				<c:HorizontalLine />
+				
+				<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="E-mail" CssClass="description_row"></c:TextView>
+						<c:EditText Id="email" CssClass="main_row"></c:EditText>
 					</c:VerticalLayout>				
 				</c:HorizontalLayout>
 				

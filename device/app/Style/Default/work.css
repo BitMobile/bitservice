@@ -1,3 +1,5 @@
+
+
 .btn_one_footer {
 	width: 100%;
 	height: 100%;
@@ -84,4 +86,11 @@ dock-align: right;
         dock-align: left;
         font: 37% arial;
         text-align: right;
+        
+	
     }
+    
+    .parameter_grid TextView {
+        width: 43%;
+    }
+    

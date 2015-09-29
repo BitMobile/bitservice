@@ -5,7 +5,7 @@
 	}
 
 .grid img {
-        height: 15.4%;
+        height: 25px;
         margin-top: 16%;
         margin-left: 2.5%;
         background-image: url(arrow.png);
@@ -14,6 +14,13 @@
 .memo_block {
 	height: 24sp;
 }
+
+.memo_block img {
+        height: 25px;
+        margin-top: 11%;
+        margin-left: 2.5%;
+        background-image: url(arrow.png);
+    }
 
 .parameter_grid TextView {
     color: #e6891b;
@@ -63,7 +70,9 @@
    	font: 40% Arial;          
         }
         
-
+.requestTextBox {
+	width: 87%;
+}
 
 .main_row_addr {
     width: 100%;

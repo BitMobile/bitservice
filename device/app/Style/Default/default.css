@@ -100,7 +100,7 @@ MemoEdit {
         .top_navigator hl TextView {
             width: 100%;
             height: 100%;
-            margin-left: 0%;
+            margin-left: 5%;
             padding-top: 25%;
             text-align: center;
             color: #000000;
@@ -124,7 +124,7 @@ MemoEdit {
     }
 
 .btn_forward {
-    width: 17%;
+    width: 23%;
     height: 100%;
     dock-align: right;
     margin-right: 2%;

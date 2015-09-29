@@ -1,4 +1,177 @@
-﻿function inintvalues(p){
+﻿var swipedItem = undefined;
+
+//function TryStartVisit(step, req, cust, outlet){
+//	if (!IsNullOrEmpty($.Address.Text)) {
+//		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
+//			var obj = outlet.GetObject();
+//			obj.Address = $.Address.Text;
+//			obj.Save(false);
+//			Workflow.Action(step,[req, cust, outlet]);
+//		} else {
+//			Workflow.Action(step,[req, cust, outlet]);
+//		}
+//	} else {
+//		Workflow.Action(step,[req, cust, outlet]);
+//	}
+//	Dialog.Ask("Зафиксировать время начала работ?",DoActionAndSave,[step, req, cust, outlet]);
+//}
+
+function DoActionAndSave(step, req, cust, outlet) {
+	if (!IsNullOrEmpty($.Address.Text)) {
+		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
+			var obj = outlet.GetObject();
+			obj.Address = $.Address.Text;
+			obj.Save(false);
+			TryStart(step, req, cust, outlet);
+		} else {
+			TryStart(step, req, cust, outlet);
+		}
+	} else {
+		TryStart(step, req, cust, outlet);
+	}	
+}
+
+function TryStart(step, req, cust, outlet){
+	var obj = req.GetObject();
+	//Dialog.Debug(obj.FactStartDataTime);
+	if (obj.FactStartDataTime == null){
+		Dialog.Ask("Зафиксировать время начала работ?", StartWork, [step, obj, cust, outlet]);
+	} else {
+		Workflow.Action(step,[req, cust, outlet]);
+	}
+	
+}
+
+function StartWork(state, args){
+	var obj = state[1];
+	obj.FactStartDataTime = DateTime.Now;
+	obj.Save(false);
+	req = obj.Id;
+	Workflow.Action(state[0],[req, state[2], state[3]]);
+}
+
+function EmptyOutlet(ref){
+	if (ref == "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function CheckParamsFilling(sender, cust, pr){
+	q = new Query("SELECT Id " +
+			"FROM Catalog_Customer_KindOfActivity " +
+			"WHERE Catalog_Customer_KindOfActivity.Ref == @currentCustomer");
+	q.AddParameter("currentCustomer", cust);
+	res = q.ExecuteCount();
+	if (!isITS(pr)||(res > 0 && cust.FinDirExist != DB.EmptyRef("Enum_LogicType") && cust.DigitPeopleCount > 0)){//&& cust.PeapleCount != DB.EmptyRef("Enum_PeopleCountVarint")
+		obj = cust.GetObject();
+		obj.Save(false);
+		if ($.ResQuery.Count() > 0 && $.workflow.name != "Historylist"){
+			Workflow.Action("GoForwardQ",[pr, cust]);
+		} else {
+			Workflow.Action("GoForward",[pr, cust]);
+		}
+		
+	} else {
+		Dialog.Message("Не все параметры заполнены. Необходимо заполнить для продолжения работы");
+	}
+}
+
+function SetBeginDate(req) {
+	var header = Translate["#enterDateTime#"];
+	Dialog.DateTime(header, req.PlanStartDataTime, CallBackBeginPlan, req);	
+}
+
+function SetEndDate(req) {
+	var header = Translate["#enterDateTime#"];
+	Dialog.DateTime(header, req.PlanEndDataTime, CallBackEndPlan, req);	
+}
+
+function CallBackBeginPlan(state,args){
+	obj = state.GetObject();
+	obj.PlanStartDataTime = args.Result;
+	obj.PlanEndDataTime = args.Result;
+	$.beginDate.Text = DoFullDate(args.Result);
+	$.endDate.Text = DoFullDate(args.Result);
+	obj.Save(false);
+}
+
+function CallBackEndPlan(state,args){
+	obj = state.GetObject();
+	obj.PlanEndDataTime = args.Result;
+	$.endDate.Text = DoFullDate(args.Result);
+	obj.Save(false);
+}
+
+function isProgress(obj){
+	//Dialog.Debug(obj);
+	if (obj.ToString() == (DB.Current.Constant.VisitStatus.Processing).ToString() || obj.ToString() == (DB.Current.Constant.VisitStatus.Expected).ToString()) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function DoFullDate(dt){
+	if (dt != null){
+	return String.Format("{0:dd MMMM yyyy} {0:HH:mm}", DateTime.Parse(dt));
+	} else {
+		return "";
+	}
+}
+//+++ For hide swiped
+function HideOtherSwiped(sender) {
+	if (swipedItem != sender){
+		HideSwiped();
+		swipedItem = sender;			
+	}	
+}
+
+function HideSwiped(){
+	if (swipedItem != undefined){
+		swipedItem.Index = 0;
+	}
+}
+//--- For hide swiped
+
+function makeContactCall(contact){
+	var tel = contact.PhoneCountryCode + contact.PhoneCityCode + contact.PhoneNumber + contact.PhoneInternalCode;
+	Dialog.Question("#call# "+ tel + "?", PhoneCall, tel);	
+}
+
+function MoreMakeContactCall(tel){
+	Dialog.Question("#call# "+ tel + "?", PhoneCall, tel);
+}
+
+function PhoneCall(answ, tel){
+	if (answ == DialogResult.Yes) {
+		Phone.Call(tel);
+	}
+}
+
+
+function numberExists(contact){
+	var tel = contact.PhoneCountryCode + contact.PhoneCityCode + contact.PhoneNumber + contact.PhoneInternalCode;
+	if (String.IsNullOrEmpty(tel)){
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function GetVal(t){
+	Dialog.Debug(t);
+	return t;
+}
+
+function SaveCustomerAndBack(){
+	obj = $.currentCustomer.GetObject();
+	obj.Save(false);
+	Workflow.Back();
+}
+
+function inintvalues(p){
 	if ($.Exists("searchtext") == false){
 		$.AddGlobal("searchtext", null);
 	} 
@@ -11,6 +184,7 @@ function findtext(key,pr){
 	$.AddGlobal("searchtext", key);
 	Workflow.Refresh([pr]);
 }
+
 function GetCurrentRequest(cust){
 	//Dialog.Debug(cust);
 	var q = new Query("Select * FROM Document_Visit WHERE Document_Visit.Id == @cst");
@@ -163,10 +337,17 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		
 			if (StrLen(editTel) >= 11 || (StrLen(editTel) >= 12 && plusFind == 1)) {
 				if (plusFind == 1) {
-					PhoneCountryCode = Mid(editTel, 1, 2);
-					PhoneCityCode = Mid(editTel, 3, 3);
-					PhoneNumber = Mid(editTel, 6, 7);
-					PhoneInternalCode = Right(editTel, StrLen(editTel) - 12);
+					if (StrLen(editTel) >= 12){
+						PhoneCountryCode = Mid(editTel, 1, 2);
+						PhoneCityCode = Mid(editTel, 3, 3);
+						PhoneNumber = Mid(editTel, 6, 7);
+						PhoneInternalCode = Right(editTel, StrLen(editTel) - 12);
+					} else{
+						PhoneCountryCode = Mid(editTel, 1, 1);
+						PhoneCityCode = Mid(editTel, 2, 3);
+						PhoneNumber = Mid(editTel, 5, 7);
+						PhoneInternalCode = Right(editTel, StrLen(editTel) - 11);
+					}
 				} else {
 					PhoneCountryCode = Mid(editTel, 1, 1);
 					PhoneCityCode = Mid(editTel, 2, 3);
@@ -197,6 +378,7 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		contact.PhoneCityCode = PhoneCityCode;
 		contact.PhoneNumber = PhoneNumber;
 		contact.PhoneInternalCode = PhoneInternalCode;
+		contact.MainContact = 0;
 	
 		contact.Save(false);
 	
@@ -248,10 +430,18 @@ function EditContact(customer, lastName, firstName_middleName, telFull, position
 
 	if (StrLen(editTel) >= 11 || (StrLen(editTel) >= 12 && plusFind == 1)) {
 		if (plusFind == 1) {
-			PhoneCountryCode = Mid(editTel, 1, 2);
-			PhoneCityCode = Mid(editTel, 3, 3);
-			PhoneNumber = Mid(editTel, 6, 7);
-			PhoneInternalCode = Right(editTel, StrLen(editTel) - 12);
+			if (StrLen(editTel) >= 12){
+				PhoneCountryCode = Mid(editTel, 1, 2);
+				PhoneCityCode = Mid(editTel, 3, 3);
+				PhoneNumber = Mid(editTel, 6, 7);
+				PhoneInternalCode = Right(editTel, StrLen(editTel) - 12);
+			} else{
+				PhoneCountryCode = Mid(editTel, 1, 1);
+				PhoneCityCode = Mid(editTel, 2, 3);
+				PhoneNumber = Mid(editTel, 5, 7);
+				PhoneInternalCode = Right(editTel, StrLen(editTel) - 11);
+			}
+			
 		} else {
 			PhoneCountryCode = Mid(editTel, 1, 1);
 			PhoneCityCode = Mid(editTel, 2, 3);
@@ -290,9 +480,14 @@ function GetActivityCaption(cust){
 	
 	if (rec.Next()){
 		if (resCount > 0){
-			return rec.Kind.Description + " и еще " + resCount;
+			if (StrLen(rec.Kind.Description) > 15){
+				return Mid(rec.Kind.Description, 1, 15) + "... и еще " + resCount;
+			} else {
+				return rec.Kind.Description + " и еще " + resCount;				
+			}
+			
 		} else{
-			return rec.Kind.Description;
+			return Mid(rec.Kind.Description, 1, 20);
 		}
 				
 	} else {
@@ -355,6 +550,7 @@ function DoBackAndClean(){
 	$.Remove("refStatus");
 	$.Remove("faktEnd");
 	$.Remove("faktStart");
+	$.Remove("ResQuery");
 	ClearMyGlobal();
 	Workflow.Back();
 	DB.Rollback();
@@ -377,16 +573,8 @@ function DoSearch(srchstr, p1){
 	}
 	Workflow.Refresh([p1]);	
 }
-<<<<<<< HEAD
-
-=======
 
 
-function DoBackAndCleanAct(){
-	$.Remove("aktsearch");
-	Workflow.Back();
-}
->>>>>>> develop
 function GetPeapleCount(request){
 	
 	var q = new Query("SELECT PC.Description " +
@@ -421,7 +609,7 @@ function SetPeapleCount(Key, request){
 //////////////////////////////////////////////////////////////////////////////////
 function GetFinDir(request){
 	var q = new Query("SELECT LT.Description " +
-			"FROM Catalog_Customer C JOIN Enum_LogicType LT ON C.FinDirExist = LT.Id  " +
+			"FROM Catalog_Customer C JOIN Enum_Logic3 LT ON C.FinDirExist = LT.Id  " +
 			"WHERE C.Id == @Cust");
 	q.AddParameter("Cust", request);
 	c = q.ExecuteScalar();
@@ -434,9 +622,10 @@ function GetFinDir(request){
 }
 function SetDialogFinDirExist(request){
 	var Cunt =[];
-	Cunt.push([DB.Current.Constant.LogicType.Yes, "ДА"]);
-	Cunt.push([DB.Current.Constant.LogicType.No, "НЕТ"]);
-	Cunt.push([DB.EmptyRef("Enum.LogicType"), "Пустое значение"]);
+	Cunt.push([DB.Current.Constant.Logic3.Yes, "ДА"]);
+	Cunt.push([DB.Current.Constant.Logic3.No, "НЕТ"]);
+	Cunt.push([DB.Current.Constant.Logic3.NoAnswer, "Отказ"]);
+	Cunt.push([DB.EmptyRef("Enum.Logic3"), "Пустое значение"]);
 	Dialog.Select("#answer#", Cunt, SetFinDirExist, request);
 }
 
@@ -447,16 +636,36 @@ function SetFinDirExist(Key, request){
 		DescKey = Translate["#" + Key.Description + "#"];
 	}
 	$.FinDirExist.Text = DescKey;
+	
+	if (Key == "@ref[Enum_Logic3]:8b052e18-38dc-cdf9-456d-2e7a155dd06d"){
+		$.CauseOfFailure.Visible = true;
+		$.hlDir.Visible = true;
+	} else {
+		$.CauseOfFailure.Visible  = false;
+		$.hlDir.Visible  = false;
+	}
+	
 	obj = request.GetObject();
 	obj.FinDirExist = Key;
 	obj.Save(false);	
-<<<<<<< HEAD
+}
+
+function FinDirFailure(Key){
+	if (Key == "@ref[Enum_Logic3]:8b052e18-38dc-cdf9-456d-2e7a155dd06d"){
+		return true;
+	} else {
+		return false;
+	}
 }
 	
 function DoBackAndCleanAct(){
 	$.Remove("aktsearch");
 	Workflow.Back();
-=======
+}
 
->>>>>>> develop
+function CheckPeopleCount(){
+	if (!validate(Variables["PeopleCountField"].Text, "[0-9]*")){
+		Dialog.Message("Разрешен ввод только целых чисел");
+	}
+	
 }

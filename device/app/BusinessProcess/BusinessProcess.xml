@@ -6,27 +6,51 @@
     <bp:Step Name="Menu" Screen="Main.xml" Controller="Main\Main.js">
       <bp:Action Name="requests" NextWorkflow="requests"></bp:Action>
       <bp:Action Name="customerlist" NextWorkflow="customerlist"></bp:Action>
-      <bp:Action Name="historylist" NextWorkflow="Historylist"></bp:Action>
-      
+      <bp:Action Name="historylist" NextWorkflow="Historylist"></bp:Action>  
+      <bp:Action Name="samurai" NextWorkflow="samuraiGame"></bp:Action> 
+      <bp:Action Name="newcustomer" NextWorkflow="newcustomer"></bp:Action> 
+      <bp:Action Name="help" NextWorkflow="help"></bp:Action>  
       <bp:Action Name="Sync" NextWorkflow="Sync"/>
     </bp:Step>
 
+  </bp:Workflow>
+  
+  <bp:Workflow Name="help">
+  <bp:Step Name="help" Screen="help.xml" Controller="help.js">
+  
+  </bp:Step>
   </bp:Workflow>
 
   <bp:Workflow Name="requests">
 
     <bp:Step Name="requests" Screen="requests.xml" Controller="requests\Main.js">
       
-	  <bp:Action Name="SelectItem" NextStep="Customer"></bp:Action>
+	 <bp:Action Name="SelectItem" NextStep="Customer"></bp:Action> 
+	  <!--<bp:Action Name="SelectItem" NextStep="Total"></bp:Action>Заглушка для тестирования Геймификации-->
 	  <bp:Action Name="EditFilter" NextStep="EditFilter"></bp:Action>
       
     </bp:Step>
     
     <bp:Step Name="EditFilter" Screen="filter.xml" Controller="requests\Main.js">
-      
-	  
-      
+         
     </bp:Step>
+    
+    <bp:Step Name="KKM" Screen="KKMlist.xml" Controller="requests\kkmlist.js">
+    	<bp:Action Name="GoForward" NextStep="Total"></bp:Action>
+        <bp:Action Name="SelectItem" NextStep="KKMDetails"></bp:Action>
+    </bp:Step>
+    
+    <bp:Step Name="KKMDetails" Screen="KKMDetails.xml" Controller="requests\KKMDetails.js">
+        
+    </bp:Step>
+    
+    <bp:Step Name="UserDetails" Screen="requests\userdetails.xml" Controller="requests\userdetails.js">
+         
+    </bp:Step>
+    
+    <bp:Step Name="req_sync" Screen="requests\request_sync.xml" Controller="requests\Sync.js">
+    	<bp:Action Name="DoCommit" NextStep="requests"></bp:Action>
+	</bp:Step>
     
     <bp:Step Name="MultiList" Screen="requests\MultiList.xml" Controller="requests\Questions.js">
     	
@@ -49,6 +73,7 @@
 	<bp:Step Name="WorkList" Screen="requests\worklist.xml" Controller="requests\worklist.js">
 		<bp:Action Name="DoNew" NextStep="Work"></bp:Action>
 		<bp:Action Name="GoForward" NextStep="Total"></bp:Action>
+		<bp:Action Name="GoKKM" NextStep="KKM"></bp:Action>
 	</bp:Step>
 
     <bp:Step Name="Work" Screen="requests\work.xml" Controller="requests\work.js">
@@ -63,15 +88,30 @@
     
     <bp:Step Name="Total" Screen="requests\total.xml" Controller="requests\total.js">
     	<bp:Action Name="DoCommit" NextStep="requests"></bp:Action>
+    	<bp:Action Name="DoSync" NextStep="req_sync"></bp:Action>
+    	<bp:Action Name="gamificationHelp" NextStep="gamificationHelp"></bp:Action>
+    </bp:Step>
+    
+     <bp:Step Name="gamificationHelp" Screen="requests\gamificationHelp.xml" Controller="requests\total.js">
+    	
     </bp:Step>
     
     <bp:Step Name="Customer" Screen="requests\customer.xml" Controller="requests\customer.js">
     	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
     	<bp:Action Name="GoParams" NextStep="Parameters"></bp:Action>
+    	<bp:Action Name="GoForwardQ" NextStep="Questions"></bp:Action>
+    	<bp:Action Name="WorkList" NextStep="WorkList"></bp:Action>
 		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
 		<bp:Action Name="Options" NextStep="Options"></bp:Action>
 		<bp:Action Name="Metrolist" NextStep="Metrolist"></bp:Action>
 		<bp:Action Name="CustomerView" NextStep="CustomerView"></bp:Action>
+		<bp:Action Name="GetFulltext" NextStep="GetFulltext"></bp:Action>
+		<bp:Action Name="GetContact" NextStep="EditContact"></bp:Action>
+		<bp:Action Name="UserDetails" NextStep="UserDetails"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="GetFulltext" Screen="requests\FullText.xml" Controller="requests\customer.js">
+    	
 	</bp:Step>
 	
 	 <bp:Step Name="CustomerView" Screen="customers\customer.xml" Controller="requests\customer.js">
@@ -171,6 +211,14 @@
 	  
       
     </bp:Step>
+    
+    <bp:Step Name="UserDetails" Screen="requests\userdetails.xml" Controller="requests\userdetails.js">
+         
+    </bp:Step>
+    
+    <bp:Step Name="GetFulltext" Screen="requests\FullText.xml" Controller="requests\customer.js">
+    	
+	</bp:Step>
 	
 	 <bp:Step Name="Questions" Screen="requests\Questions.xml" Controller="requests\Questions.js">
     	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
@@ -203,14 +251,39 @@
     
     <bp:Step Name="Total" Screen="requests\total.xml" Controller="requests\total.js">
     	<bp:Action Name="DoCommit" NextStep="history"></bp:Action>
+    	<bp:Action Name="DoSync" NextStep="req_sync"></bp:Action>
+    	<bp:Action Name="gamificationHelp" NextStep="gamificationHelp"></bp:Action>
     </bp:Step>
+    
+     <bp:Step Name="gamificationHelp" Screen="requests\gamificationHelp.xml" Controller="requests\total.js">
+    	
+    </bp:Step>
+    
+     <bp:Step Name="req_sync" Screen="requests\request_sync.xml" Controller="requests\Sync.js">
+    	<bp:Action Name="DoCommit" NextStep="history"></bp:Action>
+	</bp:Step>
     
     <bp:Step Name="Customer" Screen="requests\customer.xml" Controller="requests\customer.js">
     	<bp:Action Name="GoForward" NextStep="WorkList"></bp:Action>
+    	<bp:Action Name="GoParams" NextStep="Parameters"></bp:Action>
 		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
 		<bp:Action Name="Options" NextStep="Options"></bp:Action>
-		<bp:Action Name="GoParams" NextStep="Parameters"></bp:Action>
+		<bp:Action Name="Metrolist" NextStep="Metrolist"></bp:Action>
+		<bp:Action Name="CustomerView" NextStep="CustomerView"></bp:Action>
+		<bp:Action Name="GetFulltext" NextStep="GetFulltext"></bp:Action>
+		<bp:Action Name="GetContact" NextStep="EditContact"></bp:Action>
+		<bp:Action Name="UserDetails" NextStep="UserDetails"></bp:Action>
 	</bp:Step>
+	
+	 <bp:Step Name="CustomerView" Screen="customers\customer.xml" Controller="requests\customer.js">
+    	<bp:Action Name="Ready" NextStep="customers"></bp:Action>
+    	<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
+		<bp:Action Name="Options" NextStep="Options"></bp:Action>
+	</bp:Step>
+	
+	<bp:Step Name="Metrolist" Screen="requests\metrolist.xml" Controller="requests\metrolist.js">
+    	
+    </bp:Step>
 	
 	<bp:Step Name="Contacts" Screen="requests\contacts.xml" Controller="requests\customer.js">
 		<bp:Action Name="EditContact" NextStep="EditContact"></bp:Action>
@@ -241,4 +314,19 @@
 		<bp:Action Name="Contacts" NextStep="Contacts"></bp:Action>
 	</bp:Step>
 </bp:Workflow>
+
+<bp:Workflow Name="samuraiGame">
+	<bp:Step Name="samurai" Screen="samuraigame\samurai.xml" Controller="samuraigame\samurai.js">
+		<bp:Action Name="DirtyHack" NextStep="DirtyHack"></bp:Action>
+	</bp:Step>
+	<bp:Step Name="DirtyHack" Screen="samuraigame\samurai.xml" Controller="samuraigame\samurai.js"></bp:Step>
+</bp:Workflow>
+
+<bp:Workflow Name="newcustomer">
+	<bp:Step Name="newcust" Screen="newcustomer\newcust.xml" Controller="newcustomer\newcust.js">
+		<bp:Action Name="DirtyHackClient" NextStep="DirtyHackClient"></bp:Action>
+	</bp:Step>
+	<bp:Step Name="DirtyHackClient" Screen="newcustomer\newcust.xml" Controller="newcustomer\newcust.js"></bp:Step>
+</bp:Workflow>
+
 </bp:BusinessProcess>

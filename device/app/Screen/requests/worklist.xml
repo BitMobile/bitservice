@@ -12,9 +12,16 @@
 					 <c:Image/>
 	        		 <c:TextView Text="#back#"/>
       			</c:HorizontalLayout>						
-       
-			<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"
+       		
+       		<s:If Test="$KKMExists($param1)">
+       		<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"
+				OnClickAction="$Workflow.DoAction(GoKKM, $param1)" />
+       		</s:If> 
+       		<s:Else>
+       			<c:Button Id="btnForward" Text="#next#" CssClass="btn_forward"
 				OnClickAction="$Workflow.DoAction(GoForward, $param1)" />
+       		</s:Else>
+			
 			<c:HorizontalLayout>
 				<c:TextView Text="#worklist#" />
 			</c:HorizontalLayout>

@@ -6,7 +6,7 @@
 	<c:DockLayout>
 
 		<c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_bottom_footer " OnClickAction="$Workflow.DoBack()">
+			<c:DockLayout CssClass="btn_bottom_footer " OnEvent="Back" OnClickAction="$Workflow.DoBack()">
 				<c:TextView Text="Назад" />
 			</c:DockLayout>
 		</c:DockLayout>

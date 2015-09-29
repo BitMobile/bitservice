@@ -11,7 +11,7 @@
 				<c:TextView Text="Добавить" />
 			</c:DockLayout>
 
-			<c:DockLayout CssClass="btn_right_footer" OnClickAction="$Workflow.DoBack()">
+			<c:DockLayout CssClass="btn_right_footer" OnEvent="Back" OnClickAction="$Workflow.DoBack()">
 				<c:TextView Text="Закрыть" />
 			</c:DockLayout>
 		</c:DockLayout>

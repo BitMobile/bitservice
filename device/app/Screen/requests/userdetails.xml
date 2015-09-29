@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="userdetails.css">
+	<s:Push Id="oManager" Value="$param1"></s:Push>
+	
+	
+	<s:If Test="$oManager != NULL">
+		<s:Push Id="contact" Value="$param1"></s:Push>
+	
+		<c:DockLayout>
+	
+			<c:DockLayout CssClass="footer">					
+				<c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$Workflow.DoBack()">
+					<c:TextView Text="Назад"/>
+				</c:DockLayout>
+			</c:DockLayout>
+			<c:ScrollView>
+				<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Фамилия И.О." CssClass="description_row"></c:TextView>
+						<c:TextView Id="Name" Text="$oManager.Description" CssClass="main_row"></c:TextView>												
+	    			</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
+				<c:HorizontalLine />
+				
+		<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="Должность" CssClass="description_row"></c:TextView>
+						<c:TextView Id="PositionUser" Text="$oManager.Position.Description" CssClass="main_row"></c:TextView>												
+	    			</c:VerticalLayout>
+	    			
+	    				
+									
+		</c:HorizontalLayout>
+				
+		<c:HorizontalLine />
+				
+				<c:HorizontalLayout CssClass="grid">			
+					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+					
+					<c:VerticalLayout>
+						<c:TextView Text="E-mail" CssClass="description_row"></c:TextView>
+						<c:TextView Id="position" Text="$oManager.EMail" CssClass="main_row"></c:TextView>
+					</c:VerticalLayout>				
+				</c:HorizontalLayout>
+				
+				<s:Iterator Id="Phones" Value="$GetUserPhones($oManager.Id)">
+					<c:HorizontalLine />
+				
+					<c:HorizontalLayout CssClass="grid">			
+						<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+						
+						<c:VerticalLayout>
+							<c:TextView Text="$Phones.Name" CssClass="description_row"></c:TextView>
+							<c:TextView Text="$Phones.Number" CssClass="main_row"></c:TextView>
+						</c:VerticalLayout>	
+						
+						<c:VerticalLayout CssClass="PhonePlaceFromConfig" OnClickAction="$MoreMakeContactCall($Phones.Number)">
+									
+						</c:VerticalLayout>			
+					</c:HorizontalLayout>
+				</s:Iterator>
+				
+				<c:HorizontalLine />
+				
+				
+			</c:ScrollView>
+		</c:DockLayout>
+	</s:If>
+	<s:Else>
+		<c:DockLayout>	
+			<c:DockLayout CssClass="footer">					
+				<c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$Workflow.DoBack()">
+					<c:TextView Text="Назад"/>
+				</c:DockLayout>
+			</c:DockLayout>			
+		</c:DockLayout>	
+	</s:Else>
+
+
+
+</c:Screen>

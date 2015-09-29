@@ -52,7 +52,7 @@
 		</c:ScrollView>
 		
 	<c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_bottom_footer " OnClickAction="$DoBackAndCleanAct()">
+			<c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$DoBackAndCleanAct()">
 				<c:TextView Text="Назад" />
 			</c:DockLayout>
 	</c:DockLayout>

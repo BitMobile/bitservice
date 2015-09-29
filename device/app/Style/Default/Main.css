@@ -120,6 +120,13 @@ svl vl {
     vertical-align: central;
     background-image: url(task.png);
 }
+.btn_samurai {
+    height: 44%;
+	margin-left: 1%;
+	margin-right: 1%;
+    vertical-align: central;
+    background-image: url(icon_mountains.png);
+}
 
 .btn_orders {
     height: 58%;
