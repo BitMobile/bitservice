@@ -35,7 +35,7 @@
 		</c:DockLayout>
 	</s:Else>
 <s:If Test = "$curwork != NULL">
-<c:ScrollView>
+<c:SwipeVerticalLayout Id="grScrollView">
 	<c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
           <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
@@ -108,10 +108,10 @@
         </s:Else>
     </c:DockLayout>
     <c:HorizontalLine/>
-</c:ScrollView>
+</c:SwipeVerticalLayout>
 </s:If>
 <s:Else>
-		<c:ScrollView>
+		<c:SwipeVerticalLayout Id="grScrollView">
 	<c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
           <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
@@ -146,7 +146,7 @@
         <c:EditText Id = "nv"  CssClass="value" Keyboard="numeric"></c:EditText>
     </c:DockLayout>
     <c:HorizontalLine/>
-</c:ScrollView>
+</c:SwipeVerticalLayout>
 
 
 </s:Else>	

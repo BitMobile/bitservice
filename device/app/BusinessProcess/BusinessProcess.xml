@@ -8,10 +8,17 @@
       <bp:Action Name="customerlist" NextWorkflow="customerlist"></bp:Action>
       <bp:Action Name="historylist" NextWorkflow="Historylist"></bp:Action>  
       <bp:Action Name="samurai" NextWorkflow="samuraiGame"></bp:Action> 
-      <bp:Action Name="newcustomer" NextWorkflow="newcustomer"></bp:Action>   
+      <bp:Action Name="newcustomer" NextWorkflow="newcustomer"></bp:Action> 
+      <bp:Action Name="help" NextWorkflow="help"></bp:Action>  
       <bp:Action Name="Sync" NextWorkflow="Sync"/>
     </bp:Step>
 
+  </bp:Workflow>
+  
+  <bp:Workflow Name="help">
+  <bp:Step Name="help" Screen="help.xml" Controller="help.js">
+  
+  </bp:Step>
   </bp:Workflow>
 
   <bp:Workflow Name="requests">
