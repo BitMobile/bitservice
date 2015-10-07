@@ -8,9 +8,9 @@ function fillValues(ref) {
 
 function saveChenges(ref) {
 	var kkm = ref.GetObject();
-	Console.WriteLine('=== $.regnum.Text = ' + $.regnum.Text + '; $.PasswordNI.Text= ' + $.PasswordNI.Text );
-	if (StrLen($.regnum.Text) > 12) {
-		Dialog.Message("Рег. номер не должен превышать 12-ти символов");
+	
+	if (StrLen($.regnum.Text) > 12 || !validate($.regnum.Text, "[0-9]*")) {
+		Dialog.Message("Рег. номер не должен превышать 12-ти символов и содержать только цифры");
 		return; 
 	}
 	

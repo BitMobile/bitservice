@@ -1,6 +1,6 @@
 Bitmobile.device_address=192.168.20.206
 Bitmobile.device_debug_port=8082
-Bitmobile.device_deploy_script=C\:\\Utils\\utils.exe -dr -host %HOST% -sp bitsIDDQD12321 -sn bits  %PATH%\r\nC\:\\Utils\\utils.exe -ar -host %HOST% -sp bitsIDDQD12321 -sn bits
+Bitmobile.device_deploy_script=C\:\\Utils\\utils.exe -dr -host %HOST% -sp MyPass123 -sn AntonovBits  %PATH%\r\nC\:\\Utils\\utils.exe -ar -host %HOST% -sp MyPass123 -sn AntonovBits 
 Bitmobile.device_starter_port=8082
-Bitmobile.server_url=http\://93.153.157.82\:51080/bitmobile
+Bitmobile.server_url=http\://bitmobile1.bt/bitmobile
 eclipse.preferences.version=1
