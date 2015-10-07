@@ -39,20 +39,24 @@ function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 	}
 	
 	if (nextStep == "DirtyHackClient") {
-		sendClientRequest($.phone.Text, $.sClientName.Text, $.sComment.Text, $.contact.Text);
-		if ($.Exists("sent")){
-			$.Remove("sent");
-			$.AddGlobal("sent", true);		
+		if (sendClientRequest($.phone.Text, $.sClientName.Text, $.sComment.Text, $.contact.Text)) {
+			if ($.Exists("sent")){
+				$.Remove("sent");
+				$.AddGlobal("sent", true);		
+			} else {
+				$.AddGlobal("sent", true);
+			}
+					
+			$.sClientName.Text = "";
+			$.sComment.Text = "";
+			$.contact.Text = "";
+			$.phone.Text = "";
+			//setCookie($.sStaffName.Text, "", "");
+			Workflow.Refresh([]);
 		} else {
-			$.AddGlobal("sent", true);
+			$.submitButton.Text = "Отправить запрос";
+			Workflow.Refresh([]);
 		}
-		$.submitButton.Text = "Отправить запрос";		
-		$.sClientName.Text = "";
-		$.sComment.Text = "";
-		$.contact.Text = "";
-		//setCookie($.sStaffName.Text, "", "");
-		Workflow.Refresh([]);
-		
 		return false;
 		
 	}
@@ -77,21 +81,24 @@ function sendRequest(staffName, clientName, comment){
 }
 
 function sendClientRequest(staffName, clientName, comment, contact){
-	var req = new HttpRequest("http://192.168.104.24"); //develop
+	var req = new HttpRequest("http://93.153.157.82:51080"); //develop
 	//var req = new HttpRequest("http://web-server.ru.com:30015"); //production
-	if (!IsNullOrEmpty(staffName) && !IsNullOrEmpty(clientName) && !IsNullOrEmpty(comment)){
-		setCookie(staffName, clientName, comment);
+	if (!IsNullOrEmpty(staffName) && !IsNullOrEmpty(clientName) && !IsNullOrEmpty(comment) && !IsNullOrEmpty(contact)){
+		//setCookie(staffName, clientName, comment);
 		try {	
 			var curUser = $.common.UserRef;
-			req.Post("/bits/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop	
+			req.Post("/superservice/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop	
 			//req.Post("/bits/hs/sending" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
+			return true
 		} catch (e){
 			Dialog.Debug(e);
-			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже*.");
-			setCookie(staffName, clientName, comment);
+			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже.");
+			//setCookie(staffName, clientName, comment);
+			return false
 		}		
 	} else {
 		Dialog.Message("Пожалуйста заполните все поля.");
+		return false
 	}
 }
 

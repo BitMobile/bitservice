@@ -82,7 +82,7 @@ function sendRequest(phone, clientName, comment){
 
 function clickSend(){
 	$.done_message.Visible = false;
-	$.submitButton.Text = "Р�РґРµС‚ РѕС‚РїСЂР°РІРєР°...";
+	$.submitButton.Text = "Отправляется...";
 	
 	Workflow.Action("DirtyHackClient", []);
 	
