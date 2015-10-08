@@ -81,9 +81,9 @@ function sendRequest(staffName, clientName, comment){
 }
 
 function sendClientRequest(staffName, clientName, comment, contact){
-	var req = new HttpRequest("http://93.153.157.82:51080"); //develop
+	var req = new HttpRequest("http://bitmobile2.bt"); //develop
 	//var req = new HttpRequest("http://web-server.ru.com:30015"); //production
-	if (!IsNullOrEmpty(staffName) && !IsNullOrEmpty(clientName) && !IsNullOrEmpty(comment) && !IsNullOrEmpty(contact)){
+	if (!IsNullOrEmpty(clientName)){
 		//setCookie(staffName, clientName, comment);
 		try {	
 			var curUser = $.common.UserRef;
