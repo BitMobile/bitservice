@@ -97,7 +97,7 @@ function sendClientRequest(staffName, clientName, comment, contact){
 			return false
 		}		
 	} else {
-		Dialog.Message("Пожалуйста заполните все поля.");
+		Dialog.Message("Пожалуйста заполните поле 'Наименование клиента'");
 		return false
 	}
 }
