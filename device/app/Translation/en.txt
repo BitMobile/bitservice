@@ -17,7 +17,7 @@ visit		Визит
 visits		Визиты
 incompletedVisits	НЕВЫПОЛНЕННЫЕ ВИЗИТЫ
 completedVisits		ВЫПОЛНЕННЫЕ ВИЗИТЫ
-info		О приложении
+info		Помощь
 planVisit	Плановые
 unplanned	Внеплановые
 outlets		Магазины
