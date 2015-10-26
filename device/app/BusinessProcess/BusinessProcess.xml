@@ -78,10 +78,16 @@
 
     <bp:Step Name="Work" Screen="requests\work.xml" Controller="requests\work.js">
     	<bp:Action Name="ChoiceProduct" NextStep="ChoiceProduct"></bp:Action>
+    	<bp:Action Name="ChoiceDirection" NextStep="ChoiceDirection"></bp:Action>
     	<bp:Action Name="CMT" NextStep="WorkList"></bp:Action>
     </bp:Step>
     
      <bp:Step Name="ChoiceProduct" Screen="requests\choiceproduct.xml" Controller="requests\choiceproduct.js">
+    	<bp:Action Name="DoSelect" NextStep="Work"></bp:Action>
+    	
+    </bp:Step>
+
+    <bp:Step Name="ChoiceDirection" Screen="requests\choiceDirection.xml" Controller="requests\choiceproduct.js">
     	<bp:Action Name="DoSelect" NextStep="Work"></bp:Action>
     	
     </bp:Step>

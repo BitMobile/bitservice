@@ -84,6 +84,11 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		} else {
 			workid.AmountOfHours = 0;
 		}
+
+		if ($.Exists("workType")) {
+			workid.WorkType = $.workType;
+			$.Remove("workType");
+		}
 		workid.Save(false);
 				
 	} else {
@@ -102,6 +107,10 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		if (hcount !="" && hcount != null){
 			ow.AmountOfHours = String.Format("{0:F2}", Converter.ToDecimal(hcount));
 		}
+		if ($.Exists("workType")) {
+			ow.WorkType = $.workType;
+			$.Remove("workType");
+		}
 		ow.Save(false);
 	}
 	//Workflow.Back([request]);
@@ -114,6 +123,15 @@ function DoCancel(step){
 		$.curwork.LoadObject();
 	}
 	$.Remove("newwork");
+	$.Remove("workType");
 	Workflow.BackTo(step);
 }
 
+
+function getWorkType(val) {
+	if ($.Exists("workType")) {
+		return $.workType;
+	} else {
+		return val;
+	}
+}

@@ -26,6 +26,23 @@ function GetProducts(objCust, searchString, vRef) {
 	}
 }
 
+function GetDirections(objCust, searchString, vRef) {
+	//Dialog.Debug(searchString);
+	var q = new Query();
+	var qt = "SELECT DT.Id, DT.Description As Descr FROM Catalog_DepartureTypes DT WHERE DT.Parent = @Parent";
+	if (searchString != "" && searchString != null) {
+		var plus = " AND  Contains(DT.Description, @st)";
+		qt = qt + plus;
+		q.AddParameter("st", searchString);
+	}
+	
+	q.Text = qt;
+	
+	q.AddParameter("Parent", vRef.DirectionOfAppeal);
+	return q.Execute();
+	
+}
+
 //function SetProduct(cw, p){
 //	cw.SKU = p;
 //	Workflow.Back();
@@ -55,3 +72,12 @@ function DoBackAndClean(){
 	Workflow.Back();
 }
 
+function doSelectDirection (dir) {
+	if ($.Exists("workType")) {
+		$.Remove("workType");
+		$.AddGlobal("workType", dir);
+	} else {
+		$.AddGlobal("workType", dir);
+	}
+	DoBack();
+}
