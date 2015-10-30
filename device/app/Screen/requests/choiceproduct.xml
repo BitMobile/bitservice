@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="choiceproduct.css">
-<c:VerticalLayout>	
-	 <c:HorizontalLayout CssClass="search">
+<s:Push Id="product" Value="$GetProducts($param1.Customer, $prodsearch, $param1.Id)">
+<s:Push Id="Allproducts" Value="$GetAllProducts($prodsearch)">
+<c:VerticalLayout>
+  <c:HorizontalLayout CssClass="small_grid">	
+	  <s:If Test="$isCustProd()">
+      <c:HorizontalLayout CssClass="mode_left_button_on">
+        <c:HorizontalLayout Id="custProd" CssClass="select_zone" OnClickAction="$ChangeListAndRefresh(1)">
+        <c:TextView Text="У клиента"></c:TextView>
+        </c:HorizontalLayout>
+      </c:HorizontalLayout>
+      <c:HorizontalLayout CssClass="mode_right_button_off">
+        <c:HorizontalLayout Id="allProd" CssClass="select_zone" OnClickAction="$ChangeListAndRefresh(2)">
+        <c:TextView Text="Все"></c:TextView>
+        </c:HorizontalLayout>
+      </c:HorizontalLayout>
+      </s:If>
+      <s:Else>
+      <c:HorizontalLayout CssClass="mode_left_button_off">
+        <c:HorizontalLayout Id="custProd" CssClass="select_zone" OnClickAction="$ChangeListAndRefresh(1)">
+        <c:TextView  Text="У клиента" ></c:TextView>
+        </c:HorizontalLayout>
+      </c:HorizontalLayout>
+      <c:HorizontalLayout CssClass="mode_right_button_on">
+        <c:HorizontalLayout Id="allProd" CssClass="select_zone" OnClickAction="$ChangeListAndRefresh(2)">
+        <c:TextView Text="Все"></c:TextView>
+        </c:HorizontalLayout>
+      </c:HorizontalLayout>
+      </s:Else>
+    </c:HorizontalLayout>
+    <c:HorizontalLine/> 
+   <c:HorizontalLayout CssClass="search">
 	 <s:Push Id="val" Value="$initsearch()"/>
       <c:DockLayout >
         <c:Image />
         <c:EditText Id="edtSearch" Text="$prodsearch" Placeholder="#search#"></c:EditText>
       </c:DockLayout>
       <c:Button Id="btnSearch" Text="#search#" OnClickAction="$DoSearch($edtSearch.Text, $param1, $param2, $param3)"></c:Button>
-    </c:HorizontalLayout>    
-    <c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
+    </c:HorizontalLayout> 
     
+     
+       
+    <c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
+    <s:If Test="$isCustProd()">
     <c:ScrollView>   
-    <s:Iterator Id="product" Value="$GetProducts($param1.Customer, $prodsearch, $param1.Id)">
+    <s:Iterator Id="product" Value="$product">
           <c:HorizontalLine/>
           <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $product.Product, 1, $param3)">
             <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
@@ -25,12 +57,33 @@
 
      </s:Iterator>
    </c:ScrollView>
-   
    <c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$DoBackAndClean()">
-				<c:TextView Text="Назад" />
-			</c:DockLayout>
-	</c:DockLayout>
-   
+      <c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$DoBackAndClean()">
+        <c:TextView Text="Назад" />
+      </c:DockLayout>
+  </c:DockLayout>
+   </s:If>
+   <s:Else>
+      <c:ScrollView>   
+    <s:Iterator Id="allProduct" Value="$Allproducts">
+          <c:HorizontalLine/>
+          <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $product.Product, 1, $param3)">
+            <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+            <c:VerticalLayout>
+              <c:TextView Text="$allProduct.Product.Description" CssClass="main_row"></c:TextView>
+             
+            </c:VerticalLayout>
+            <c:Image/>
+          </c:HorizontalLayout>
+
+     </s:Iterator>
+   </c:ScrollView>
+   <c:DockLayout CssClass="footer">
+      <c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$DoBackAndClean()">
+        <c:TextView Text="Назад" />
+      </c:DockLayout>
+  </c:DockLayout>
+  </s:Else>
+     
 </c:VerticalLayout>
 </c:Screen>

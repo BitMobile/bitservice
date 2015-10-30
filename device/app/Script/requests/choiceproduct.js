@@ -1,3 +1,26 @@
+function OnLoading(){
+	SetListType();
+}
+
+ function SetListType() {
+    if ($.Exists("listType") == false){
+        $.AddGlobal("listType", 1);
+      } 
+      Dialog.Debug($.listType);
+      return $.listType;
+}
+
+function isCustProd() {
+	if ( $.listType == 1) {
+		 Dialog.Debug("CP");
+		return true;
+	} else {
+		Dialog.Debug("AP");
+		return false;
+	}
+
+}
+
 function GetProducts(objCust, searchString, vRef) {
 	//Dialog.Debug(searchString);
 	var q = new Query();
@@ -24,6 +47,24 @@ function GetProducts(objCust, searchString, vRef) {
 		qq.AddParameter("r", vRef);		
 		return qq.Execute();
 	}
+}
+
+function GetAllProducts(searchString) {
+	//Dialog.Debug(searchString);
+	var q = new Query();
+	var qt = "SELECT P.Id AS Id, P.Product AS Product, S.Description AS Description FROM Catalog_Customer_Products P LEFT JOIN Catalog_SKU S ON P.Product = S.Id ";
+	
+	if (searchString != "" && searchString != null) {
+		var plus = " WHERE Contains(S.Description, @st)";		
+		qt = qt + plus;		
+		q.AddParameter("st", searchString);
+	}	
+	//Dialog.Debug(qt);
+	q.Text = qt;	
+	q.AddParameter("cust", objCust);
+	
+	return q.Execute();	
+	
 }
 
 function GetDirections(objCust, searchString, vRef) {
@@ -69,6 +110,7 @@ function DoSearch(srchstr, p1, p2, p3){
 
 function DoBackAndClean(){
 	$.Remove("prodsearch");
+	$.Remove("listType");
 	Workflow.Back();
 }
 
@@ -80,4 +122,10 @@ function doSelectDirection (dir) {
 		$.AddGlobal("workType", dir);
 	}
 	DoBack();
+}
+
+function ChangeListAndRefresh(control) {
+    $.Remove("listType");
+    $.AddGlobal("listType", control);
+    Workflow.Refresh([]);
 }
