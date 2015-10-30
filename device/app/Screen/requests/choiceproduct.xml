@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="choiceproduct.css">
-<s:Push Id="product" Value="$GetProducts($param1.Customer, $prodsearch, $param1.Id)">
-<s:Push Id="Allproducts" Value="$GetAllProducts($prodsearch)">
+
 <c:VerticalLayout>
   <c:HorizontalLayout CssClass="small_grid">	
 	  <s:If Test="$isCustProd()">
@@ -43,46 +42,48 @@
        
     <c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
     <s:If Test="$isCustProd()">
-    <c:ScrollView>   
-    <s:Iterator Id="product" Value="$product">
-          <c:HorizontalLine/>
-          <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $product.Product, 1, $param3)">
-            <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
-            <c:VerticalLayout>
-              <c:TextView Text="$product.Product.Description" CssClass="main_row"></c:TextView>
-             
-            </c:VerticalLayout>
-            <c:Image/>
-          </c:HorizontalLayout>
+        <s:Push Id="product" Value="$GetProducts($param1.Customer, $prodsearch, $param1.Id)"/>
+        <c:ScrollView>   
+        <s:Iterator Id="product" Value="$product">
+              <c:HorizontalLine/>
+              <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $product.Product, 1, $param3)">
+                <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+                <c:VerticalLayout>
+                  <c:TextView Text="$product.Product.Description" CssClass="main_row"></c:TextView>
+                 
+                </c:VerticalLayout>
+                <c:Image/>
+              </c:HorizontalLayout>
 
-     </s:Iterator>
-   </c:ScrollView>
-   <c:DockLayout CssClass="footer">
-      <c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$DoBackAndClean()">
-        <c:TextView Text="Назад" />
+         </s:Iterator>
+       </c:ScrollView>
+       <c:DockLayout CssClass="footer">
+          <c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$DoBackAndClean()">
+            <c:TextView Text="Назад" />
+          </c:DockLayout>
       </c:DockLayout>
-  </c:DockLayout>
    </s:If>
    <s:Else>
-      <c:ScrollView>   
-    <s:Iterator Id="allProduct" Value="$Allproducts">
-          <c:HorizontalLine/>
-          <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $product.Product, 1, $param3)">
-            <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
-            <c:VerticalLayout>
-              <c:TextView Text="$allProduct.Product.Description" CssClass="main_row"></c:TextView>
-             
-            </c:VerticalLayout>
-            <c:Image/>
-          </c:HorizontalLayout>
+        <s:Push Id="Allproducts" Value="$GetAllProducts($prodsearch)"/>
+        <c:ScrollView>   
+        <s:Iterator Id="allProduct" Value="$Allproducts">
+              <c:HorizontalLine/>
+              <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $allProduct.Product, 1, $param3)">
+                <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+                <c:VerticalLayout>
+                  <c:TextView Text="$allProduct.Product.Description" CssClass="main_row"></c:TextView>
+                 
+                </c:VerticalLayout>
+                <c:Image/>
+              </c:HorizontalLayout>
 
-     </s:Iterator>
-   </c:ScrollView>
-   <c:DockLayout CssClass="footer">
-      <c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$DoBackAndClean()">
-        <c:TextView Text="Назад" />
+         </s:Iterator>
+       </c:ScrollView>
+       <c:DockLayout CssClass="footer">
+          <c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$DoBackAndClean()">
+            <c:TextView Text="Назад" />
+          </c:DockLayout>
       </c:DockLayout>
-  </c:DockLayout>
   </s:Else>
      
 </c:VerticalLayout>

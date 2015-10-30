@@ -127,5 +127,5 @@ function doSelectDirection (dir) {
 function ChangeListAndRefresh(control) {
     $.Remove("listType");
     $.AddGlobal("listType", control);
-    Workflow.Refresh([]);
+    Workflow.Refresh([$.param1, $.param2, $.param3]);
 }
