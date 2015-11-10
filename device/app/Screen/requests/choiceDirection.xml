@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="choiceproduct.css">
+<c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="choiceDirection.css">
 <c:VerticalLayout>	
 	 <c:HorizontalLayout CssClass="search">
 	 <s:Push Id="val" Value="$initsearch()"/>

@@ -16,6 +16,9 @@ function OnWorkflowStart(name) {
 	 Variables.AddGlobal("workflow", new Dictionary());
 	 Variables["workflow"].Add("name", name);
 	 
+	 if(name == "requests"){
+	 	GPS.StartTracking(180);
+	 }
 	
 }
 

@@ -36,7 +36,21 @@
 	</s:Else>
 <s:If Test = "$curwork != NULL">
 <c:SwipeVerticalLayout Id="grScrollView">
-  <s:If Test="$isProgress($visit.Status)">  
+  
+	<c:HorizontalLayout CssClass="memo_block">
+        <c:VerticalLayout>
+          <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
+          <s:If Test="$isProgress($visit.Status)">
+          	<c:MemoEdit Id="desc" Value = "$curwork.Description"  CssClass="main_row" ></c:MemoEdit>
+          </s:If>
+          <s:Else>
+          	<c:TextView Id="desc" Text = "$curwork.Description"  CssClass="main_row"></c:TextView>
+          </s:Else>
+        </c:VerticalLayout>
+    </c:HorizontalLayout>
+    <c:HorizontalLine/>
+
+    <s:If Test="$isProgress($visit.Status)">  
      <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(ChoiceDirection, $visit, $curwork, $param5)">
       <c:TextView Text="Тип выезда" CssClass="ProdCaption"></c:TextView>
           <s:Push Id="TypeWorkVal" Value="$getWorkType($curwork.WorkType)"></s:Push>
@@ -50,18 +64,6 @@
           <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>               
     </c:DockLayout>
     </s:Else>
-    <c:HorizontalLine/>
-	<c:HorizontalLayout CssClass="memo_block">
-        <c:VerticalLayout>
-          <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
-          <s:If Test="$isProgress($visit.Status)">
-          	<c:MemoEdit Id="desc" Value = "$curwork.Description"  CssClass="main_row" ></c:MemoEdit>
-          </s:If>
-          <s:Else>
-          	<c:TextView Id="desc" Text = "$curwork.Description"  CssClass="main_row"></c:TextView>
-          </s:Else>
-        </c:VerticalLayout>
-    </c:HorizontalLayout>
     <c:HorizontalLine/>
     
     <c:DockLayout CssClass="parameter_grid">
@@ -127,7 +129,16 @@
 </s:If>
 <s:Else>
 		<c:SwipeVerticalLayout Id="grScrollView">
-      <s:If Test="$isProgress($visit.Status)">  
+     
+	<c:HorizontalLayout CssClass="memo_block">
+        <c:VerticalLayout>
+          <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
+          <c:MemoEdit Id = "desc"  CssClass="main_row"></c:MemoEdit>
+        </c:VerticalLayout>
+    </c:HorizontalLayout>
+    <c:HorizontalLine/>
+
+     <s:If Test="$isProgress($visit.Status)">  
      <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(ChoiceDirection, $visit, $curwork, $param5)">
       <c:TextView Text="Тип выезда" CssClass="ProdCaption"></c:TextView>
           <s:Push Id="TypeWorkVal" Value="$getWorkType($curwork.WorkType)"></s:Push>
@@ -141,13 +152,6 @@
           <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>               
     </c:DockLayout>
     </s:Else>
-    <c:HorizontalLine/>
-	<c:HorizontalLayout CssClass="memo_block">
-        <c:VerticalLayout>
-          <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
-          <c:MemoEdit Id = "desc"  CssClass="main_row"></c:MemoEdit>
-        </c:VerticalLayout>
-    </c:HorizontalLayout>
     <c:HorizontalLine/>
     
     <c:DockLayout CssClass="parameter_grid">

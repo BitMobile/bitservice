@@ -1,5 +1,57 @@
 ﻿var swipedItem = undefined;
 
+function isEmptyCoordinats(outlet){
+	if (outlet.Lattitude == 0 && outlet.Longitude == 0) {
+		return true;
+	} else {
+		return false;
+	}
+	
+}
+
+function setCoordinats(outlet, param1){
+	var location = GPS.CurrentLocation;
+	if(location.NotEmpty) {
+	    var objOutlet = outlet.GetObject();
+	    objOutlet.Latitude = location.Latitude;
+	    objOutlet.Longitude = location.Longitude;
+	    objOutlet.Save(false);
+	    //$.Coordinats = location.Latitude + "; " + location.Longitude;
+	    Workflow.Refresh([param1]);
+	} else {
+		Dialog.Message("Координаты не зафиксированы.");
+	}
+}
+
+function updateCoordinats(outlet, param1) {
+	Dialog.Choose("Координаты", [["update", "Обновить"],["copy", "Скопировать"], ["cut", "Удалить"]] , coordinatsCallBack, [outlet, param1]);
+}
+
+function coordinatsCallBack(state, args){
+	var obj = state[0].GetObject();
+	var location = GPS.CurrentLocation;
+
+	if (args.Result == "update") {
+		obj.Latitude = location.Latitude;
+		obj.Longitude = location.Longitude;
+		obj.Save(false);
+		Workflow.Refresh([state[1]]);
+	}
+
+	if (args.Result == "copy") {
+		Clipboard.SetString(location.Latitude + "; " + location.Longitude);
+	}
+
+	if (args.Result == "cut") {
+		obj.Latitude = 0;
+		obj.Longitude = 0;
+		obj.Save(false);
+		Workflow.Refresh([state[1]]);
+	}
+
+ 	
+}
+
 function DoActionAndSave(step, req, cust, outlet) {
 	if (!IsNullOrEmpty($.Address.Text)) {
 		if (outlet != "@ref[Catalog_Outlet]:00000000-0000-0000-0000-000000000000"){
@@ -377,7 +429,7 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		contact.PhoneInternalCode = PhoneInternalCode;
 		contact.MainContact = 0;
 		contact.Email = $.email.Text;
-	
+		contact.ChangeAutor = $.common.UserRef;
 		contact.Save(false);
 	
 		Workflow.Back();
@@ -464,6 +516,7 @@ function EditContact(customer, lastName, firstName_middleName, telFull, position
 	contactObj.PhoneNumber = PhoneNumber;
 	contactObj.PhoneInternalCode = PhoneInternalCode;
 	contactObj.Email = $.email.Text;
+	contactObj.ChangeAutor = $.common.UserRef;
 	
 	contactObj.Save(false);
 	Workflow.Back();
@@ -514,9 +567,13 @@ function AddActivity(curCustomer, act){
 		curAct.LineNumber = count + 1;
 		//curAct.LineId = GenerateGuid();
 		curAct.Kind = act;
-		curAct.DelMark = false;
-	    
+		curAct.DelMark = false;	    
 		curAct.Save(false);
+
+		//Save Change Author
+		objCust = curCustomer.GetObject();
+		objCust.ChangeAutor = $.common.UserRef;
+		objCust.Save(false);
 	}
 //	Dialog.Debug(curCustomer);
 //	Dialog.Debug(act);
@@ -526,6 +583,7 @@ function AddActivity(curCustomer, act){
 function KillContact(contact, objCust){
 	obj = contact.GetObject();
 	obj.Fired = true;
+	obj.ChangeAutor = $.common.UserRef;
 	obj.Save(false);
 	
 	// DB.Delete(contact);

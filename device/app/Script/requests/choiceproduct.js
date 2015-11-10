@@ -6,16 +6,13 @@ function OnLoading(){
     if ($.Exists("listType") == false){
         $.AddGlobal("listType", 1);
       } 
-      Dialog.Debug($.listType);
       return $.listType;
 }
 
 function isCustProd() {
-	if ( $.listType == 1) {
-		 Dialog.Debug("CP");
+	if ( $.listType == 1) {		
 		return true;
 	} else {
-		Dialog.Debug("AP");
 		return false;
 	}
 
