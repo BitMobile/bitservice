@@ -46,15 +46,21 @@ function GetProducts(objCust, searchString, vRef) {
 	}
 }
 
-function GetAllProducts(searchString) {
+function GetAllProducts(searchString, vRef) {
 	//Dialog.Debug(searchString);
 	var q = new Query();
 	var qt = "SELECT P.Id AS Id, P.Product AS Product, S.Description AS Description FROM Catalog_Customer_Products P LEFT JOIN Catalog_SKU S ON P.Product = S.Id ";
 	
 	if (searchString != "" && searchString != null) {
-		var plus = " WHERE Contains(S.Description, @st)";		
+		var plus = " WHERE Contains(S.Description, @st) AND NOT P.Product IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";		
 		qt = qt + plus;		
 		q.AddParameter("st", searchString);
+		q.AddParameter("r", vRef);
+	} else {
+		var plus = " WHERE NOT P.Product IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";		
+		qt = qt + plus;		
+		q.AddParameter("st", searchString);
+		q.AddParameter("r", vRef);
 	}	
 	//Dialog.Debug(qt);
 	q.Text = qt;	

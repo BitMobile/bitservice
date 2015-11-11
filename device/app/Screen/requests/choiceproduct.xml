@@ -64,7 +64,7 @@
       </c:DockLayout>
    </s:If>
    <s:Else>
-        <s:Push Id="Allproducts" Value="$GetAllProducts($prodsearch)"/>
+        <s:Push Id="Allproducts" Value="$GetAllProducts($prodsearch, $param1.Id)"/>
         <c:ScrollView>   
         <s:Iterator Id="allProduct" Value="$Allproducts">
               <c:HorizontalLine/>
