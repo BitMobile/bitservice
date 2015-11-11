@@ -58,7 +58,7 @@
     </c:DockLayout>
     </s:If>
     <s:Else>
-      <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(ChoiceDirection, $visit, $curwork, $param5)">
+      <c:DockLayout CssClass="parameter_grid">
       <c:TextView Text="Тип выезда" CssClass="ProdCaption"></c:TextView>
           <s:Push Id="TypeWorkVal" Value="$getWorkType($curwork.WorkType)"></s:Push>
           <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>               

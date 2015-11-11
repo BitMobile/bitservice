@@ -17,7 +17,7 @@ function OnWorkflowStart(name) {
 	 Variables["workflow"].Add("name", name);
 	 
 	 if(name == "requests"){
-	 	GPS.StartTracking(180);
+	 	GPS.StartTracking(-1);
 	 }
 	
 }
