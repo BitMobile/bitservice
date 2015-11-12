@@ -13,7 +13,7 @@ function setCoordinats(outlet, param1){
 	var location = GPS.CurrentLocation;
 	if(location.NotEmpty) {
 	    var objOutlet = outlet.GetObject();
-	    objOutlet.Latitude = location.Latitude;
+	    objOutlet.Lattitude = location.Latitude;
 	    objOutlet.Longitude = location.Longitude;
 	    objOutlet.Save(false);
 	    //$.Coordinats = location.Latitude + "; " + location.Longitude;
@@ -32,7 +32,7 @@ function coordinatsCallBack(state, args){
 	var location = GPS.CurrentLocation;
 
 	if (args.Result == "update") {
-		obj.Latitude = location.Latitude;
+		obj.Lattitude = location.Latitude;
 		obj.Longitude = location.Longitude;
 		obj.Save(false);
 		Workflow.Refresh([state[1]]);
