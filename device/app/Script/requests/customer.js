@@ -9,9 +9,16 @@ function isEmptyCoordinats(outlet){
 	
 }
 
+function isNotHistory() {
+	if ($.workflow.name == "Historylist"){
+		return false;
+	} 
+	return true;
+}
+
 function setCoordinats(outlet, param1){
 	var location = GPS.CurrentLocation;
-	if(location.NotEmpty) {
+	if(ActualLocation(location)) {
 	    var objOutlet = outlet.GetObject();
 	    objOutlet.Lattitude = location.Latitude;
 	    objOutlet.Longitude = location.Longitude;
@@ -19,7 +26,7 @@ function setCoordinats(outlet, param1){
 	    //$.Coordinats = location.Latitude + "; " + location.Longitude;
 	    Workflow.Refresh([param1]);
 	} else {
-		Dialog.Message("Координаты не зафиксированы.");
+		Dialog.Message("Не удалось получить координаты.");
 	}
 }
 
@@ -32,10 +39,14 @@ function coordinatsCallBack(state, args){
 	var location = GPS.CurrentLocation;
 
 	if (args.Result == "update") {
+		if(ActualLocation(location)) {
 		obj.Lattitude = location.Latitude;
 		obj.Longitude = location.Longitude;
 		obj.Save(false);
 		Workflow.Refresh([state[1]]);
+		} else {
+			Dialog.Message("Не удалось получить координаты.");
+		}
 	}
 
 	if (args.Result == "copy") {
@@ -43,10 +54,11 @@ function coordinatsCallBack(state, args){
 	}
 
 	if (args.Result == "cut") {
-		obj.Latitude = 0;
+		obj.Lattitude = 0;
 		obj.Longitude = 0;
 		obj.Save(false);
 		Workflow.Refresh([state[1]]);
+		
 	}
 
  	

@@ -93,28 +93,41 @@
 				</c:VerticalLayout>		
 			  </c:HorizontalLayout>
 
-			 <!-- Begin GPS block -->	
-			<s:If Test="$isEmptyCoordinats($objOutlet)">
-				 <c:HorizontalLine/>
-				  <c:HorizontalLayout CssClass="grid" OnClickAction="$setCoordinats($objOutlet, $param1)">
-					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
-					<c:VerticalLayout>
-					  <c:TextView Text="Координаты" CssClass="description_row"></c:TextView>
-					  <c:TextView Id = "Coordinats" Text="Установить" CssClass="main_row_metro_edit"></c:TextView>					  
-					</c:VerticalLayout>		
-				  </c:HorizontalLayout>
-			</s:If>
+			 <!-- Begin GPS block -->
+			<s:If Test="$isNotHistory()">	
+				<s:If Test="$isEmptyCoordinats($objOutlet)">
+					 <c:HorizontalLine/>
+					  <c:HorizontalLayout CssClass="grid" OnClickAction="$setCoordinats($objOutlet, $param1)">
+						<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+						<c:VerticalLayout>
+						  <c:TextView Text="Координаты" CssClass="description_row"></c:TextView>
+						  <c:TextView Id = "Coordinats" Text="Установить" CssClass="main_row_metro_edit"></c:TextView>					  
+						</c:VerticalLayout>		
+					  </c:HorizontalLayout>
+				</s:If>
+				<s:Else>
+					 <c:HorizontalLine/>
+					<c:HorizontalLayout CssClass="grid" OnClickAction="$updateCoordinats($objOutlet, $param1)">
+						<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+						<c:VerticalLayout>
+						  <c:TextView Text="Координаты" CssClass="description_row"></c:TextView>
+						  <c:TextView Id = "Coordinats" Text="{$objOutlet.Lattitude}; {$objOutlet.Longitude}" CssClass="main_row_metro_edit"></c:TextView>
+						  
+						</c:VerticalLayout>		
+					  </c:HorizontalLayout>
+				</s:Else>
+			</s:If>	
 			<s:Else>
-				 <c:HorizontalLine/>
-				<c:HorizontalLayout CssClass="grid" OnClickAction="$updateCoordinats($objOutlet, $param1)">
-					<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
-					<c:VerticalLayout>
-					  <c:TextView Text="Координаты" CssClass="description_row"></c:TextView>
-					  <c:TextView Id = "Coordinats" Text="{$objOutlet.Lattitude}; {$objOutlet.Longitude}" CssClass="main_row_metro_edit"></c:TextView>
-					  
-					</c:VerticalLayout>		
-				  </c:HorizontalLayout>
-			</s:Else>	
+				<c:HorizontalLine/>
+					<c:HorizontalLayout CssClass="grid">
+						<c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
+						<c:VerticalLayout>
+						  <c:TextView Text="Координаты" CssClass="description_row"></c:TextView>
+						  <c:TextView Id = "Coordinats" Text="{$objOutlet.Lattitude}; {$objOutlet.Longitude}" CssClass="main_row_metro_disabled"></c:TextView>
+						  
+						</c:VerticalLayout>		
+					  </c:HorizontalLayout>
+			</s:Else>
 			
 			<!-- End GPS block -->
 		</s:Else>

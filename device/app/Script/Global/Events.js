@@ -1,4 +1,4 @@
-﻿// ------------------------ Application -------------------
+// ------------------------ Application -------------------
 
 function OnApplicationInit() {
     Variables.AddGlobal("lastDataSync", "-");
@@ -22,6 +22,16 @@ function OnWorkflowStart(name) {
 	
 }
 
+function OnApplicationBackground(workflow) {     
+	 	GPS.StopTracking();	 	
+}
+
+
+function OnApplicationRestore(workflow) {
+     if($.Exists("onGPS")){
+	 	GPS.StartTracking(-1);
+	 }
+}
 function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 	if (nextStep == "DirtyHack") {
 		sendRequest($.sStaffName.Text, $.sClientName.Text, $.sComment.Text);
@@ -31,6 +41,8 @@ function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 		} else {
 			$.AddGlobal("sent", true);
 		}
+
+
 		$.submitButton.Text = "Отправить запрос";		
 		$.sClientName.Text = "";
 		$.sComment.Text = "";
@@ -63,7 +75,34 @@ function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 		return false;
 		
 	}
+
+	//Dialog.Debug("workflowName = "+workflowName+", lastStep = "+lastStep+", nextStep = "+nextStep);
+
+	 if ((nextStep == "requests" && lastStep == "null") || (nextStep == "Customer" && lastStep == "requests")) {
+	 	if (!$.Exists("onGPS")){
+	 		$.AddGlobal("onGPS", null);
+	 		GPS.StartTracking(-1);
+	 	}
+	 } else {
+	 	if ($.Exists("onGPS")){
+	 		$.Remove("onGPS");
+	 		GPS.StopTracking();
+	 	}
+	 }
+
 	return true;
+}
+
+function OnWorkflowBack(workflow, lastStep, nextStep) {
+	//Dialog.Debug("workflowName = "+workflow+", lastStep = "+lastStep+", nextStep = "+nextStep);
+
+	 if ((nextStep == "Customer" && lastStep == "Parameters")) {
+	 	if (!$.Exists("onGPS")){
+	 		$.AddGlobal("onGPS", null);
+	 		GPS.StartTracking(-1);
+	 	}
+	 }
+	 return true;	 
 }
 
 function sendRequest(staffName, clientName, comment){
