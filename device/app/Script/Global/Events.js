@@ -96,7 +96,7 @@ function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 function OnWorkflowBack(workflow, lastStep, nextStep) {
 	//Dialog.Debug("workflowName = "+workflow+", lastStep = "+lastStep+", nextStep = "+nextStep);
 
-	 if ((nextStep == "Customer" && lastStep == "Parameters")) {
+	 if (nextStep == "Customer") {
 	 	if (!$.Exists("onGPS")){
 	 		$.AddGlobal("onGPS", null);
 	 		GPS.StartTracking(-1);
