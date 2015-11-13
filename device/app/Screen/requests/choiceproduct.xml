@@ -68,10 +68,10 @@
         <c:ScrollView>   
         <s:Iterator Id="allProduct" Value="$Allproducts">
               <c:HorizontalLine/>
-              <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $allProduct.Product, 1, $param3)">
+              <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $allProduct.Id, 1, $param3)">
                 <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
                 <c:VerticalLayout>
-                  <c:TextView Text="$allProduct.Product.Description" CssClass="main_row"></c:TextView>
+                  <c:TextView Text="$allProduct.Description" CssClass="main_row"></c:TextView>
                  
                 </c:VerticalLayout>
                 <c:Image/>

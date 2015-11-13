@@ -49,22 +49,22 @@ function GetProducts(objCust, searchString, vRef) {
 function GetAllProducts(searchString, vRef) {
 	//Dialog.Debug(searchString);
 	var q = new Query();
-	var qt = "SELECT P.Id AS Id, P.Product AS Product, S.Description AS Description FROM Catalog_Customer_Products P LEFT JOIN Catalog_SKU S ON P.Product = S.Id ";
+	var qt = "SELECT S.Id AS Id, S.Description AS Description FROM Catalog_SKU S ";
 	
 	if (searchString != "" && searchString != null) {
-		var plus = " WHERE Contains(S.Description, @st) AND NOT P.Product IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";		
+		var plus = " WHERE Contains(S.Description, @st) AND NOT S.Id IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";		
 		qt = qt + plus;		
 		q.AddParameter("st", searchString);
 		q.AddParameter("r", vRef);
 	} else {
-		var plus = " WHERE NOT P.Product IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";		
+		var plus = " WHERE NOT S.Id IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";		
 		qt = qt + plus;		
 		q.AddParameter("st", searchString);
 		q.AddParameter("r", vRef);
 	}	
 	//Dialog.Debug(qt);
 	q.Text = qt;	
-	q.AddParameter("cust", objCust);
+	//q.AddParameter("cust", objCust);
 	
 	return q.Execute();	
 	
