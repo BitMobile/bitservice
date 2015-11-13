@@ -194,6 +194,15 @@ function cleanBase(){
 	var curUser = $.common.UserRef;
 	qDelete = new Query("DELETE FROM _Catalog_User WHERE NOT Id = @usr");
 	qDelete.AddParameter("usr", curUser.Id);
-	qDelete.Execute();
-	
+	qDelete.Execute();	
+}
+
+function ActualLocation(location){
+    
+    var actualTime;
+    var locTime = location.Time.ToLocalTime();
+    var maxTime = DateTime.Now.AddMinutes(-5);
+    actualTime = locTime > maxTime;
+    
+    return (location.NotEmpty && actualTime);
 }
