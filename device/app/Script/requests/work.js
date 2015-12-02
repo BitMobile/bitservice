@@ -37,11 +37,19 @@ function checkIsNumericOnWrite(value, length){
 
 function CreateIfNotExist(work)
 {
-	if (work == null){
-		work = DB.Create("Document.Visit_Result");
-		$.Remove("newwork");
-		$.AddGlobal("newwork", true);		
+	if ($.Exists("currentWork")){
+		work = $.currentWork;
+	} else {
+		if (work == null){
+				work = DB.Create("Document.Visit_Result");
+				$.Remove("newwork");
+				$.AddGlobal("newwork", true);
+				work.Save();
+				work = work.Id;
+				$.AddGlobal("currentWork", work);		
+			}		
 	}
+	
 	return work;
 }
 
@@ -49,6 +57,7 @@ function CreateIfNotExist(work)
 
 function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 	//Dialog.Debug(prod.ToString());
+	workid = workid.GetObject();
 	if (prod.ToString() == "@ref[Catalog_SKU]:00000000-0000-0000-0000-000000000000"){
 		Dialog.Message(Translate["#errEmptyProduct#"]);
 		return;
@@ -92,7 +101,7 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 		workid.Save(false);
 				
 	} else {
-		ow = workid.GetObject();
+		ow = workid;
 		ow.SKU = prod;
 		
 		if (IsNullOrEmpty(ov)){
@@ -124,6 +133,7 @@ function DoCancel(step){
 	}
 	$.Remove("newwork");
 	$.Remove("workType");
+	$.Remove("currentWork");
 	Workflow.BackTo(step);
 }
 
@@ -134,4 +144,32 @@ function getWorkType(val) {
 	} else {
 		return val;
 	}
+}
+
+function writeDescription(){
+	//Dialog.Debug($.curwork.Id);
+	obj = $.curwork.GetObject();
+	obj.Description = $.desc.Text;
+	obj.Save();
+}
+
+function writeHCount(){
+	//Dialog.Debug($.curwork.Id);
+	obj = $.curwork.GetObject();
+	obj.AmountOfHours = $.hcount.Text;
+	obj.Save();
+}
+
+function writeOv(){
+	//Dialog.Debug($.curwork.Id);
+	obj = $.curwork.GetObject();
+	obj.BaseCount = $.ov.Text;
+	obj.Save();
+}
+
+function writeNv(){
+	//Dialog.Debug($.curwork.Id);
+	obj = $.curwork.GetObject();
+	obj.NewVersion = $.nv.Text;
+	obj.Save();
 }

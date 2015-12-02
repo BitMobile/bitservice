@@ -105,7 +105,7 @@ function DoSearch(srchstr, p1, p2, p3){
 function DoBackAndClean(){
 	$.Remove("prodsearch");
 	$.Remove("listType");
-	Workflow.Back();
+	Workflow.BackTo("Work");
 }
 
 function doSelectDirection (dir) {
