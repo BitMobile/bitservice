@@ -15,15 +15,15 @@ function OnWorkflowStart(name) {
 		  $.Remove("workflow");
 	 Variables.AddGlobal("workflow", new Dictionary());
 	 Variables["workflow"].Add("name", name);
-	 
+
 	 if(name == "requests"){
 	 	GPS.StartTracking(-1);
 	 }
-	
+
 }
 
-function OnApplicationBackground(workflow) {     
-	 	GPS.StopTracking();	 	
+function OnApplicationBackground(workflow) {
+	 	GPS.StopTracking();
 }
 
 
@@ -37,31 +37,31 @@ function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 		sendRequest($.sStaffName.Text, $.sClientName.Text, $.sComment.Text);
 		if ($.Exists("sent")){
 			$.Remove("sent");
-			$.AddGlobal("sent", true);		
+			$.AddGlobal("sent", true);
 		} else {
 			$.AddGlobal("sent", true);
 		}
 
 
-		$.submitButton.Text = "Отправить запрос";		
+		$.submitButton.Text = "Отправить запрос";
 		$.sClientName.Text = "";
 		$.sComment.Text = "";
 		setCookie($.sStaffName.Text, "", "");
 		Workflow.Refresh([]);
-		
+
 		return false;
-		
+
 	}
-	
+
 	if (nextStep == "DirtyHackClient") {
 		if (sendClientRequest($.phone.Text, $.sClientName.Text, $.sComment.Text, $.contact.Text)) {
 			if ($.Exists("sent")){
 				$.Remove("sent");
-				$.AddGlobal("sent", true);		
+				$.AddGlobal("sent", true);
 			} else {
 				$.AddGlobal("sent", true);
 			}
-					
+
 			$.sClientName.Text = "";
 			$.sComment.Text = "";
 			$.contact.Text = "";
@@ -73,7 +73,7 @@ function OnWorkflowForwarding(workflowName, lastStep, nextStep, parameters) {
 			Workflow.Refresh([]);
 		}
 		return false;
-		
+
 	}
 
 	//Dialog.Debug("workflowName = "+workflowName+", lastStep = "+lastStep+", nextStep = "+nextStep);
@@ -102,7 +102,7 @@ function OnWorkflowBack(workflow, lastStep, nextStep) {
 	 		GPS.StartTracking(-1);
 	 	}
 	 }
-	 return true;	 
+	 return true;
 }
 
 function sendRequest(staffName, clientName, comment){
@@ -110,13 +110,13 @@ function sendRequest(staffName, clientName, comment){
 	var req = new HttpRequest("http://web-server.ru.com:30015"); //production
 	if (!IsNullOrEmpty(staffName) && !IsNullOrEmpty(clientName) && !IsNullOrEmpty(comment)){
 		setCookie(staffName, clientName, comment);
-		try {							
-			//req.Post("/leadmarketing/hs/sending", 'from=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop	
+		try {
+			//req.Post("/leadmarketing/hs/sending", 'from=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop
 			req.Post("/samurai1/hs/sending", 'from=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
 		} catch (e){
 			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже.");
 			setCookie(staffName, clientName, comment);
-		}		
+		}
 	} else {
 		Dialog.Message("Пожалуйста заполните все поля.");
 	}
@@ -127,10 +127,9 @@ function sendClientRequest(staffName, clientName, comment, contact){
 	var req = new HttpRequest("http://web-server.ru.com:40018"); //production
 	if (!IsNullOrEmpty(clientName)){
 		//setCookie(staffName, clientName, comment);
-		try {	
+		try {
 			var curUser = $.common.UserRef;
-			//req.Post("/superservice/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop	
-			Dialog.Debug(curUser.Id);
+			//req.Post("/superservice/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop
 			req.Post("/mobile/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
 			return true
 		} catch (e){
@@ -139,7 +138,7 @@ function sendClientRequest(staffName, clientName, comment, contact){
 			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже.");
 			//setCookie(staffName, clientName, comment);
 			return false
-		}		
+		}
 	} else {
 		Dialog.Message("Пожалуйста заполните поле 'Наименование клиента'");
 		return false
@@ -155,15 +154,15 @@ function setCookie(staffName, clientName, comment) {
 	if (!IsNullOrEmpty(staffName)){
 		data = data + staffName + "|";
 	}
-	
+
 	if (!IsNullOrEmpty(clientName)){
 		data = data + clientName + "|";
 	}
-	
+
 	if (!IsNullOrEmpty(comment)){
 		data = data + comment + "|";
 	}
-	
+
 	if (FileSystem.Exists("/private/cookie.bmf")){
 		FileSystem.Delete("/private/cookie.bmf");
 		FileSystem.CreateTextFile("/private/cookie.bmf", data);
@@ -171,4 +170,3 @@ function setCookie(staffName, clientName, comment) {
 		FileSystem.CreateTextFile("/private/cookie.bmf", data);
 	}
 }
-
