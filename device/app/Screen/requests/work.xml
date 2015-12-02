@@ -3,40 +3,40 @@
   StyleSheet="work.css">
 <c:DockLayout>
   <s:Push Id="visit" Value="$param1"></s:Push>
-  <s:Push Id="curwork" Value="$CreateIfNotExist($param2)"></s:Push> 
+  <s:Push Id="curwork" Value="$CreateIfNotExist($param2)"></s:Push>
   <s:Push Id="CheckParam3" Value="$param3"></s:Push>
   <s:If Test="$CheckParam3 != NULL">
-    <s:Push Id="prod" Value="$CheckParam3"></s:Push>  
+    <s:Push Id="prod" Value="$CheckParam3"></s:Push>
   </s:If>
   <s:Else>
     <s:If Test = "$curwork != NULL">
       <s:Push Id="prod" Value="$curwork.SKU"></s:Push>
     </s:If>
   </s:Else>
-  
+
   <s:Push Id="check" Value="$param4"></s:Push>
   <s:Push Id="inw" Value="$param5"></s:Push>
   <s:If Test="$isProgress($visit.Status)">
     <c:DockLayout CssClass="footer">
-      <c:DockLayout CssClass="btn_left_footer" OnClickAction="$WriteWorkOrEdit($visit, $curwork, $desc.Text, $hcount.Text, $prod, $ov.Text, $nv.Text, $inw)"> 
+      <c:DockLayout CssClass="btn_left_footer" OnClickAction="$WriteWorkOrEdit($visit, $curwork, $desc.Text, $hcount.Text, $prod, $ov.Text, $nv.Text, $inw)">
         <c:TextView Text="#ready#"></c:TextView>
       </c:DockLayout>
-      
+
       <c:DockLayout CssClass="btn_right_footer" OnEvent="Back" OnClickAction="$DoCancel(WorkList, $curwork)">
         <c:TextView Text="#cancel#"></c:TextView>
-      </c:DockLayout>   
-    </c:DockLayout> 
+      </c:DockLayout>
+    </c:DockLayout>
   </s:If>
   <s:Else>
     <c:DockLayout CssClass="footer">
       <c:DockLayout CssClass="btn_one_footer" OnClickAction="$DoBack()">
         <c:TextView Text="#back#"></c:TextView>
-      </c:DockLayout>   
+      </c:DockLayout>
     </c:DockLayout>
   </s:Else>
 <s:If Test = "$curwork != NULL">
 <c:SwipeVerticalLayout Id="grScrollView">
-  
+
   <c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
           <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
@@ -50,33 +50,33 @@
     </c:HorizontalLayout>
     <c:HorizontalLine/>
 
-    <s:If Test="$isProgress($visit.Status)">  
+    <s:If Test="$isProgress($visit.Status)">
      <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(ChoiceDirection, $visit, $curwork, $param5)">
       <c:TextView Text="Тип выезда" CssClass="ProdCaption"></c:TextView>
           <s:Push Id="TypeWorkVal" Value="$getWorkType($curwork.WorkType)"></s:Push>
-          <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>               
+          <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>
     </c:DockLayout>
     </s:If>
     <s:Else>
       <c:DockLayout CssClass="parameter_grid">
       <c:TextView Text="Тип выезда" CssClass="ProdCaption"></c:TextView>
           <s:Push Id="TypeWorkVal" Value="$getWorkType($curwork.WorkType)"></s:Push>
-          <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>               
+          <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>
     </c:DockLayout>
     </s:Else>
     <c:HorizontalLine/>
-    
+
     <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="#HoursCount#"></c:TextView>
          <s:If Test="$isProgress($visit.Status)">
-          <c:EditText Id = "hcount" Value = "$curwork.AmountOfHours"  CssClass="value" Keyboard="numeric" OnChange="$writeHCount()"></c:EditText>
+          <c:EditText Id = "hcount" Value = "$curwork.AmountOfHours"  CssClass="value" Keyboard="numeric" OnLostFocus="$writeHCount()"></c:EditText>
        </s:If>
        <s:Else>
           <c:TextView Id = "hcount" Text = "$curwork.AmountOfHours"  CssClass="value"></c:TextView>
        </s:Else>
     </c:DockLayout>
     <c:HorizontalLine/>
-     <s:If Test="$isProgress($visit.Status)"> 
+     <s:If Test="$isProgress($visit.Status)">
      <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(ChoiceProduct, $visit, $curwork, $param5)">
       <c:TextView Text="#Product#" CssClass="ProdCaption"></c:TextView>
         <s:If Test="$check == NULL">
@@ -86,7 +86,7 @@
         <s:Else>
           <c:TextView Id="SKUField" Text="$prod.Description" CssClass="value"></c:TextView>
         </s:Else>
-        
+
     </c:DockLayout>
     </s:If>
     <s:Else>
@@ -99,14 +99,14 @@
         <s:Else>
           <c:TextView Text="$prod.Description" CssClass="value"></c:TextView>
         </s:Else>
-        
+
     </c:DockLayout>
     </s:Else>
     <c:HorizontalLine/>
-    
+
      <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="#BaseCount#"></c:TextView>
-        <s:If Test="$isProgress($visit.Status)">  
+        <s:If Test="$isProgress($visit.Status)">
           <c:EditText Id = "ov" Value = "$curwork.BaseCount"  CssClass="value" Keyboard="numeric"  OnChange="$checkIsNumeric()" OnLostFocus="$writeOv()"></c:EditText>
         </s:If>
         <s:Else>
@@ -114,7 +114,7 @@
         </s:Else>
     </c:DockLayout>
     <c:HorizontalLine/>
-     
+
      <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="#NewVer#"></c:TextView>
         <s:If Test="$isProgress($visit.Status)">
@@ -129,7 +129,7 @@
 </s:If>
 <s:Else>
     <c:SwipeVerticalLayout Id="grScrollView">
-     
+
   <c:HorizontalLayout CssClass="memo_block">
         <c:VerticalLayout>
           <c:TextView Text="#WorkDetail#" CssClass="description_row"></c:TextView>
@@ -138,43 +138,43 @@
     </c:HorizontalLayout>
     <c:HorizontalLine/>
 
-     <s:If Test="$isProgress($visit.Status)">  
+     <s:If Test="$isProgress($visit.Status)">
      <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(ChoiceDirection, $visit, $curwork, $param5)">
       <c:TextView Text="Тип выезда" CssClass="ProdCaption"></c:TextView>
           <s:Push Id="TypeWorkVal" Value="$getWorkType($curwork.WorkType)"></s:Push>
-          <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>               
+          <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>
     </c:DockLayout>
     </s:If>
     <s:Else>
       <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(ChoiceDirection, $visit, $curwork, $param5)">
       <c:TextView Text="Тип выезда" CssClass="ProdCaption"></c:TextView>
           <s:Push Id="TypeWorkVal" Value="$getWorkType($curwork.WorkType)"></s:Push>
-          <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>               
+          <c:TextView Id="TypeWork" Text="$TypeWorkVal.Description" CssClass="value"></c:TextView>
     </c:DockLayout>
     </s:Else>
     <c:HorizontalLine/>
-    
+
     <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="#HoursCount#"></c:TextView>
-        <c:EditText Id = "hcount"  CssClass="value" Keyboard="numeric" OnChange="$writeHCount()"></c:EditText>
+        <c:EditText Id = "hcount"  CssClass="value" Keyboard="numeric" OnLostFocus="$writeHCount()"></c:EditText>
     </c:DockLayout>
     <c:HorizontalLine/>
-    
+
      <c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(ChoiceProduct, $visit, $curwork)">
-        <c:TextView Text="#Product#"></c:TextView>        
+        <c:TextView Text="#Product#"></c:TextView>
           <c:TextView Text="$prod.Description" CssClass="value"></c:TextView>
-       
-       
-        
+
+
+
     </c:DockLayout>
     <c:HorizontalLine/>
-    
+
      <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="#BaseCount#"></c:TextView>
         <c:EditText Id = "ov"   CssClass="value" Keyboard="numeric" OnChange="$checkIsNumeric()" OnLostFocus="$writeOv()"></c:EditText>
     </c:DockLayout>
     <c:HorizontalLine/>
-     
+
      <c:DockLayout CssClass="parameter_grid">
         <c:TextView  Text="#NewVer#"></c:TextView>
         <c:EditText Id = "nv"  CssClass="value" Keyboard="numeric" OnChange="$writeNv()"></c:EditText>
@@ -183,10 +183,10 @@
 </c:SwipeVerticalLayout>
 
 
-</s:Else> 
-  
-  
-  
+</s:Else>
+
+
+
 </c:DockLayout>
 
 </c:Screen>
