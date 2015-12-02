@@ -124,16 +124,18 @@ function sendRequest(staffName, clientName, comment){
 
 function sendClientRequest(staffName, clientName, comment, contact){
 	//var req = new HttpRequest("http://bitmobile2.bt"); //develop
-	var req = new HttpRequest("http://web-server.ru.com:30015"); //production
+	var req = new HttpRequest("http://web-server.ru.com:40018"); //production
 	if (!IsNullOrEmpty(clientName)){
 		//setCookie(staffName, clientName, comment);
 		try {	
 			var curUser = $.common.UserRef;
 			//req.Post("/superservice/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop	
-			req.Post("/bits/hs/sending" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
+			Dialog.Debug(curUser.Id);
+			req.Post("/mobile/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
 			return true
 		} catch (e){
 			Dialog.Debug(e);
+			Dialog.Debug(e.StatusCode);
 			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже.");
 			//setCookie(staffName, clientName, comment);
 			return false
