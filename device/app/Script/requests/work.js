@@ -156,16 +156,39 @@ function writeDescription(){
 
 function writeHCount(){
 	//Dialog.Debug($.curwork.Id);
-	obj = $.curwork.GetObject();
-	obj.AmountOfHours = $.hcount.Text;
-	obj.Save();
+	if (validate($.hcount.Text, "[0-9]+((\.|\,)[0-9]+)?")){
+		if (!IsNullOrEmpty($.hcount.Text)){
+			obj = $.curwork.GetObject();
+			obj.AmountOfHours = $.hcount.Text;
+			obj.Save();
+		}	 else {
+				obj.AmountOfHours = 0;
+		}
+} else {
+		if (!IsNullOrEmpty($.hcount.Text)){
+			Dialog.Message("В поле 'Количество часов' Разрешен ввод только цифр");
+			$.hcount.Text = Left($.hcount.Text, StrLen(	$.hcount.Text)-1);
+		} else {
+			$.hcount.Text = 0;
+		}
+}
 }
 
 function writeOv(){
 	//Dialog.Debug($.curwork.Id);
-	obj = $.curwork.GetObject();
-	obj.BaseCount = $.ov.Text;
-	obj.Save();
+	if (validate($.ov.Text, "^([0-9]*)?$")){
+		if (!IsNullOrEmpty($.ov.Text)){
+				obj = $.curwork.GetObject();
+				obj.BaseCount = $.ov.Text;
+				obj.Save();
+		}	 else {
+				$.ov.Text = 0;
+		}
+	} else {
+		Dialog.Message("В поле 'Количество баз' Разрешен ввод только цифр");
+		$.ov.Text = Left($.ov.Text, StrLen(	$.ov.Text)-1);
+	}
+
 }
 
 function writeNv(){
