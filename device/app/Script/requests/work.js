@@ -47,6 +47,7 @@ function CreateIfNotExist(work)
 				work.Save();
 				work = work.Id;
 				$.AddGlobal("currentWork", work);
+				Vars.setNewWork(true);
 			}
 	}
 
@@ -135,6 +136,11 @@ function DoCancel(step){
 	$.Remove("newwork");
 	$.Remove("workType");
 	$.Remove("currentWork");
+
+	if (Vars.getWorkType()){
+		DB.Delete($.currentWork);
+	}
+
 	Workflow.BackTo(step);
 }
 
