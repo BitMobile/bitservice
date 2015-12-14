@@ -126,7 +126,8 @@ function WriteWorkOrEdit(request, workid, desc, hcount, prod, ov, nv, isnul){
 	}
 	//Workflow.Back([request]);
 	$.Remove("newwork");
-	$.Remove("currentWork");
+	Vars.setNewWork(false);
+	$.Remove("currentWork");	
 	Workflow.Action("CMT", [request]);
 }
 
@@ -136,14 +137,13 @@ function DoCancel(step){
 	}
 	$.Remove("newwork");
 	$.Remove("workType");
-	$.Remove("currentWork");
+
 
 	if (Vars.getNewWork()){
-		Dialog.Debug($.currentWork.Id);
-		//DB.Delete($.currentWork);
+		DB.Delete($.currentWork);
 		Vars.setNewWork(false);
 	}
-
+	$.Remove("currentWork");
 	Workflow.BackTo(step);
 }
 
