@@ -35,8 +35,7 @@ function checkIsNumericOnWrite(value, length){
 }
 
 
-function CreateIfNotExist(work)
-{
+function CreateIfNotExist(work) {
 	if ($.Exists("currentWork")){
 		work = $.currentWork;
 	} else {
@@ -48,6 +47,8 @@ function CreateIfNotExist(work)
 				work = work.Id;
 				$.AddGlobal("currentWork", work);
 				Vars.setNewWork(true);
+			} else {
+				Vars.setNewWork(false);
 			}
 	}
 
@@ -137,8 +138,10 @@ function DoCancel(step){
 	$.Remove("workType");
 	$.Remove("currentWork");
 
-	if (Vars.getWorkType()){
-		DB.Delete($.currentWork);
+	if (Vars.getNewWork()){
+		Dialog.Debug($.currentWork.Id);
+		//DB.Delete($.currentWork);
+		Vars.setNewWork(false);
 	}
 
 	Workflow.BackTo(step);
