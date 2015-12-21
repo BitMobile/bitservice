@@ -8,7 +8,12 @@ body {
 	text-align: center;
 	margin-top: 30%;
 	color: #c0c0c0;
-	padding-top: 80%;	
+	padding-top: 80%;
+}
+
+WebMapGoogle{
+	width: 100%;
+	height: 100%;
 }
 
 line {
@@ -135,27 +140,29 @@ MemoEdit {
 }
 
 .btn_back {
-    width: 30%;
+    width: 16.3mm;
     height: 100%;
     dock-align: left;
 }
 
-    .btn_back TextView {
-        width: 100%;
-        height: 100%;
-        margin-left: 5%;
-        padding-top: 25%;
-        text-align: left;
-        color: #b96f18;
-        font: 41% arial;
-    }
+.btn_back TextView {
+    width: 100%;
+    height: 100%;
+    margin-left: 1mm;
+    padding-top: 26%;
+    text-align: left;
+    dock-align: left;
+    color: #b96f18;
+    font: 39.5% arial;
+}
 
-    .btn_back img {
-        background-image: url(arrow_left.png);
-        margin-top: 24%;
-        margin-left: 5%;
-        height: 50%;
-    }
+.btn_back img {
+    background-image: url(arrow_left.png);
+    margin-top: 24%;
+    margin-left: 1mm;
+    dock-align: left;
+    height: 50%;
+}
 
 .mode_left_button_on {
     background-image: url(mode_left_button_on.png);
@@ -329,9 +336,10 @@ MemoEdit {
 }
 
 .grid {
-    height: 15.9sp;
+    height: 13.8mm;
     width: 100%;
     background-color: #ffffff;
+    selected-color: #bacdce;
 }
 
     .grid line {
@@ -346,7 +354,7 @@ MemoEdit {
         margin-left: 2.5%;
         background-image: url(arrow.png);
     }
-    
+
     .grid iphone {
         height: 8%;
         width: 9%;
@@ -429,7 +437,7 @@ MemoEdit {
     height: 0%;
     width: 4.1%;
     margin-left: 2%;
-    margin-right: 0%;    
+    margin-right: 0%;
 }
 
 .no_mark {
@@ -656,7 +664,7 @@ MemoEdit {
 .memo_block {
     height: 48sp;
 }
- 
+
 
     .memo_block vl {
         width: 98%;

@@ -1,7 +1,6 @@
 .grid vl {
-	margin-left: -3%;
-	width: 90%;
-    
+	width: 100%;
+
 	}
 
 .grid img {
@@ -9,8 +8,8 @@
         margin-top: 16%;
         margin-left: 2.5%;
         background-image: url(arrow.png);
-    }	
-	
+    }
+
 .memo_block {
 	height: 24sp;
 }
@@ -39,7 +38,7 @@
     dock-align: left;
     font: 36% arial;
     margin-left: 3.5%;
-    padding-top: 30%;	
+    padding-top: 30%;
 }
 
 .main_row_custname{
@@ -48,7 +47,7 @@
     white-space: normal;
     font: 40% Arial;
     margin-top: 0%;
-	
+
 }
 
 .main_row {
@@ -63,13 +62,13 @@
 	font: 80% Arial;
 	height: 18%;
 	width: 100%;
-	
+
 }
 
 .memo_block vl main_row {
-   	font: 40% Arial;          
+   	font: 40% Arial;
         }
-        
+
 .requestTextBox {
 	width: 87%;
 }
@@ -148,7 +147,7 @@ width: 40%;
 height: 100%;
 dock-align: right;
 }
-	
+
 	.btn_right_footer TextView {
             width: 100%;
             height: 100%;
@@ -165,7 +164,7 @@ dock-align: right;
         padding-top: 11%;
         padding-left: 5%;
     }
-        
+
 
 .main_row_manager{
 	width: 100%;
@@ -186,5 +185,45 @@ dock-align: right;
     text-align: right;
 }
 
+.EmptyCor {
+	width: 10.3mm;
+	height: 9mm;
+	dock-align: right;
+	margin-right: 2mm;
+	background-image: url(geo_empty.png);
+}
 
+.coord {
+	  width: 10.3mm;
+	  height: 9mm;
+	  dock-align: right;
+	  background-image: url(geo_set.png);
+		margin-right: 2mm;
+		margin-top: 2.4mm;
+	}
 
+.coordButton {
+	width: 15mm;
+	height: 4.1mm;
+	vertical-align: central;
+	margin-top: 10%;
+	border-style : solid;
+	border-width: 1px;
+	border-color: #b96f18;
+	border-radius: 5px;
+	color: #b96f18;
+	text-align: center;
+	font: 60% arial;
+}
+
+.CoordinatsPlace{
+	width: 100%;
+	height: 100%;
+}
+
+.CoordinatsPlace .main_row {
+    width: 100%;
+    height: 60%;
+    white-space: normal;
+    font: 42% Arial;
+}
