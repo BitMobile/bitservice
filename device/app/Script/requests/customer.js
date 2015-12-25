@@ -6,13 +6,13 @@ function isEmptyCoordinats(outlet){
 	} else {
 		return false;
 	}
-	
+
 }
 
 function isNotHistory() {
 	if ($.workflow.name == "Historylist"){
 		return false;
-	} 
+	}
 	return true;
 }
 
@@ -58,10 +58,10 @@ function coordinatsCallBack(state, args){
 		obj.Longitude = 0;
 		obj.Save(false);
 		Workflow.Refresh([state[1]]);
-		
+
 	}
 
- 	
+
 }
 
 function DoActionAndSave(step, req, cust, outlet) {
@@ -76,7 +76,7 @@ function DoActionAndSave(step, req, cust, outlet) {
 		}
 	} else {
 		TryStart(step, req, cust, outlet);
-	}	
+	}
 }
 
 function TryStart(step, req, cust, outlet){
@@ -91,12 +91,12 @@ function TryStart(step, req, cust, outlet){
 			} else {
 				Workflow.Action("WorkList",[req, cust, outlet]);
 			}
-			
+
 		} else{
 			Workflow.Action(step,[req, cust, outlet]);
-		}		
+		}
 	}
-	
+
 }
 
 function StartWork(state, args){
@@ -108,7 +108,7 @@ function StartWork(state, args){
 		Workflow.Action("WorkList",[req, state[2], state[3]]);
 	} else{
 		Workflow.Action(state[0],[req, state[2], state[3]]);
-	}		
+	}
 }
 
 function EmptyOutlet(ref){
@@ -127,7 +127,7 @@ function CheckParamsFilling(sender, cust, pr){
 				Workflow.Action("GoForwardQ",[pr, cust]);
 			} else {
 				Workflow.Action("GoForward",[pr, cust]);
-			}			
+			}
 	} else {
 		obj = cust.GetObject();
 		obj.Save(false);
@@ -141,12 +141,12 @@ function CheckParamsFilling(sender, cust, pr){
 
 function SetBeginDate(req) {
 	var header = Translate["#enterDateTime#"];
-	Dialog.DateTime(header, req.PlanStartDataTime, CallBackBeginPlan, req);	
+	Dialog.DateTime(header, req.PlanStartDataTime, CallBackBeginPlan, req);
 }
 
 function SetEndDate(req) {
 	var header = Translate["#enterDateTime#"];
-	Dialog.DateTime(header, req.PlanEndDataTime, CallBackEndPlan, req);	
+	Dialog.DateTime(header, req.PlanEndDataTime, CallBackEndPlan, req);
 }
 
 function CallBackBeginPlan(state,args){
@@ -160,9 +160,21 @@ function CallBackBeginPlan(state,args){
 
 function CallBackEndPlan(state,args){
 	obj = state.GetObject();
-	obj.PlanEndDataTime = args.Result;
-	$.endDate.Text = DoFullDate(args.Result);
+	if (args.Result > getEndOfDay(obj.PlanStartDataTime)) {
+		obj.PlanEndDataTime = getEndOfDay(obj.PlanStartDataTime);
+		$.endDate.Text = DoFullDate(getEndOfDay(obj.PlanStartDataTime));
+	} else {
+		obj.PlanEndDataTime = args.Result;
+		$.endDate.Text = DoFullDate(args.Result);
+	}
+
 	obj.Save(false);
+}
+
+function getEndOfDay(date) {
+	var q = new Query("SELECT datetime(@dt, 'start of day', '+1 day', '-1 second') as Dt");
+	q.AddParameter("dt", date);
+	return Date(q.ExecuteScalar());
 }
 
 function isProgress(obj){
@@ -185,8 +197,8 @@ function DoFullDate(dt){
 function HideOtherSwiped(sender) {
 	if (swipedItem != sender){
 		HideSwiped();
-		swipedItem = sender;			
-	}	
+		swipedItem = sender;
+	}
 }
 
 function HideSwiped(){
@@ -198,7 +210,7 @@ function HideSwiped(){
 
 function makeContactCall(contact){
 	var tel = contact.PhoneCountryCode + contact.PhoneCityCode + contact.PhoneNumber + contact.PhoneInternalCode;
-	Dialog.Question("#call# "+ tel + "?", PhoneCall, tel);	
+	Dialog.Question("#call# "+ tel + "?", PhoneCall, tel);
 }
 
 function MoreMakeContactCall(tel){
@@ -235,7 +247,7 @@ function SaveCustomerAndBack(){
 function inintvalues(p){
 	if ($.Exists("searchtext") == false){
 		$.AddGlobal("searchtext", null);
-	} 
+	}
 	//Dialog.Debug(searchtext);
 	return p;
 }
@@ -256,9 +268,9 @@ function GetCurrentRequest(cust){
 function GetContacts(objCust) {
 	var q = new Query("Select * FROM Catalog_Contact WHERE Catalog_Contact.Owner == @cust AND Catalog_Contact.Fired == 0 ");
 	q.AddParameter("cust", objCust);
-	
+
 	var u = q.Execute();
-	
+
 	//Dialog.Debug(u.Id);
 	return u
 }
@@ -275,17 +287,17 @@ function GetActivities(currentCustomer) {
 	var q = new Query("Select * FROM Catalog_Customer_KindOfActivity WHERE Catalog_Customer_KindOfActivity.Ref == @currentCustomer AND Catalog_Customer_KindOfActivity.DelMark = 0");
 		q.AddParameter("currentCustomer", currentCustomer);
 	return q.Execute();
-	
+
 }
 
 function GetActivitiesCount(currentCustomer) {
 	var q = new Query("Select * FROM Catalog_Customer_KindOfActivity WHERE Catalog_Customer_KindOfActivity.Ref == @currentCustomer AND Catalog_Customer_KindOfActivity.DelMark = 0");
 	q.AddParameter("currentCustomer", currentCustomer);
 	var u = q.ExecuteCount();
-	
+
 	//Dialog.Debug(u);
-	
-	return u;		
+
+	return u;
 }
 
 function GetAllActivities(customer, searchText) {
@@ -295,12 +307,12 @@ function GetAllActivities(customer, searchText) {
 		        + " LEFT JOIN Catalog_Customer_KindOfActivity C ON K.Id = C.Kind AND C.Ref = @customer "
 		        + " WHERE (C.Ref IS NULL OR C.DelMark == 1) ";
 	 if (searchText != "" && searchText != null) {
-			var plus = " AND Contains(K.Description, @st) ";			
+			var plus = " AND Contains(K.Description, @st) ";
 			qtext = qtext + plus;
 			q.AddParameter("st", searchText);
 		}
 	// Dialog.Debug(searchText);
-	 q.Text = qtext + " ORDER BY K.Description";  
+	 q.Text = qtext + " ORDER BY K.Description";
 	 q.AddParameter("customer", customer);
 	 return q.Execute();
 }
@@ -314,14 +326,14 @@ function GetAllActivitiesCount(customer) {
 			"ORDER BY DesAct ASC");
 	q.AddParameter("customer", customer);
 	var u = q.ExecuteCount();
-	return u;		
+	return u;
 }
 
 function ParsLastNameMiddlName(fm){
 	var trFM = TrimL(fm);
 	var charCount = StrLen(trFM);
 	var charPosition = Find(trFM, " ");
-	
+
 	if(charPosition > 0){
 		var firstName = Left(trFM, charPosition-1);
 		var middleName = Right(trFM, charCount - charPosition);
@@ -329,14 +341,14 @@ function ParsLastNameMiddlName(fm){
 		var firstName = trFM;
 		var middleName = "";
 	}
-	
+
 	var someArray = [];
 	someArray.push(firstName);
 	someArray.push(middleName);
     return someArray;
-	
+
 	//Dialog.Debug(firstName);
-	//Dialog.Debug(middleName);		
+	//Dialog.Debug(middleName);
 }
 
 function DoSelectPos() {
@@ -352,13 +364,13 @@ function SetPosition(key){
 		$.Add("SelectedPosition", key);
 	}else{
 		$.Add("SelectedPosition", key);
-	} 
+	}
 	$.position.Text = key.Description;
 }
 
 function CreateContact(customer, lastName, firstName_middleName, telFull, position) {
 
-	var firstName = "";  
+	var firstName = "";
 	var middleName = "";
 	var PhoneNumber = "";
 	// парсинг ИмяОтчество
@@ -367,7 +379,7 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		var firstName = parsfirstName_middleName[0];
 		var middleName = parsfirstName_middleName[1];
 	}
-	
+
 /////////////////////////////////////////////////////////
 	// парсинг номера телефона
 	// var res = StrReplace("Str",[^0-9],"");
@@ -376,11 +388,11 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 			var PhoneCityCode = "";
 			var PhoneNumber = "";
 			var PhoneInternalCode = "";
-		
+
 			var editTel = "";
 			var plusFind = 0;
 			var telFullCharCount = StrLen(telFull);
-		
+
 			for (var tChar = 1; tChar <= telFullCharCount; tChar++) {
 				var nextChar = Mid(telFull, tChar, 1);
 				if ((nextChar == "+" && plusFind == 0) || nextChar == "0"
@@ -393,9 +405,9 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 					}
 				}
 			}
-		
+
 			// Dialog.Debug(plusFind);
-		
+
 			if (StrLen(editTel) >= 11 || (StrLen(editTel) >= 12 && plusFind == 1)) {
 				if (plusFind == 1) {
 					if (StrLen(editTel) >= 12){
@@ -421,8 +433,8 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 	}
 //////////////////////////////
 	// запись
-	
-	
+
+
 	if ((lastName != null && lastName != "") || (firstName != null && firstName != "")){
 		var contact = DB.Create("Catalog.Contact");
 		contact.Owner = customer;
@@ -430,11 +442,11 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		contact.LastName = lastName;
 		contact.FirstName = firstName;
 		contact.MiddleName = middleName;
-		
-		if ($.SelectedPosition != null){	
+
+		if ($.SelectedPosition != null){
 			contact.Position = $.SelectedPosition;
 		}
-		
+
 		contact.PhoneCountryCode = PhoneCountryCode;
 		contact.PhoneCityCode = PhoneCityCode;
 		contact.PhoneNumber = PhoneNumber;
@@ -443,9 +455,9 @@ function CreateContact(customer, lastName, firstName_middleName, telFull, positi
 		contact.Email = $.email.Text;
 		contact.ChangeAutor = $.common.UserRef;
 		contact.Save(false);
-	
+
 		Workflow.Back();
-	} else{		
+	} else{
 		Dialog.Message(Translate["#nonamecontact#"]);
 	}
 
@@ -503,7 +515,7 @@ function EditContact(customer, lastName, firstName_middleName, telFull, position
 				PhoneNumber = Mid(editTel, 5, 7);
 				PhoneInternalCode = Right(editTel, StrLen(editTel) - 11);
 			}
-			
+
 		} else {
 			PhoneCountryCode = Mid(editTel, 1, 1);
 			PhoneCityCode = Mid(editTel, 2, 3);
@@ -529,7 +541,7 @@ function EditContact(customer, lastName, firstName_middleName, telFull, position
 	contactObj.PhoneInternalCode = PhoneInternalCode;
 	contactObj.Email = $.email.Text;
 	contactObj.ChangeAutor = $.common.UserRef;
-	
+
 	contactObj.Save(false);
 	Workflow.Back();
 	} else {
@@ -541,19 +553,19 @@ function GetActivityCaption(cust){
 	var count = GetActivitiesCount(cust);
 	var rec = GetActivities(cust);
 	var resCount = count - 1;
-	
+
 	if (rec.Next()){
 		if (resCount > 0){
 			if (StrLen(rec.Kind.Description) > 15){
 				return Mid(rec.Kind.Description, 1, 15) + "... и еще " + resCount;
 			} else {
-				return rec.Kind.Description + " и еще " + resCount;				
+				return rec.Kind.Description + " и еще " + resCount;
 			}
-			
+
 		} else{
 			return Mid(rec.Kind.Description, 1, 20);
 		}
-				
+
 	} else {
 		return "Нет видов деятельности";
 	}
@@ -564,22 +576,22 @@ function AddActivity(curCustomer, act){
 	tq.AddParameter("cust", curCustomer);
 	tq.AddParameter("act", act);
 	rtq = tq.ExecuteScalar();
-	
+
 	if(rtq != null){
 		obj = rtq.GetObject();
 		obj.DelMark = 0;
 		obj.Save(false);
-	} else {	
+	} else {
 		var q = new Query("SELECT LineNumber FROM Catalog_Customer_KindOfActivity WHERE Catalog_Customer_KindOfActivity.Ref == @curCust ORDER BY Catalog_Customer_KindOfActivity.LineNumber DESC");
 		q.AddParameter("curCust",curCustomer);
 		count = q.ExecuteScalar();
-		
+
 		var curAct = DB.Create("Catalog.Customer_KindOfActivity");
 		curAct.Ref = curCustomer;
 		curAct.LineNumber = count + 1;
 		//curAct.LineId = GenerateGuid();
 		curAct.Kind = act;
-		curAct.DelMark = false;	    
+		curAct.DelMark = false;
 		curAct.Save(false);
 
 		//Save Change Author
@@ -597,7 +609,7 @@ function KillContact(contact, objCust){
 	obj.Fired = true;
 	obj.ChangeAutor = $.common.UserRef;
 	obj.Save(false);
-	
+
 	// DB.Delete(contact);
 	 Workflow.Refresh([objCust]);
 }
@@ -628,7 +640,7 @@ function DoBackAndClean(){
 function initsearch() {
 	if ($.Exists("aktsearch") == false){
 		//Dialog.Debug("Init");
-		$.AddGlobal("aktsearch", null);		
+		$.AddGlobal("aktsearch", null);
 	}
 }
 
@@ -640,12 +652,12 @@ function DoSearch(srchstr, p1){
 	} else {
 		$.AddGlobal("aktsearch", null);
 	}
-	Workflow.Refresh([p1]);	
+	Workflow.Refresh([p1]);
 }
 
 
 function GetPeapleCount(request){
-	
+
 	var q = new Query("SELECT PC.Description " +
 			"FROM  Catalog_Customer C " +
 			"JOIN Enum_PeopleCountVarint PC ON C.PeapleCount = PC.Id " +
@@ -657,7 +669,7 @@ function GetPeapleCount(request){
 	} else {
 		return Translate["#" + c + "#"];
 	}
-		
+
 }
 function SetDialogPeapleCount(request){
 	var Cnt =[];
@@ -673,7 +685,7 @@ function SetPeapleCount(Key, request){
 	$.PeopleCountField.Text = Translate["#" + Key.Description + "#"];
 	obj = request.GetObject();
 	obj.PeapleCount = Key;
-	obj.Save(false);	
+	obj.Save(false);
 }
 //////////////////////////////////////////////////////////////////////////////////
 function GetFinDir(request){
@@ -687,7 +699,7 @@ function GetFinDir(request){
 	} else {
 		return Translate["#" + c + "#"];
 	}
-		
+
 }
 function SetDialogFinDirExist(request){
 	var Cunt =[];
@@ -705,7 +717,7 @@ function SetFinDirExist(Key, request){
 		DescKey = Translate["#" + Key.Description + "#"];
 	}
 	$.FinDirExist.Text = DescKey;
-	
+
 	if (Key == "@ref[Enum_Logic3]:8b052e18-38dc-cdf9-456d-2e7a155dd06d"){
 		$.CauseOfFailure.Visible = true;
 		$.hlDir.Visible = true;
@@ -713,10 +725,10 @@ function SetFinDirExist(Key, request){
 		$.CauseOfFailure.Visible  = false;
 		$.hlDir.Visible  = false;
 	}
-	
+
 	obj = request.GetObject();
 	obj.FinDirExist = Key;
-	obj.Save(false);	
+	obj.Save(false);
 }
 
 function FinDirFailure(Key){
@@ -726,7 +738,7 @@ function FinDirFailure(Key){
 		return false;
 	}
 }
-	
+
 function DoBackAndCleanAct(){
 	$.Remove("aktsearch");
 	Workflow.Back();
@@ -735,6 +747,5 @@ function DoBackAndCleanAct(){
 function CheckPeopleCount(){
 	if (!validate(Variables["PeopleCountField"].Text, "[0-9]*")){
 		Dialog.Message("Разрешен ввод только целых чисел");
-	}	
+	}
 }
-
