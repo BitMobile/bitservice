@@ -160,9 +160,28 @@ function CallBackBeginPlan(state,args){
 
 function CallBackEndPlan(state,args){
 	obj = state.GetObject();
-	obj.PlanEndDataTime = args.Result;
-	$.endDate.Text = DoFullDate(args.Result);
+	if (args.Result > getEndOfDay(obj.PlanStartDataTime)) {
+		obj.PlanEndDataTime = getEndOfDay(obj.PlanStartDataTime);
+		$.endDate.Text = DoFullDate(getEndOfDay(obj.PlanStartDataTime));
+		Dialog.Message("Плановая дата окончания не может быть позже 1 дня от даты начала.");
+	} else {
+		if (args.Result >= Date(obj.PlanStartDataTime)) {
+			obj.PlanEndDataTime = args.Result;
+			$.endDate.Text = DoFullDate(args.Result);
+		} else {
+			obj.PlanEndDataTime = obj.PlanStartDataTime;
+			$.endDate.Text = DoFullDate(obj.PlanStartDataTime);
+			Dialog.Message("Плановая дата окончания не может быть раньше плановой даты начала.");
+		}
+	}
+
 	obj.Save(false);
+}
+
+function getEndOfDay(date) {
+	var q = new Query("SELECT datetime(@dt, 'start of day', '+1 day', '-1 second') as Dt");
+	q.AddParameter("dt", date);
+	return Date(q.ExecuteScalar());
 }
 
 function isProgress(obj){

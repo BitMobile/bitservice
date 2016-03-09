@@ -133,8 +133,8 @@ function sendClientRequest(staffName, clientName, comment, contact){
 			req.Post("/mobile/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
 			return true
 		} catch (e){
-			Dialog.Debug(e);
-			Dialog.Debug(e.StatusCode);
+			//Dialog.Debug(e);
+			//Dialog.Debug(e.StatusCode);
 			Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже.");
 			//setCookie(staffName, clientName, comment);
 			return false
