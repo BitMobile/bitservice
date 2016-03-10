@@ -1,5 +1,5 @@
 ﻿function OnLoading() {
-	 var curUser = $.common.UserRef;		
+	 var curUser = $.common.UserRef;
 	  if (curUser.Disabled) {
 		  cleanBase();
 	  }
@@ -31,16 +31,17 @@ function OpenMenu() {
 function GetToDayUnDoneRequestsCount(){//(searchText - строка поиска, getCount - получать ли количество[1-ДА,0-НЕТ])
 	var q = new Query("SELECT Document_Visit.Id " +
 			"FROM Document_Visit " +
-			"WHERE (Document_Visit.PlanStartDataTime " +
+			"WHERE Document_Visit.SR = @SR AND (Document_Visit.PlanStartDataTime " +
 			"BETWEEN @DateStart AND @DateEnd) " +
 			"AND Document_Visit.Status = @StatusEx");
-	
+
 	//q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expected);
 	q.AddParameter("DateStart", DateTime.Now.Date);
 	q.AddParameter("DateEnd", DateTime.Now.Date.AddDays(1));
+	q.AddParameter("SR", $.common.UserRef);
 	return q.ExecuteCount();
-	
+
 }
 
 function GetToDayDoneRequestCount(){//(searchText - строка поиска, getCount - получать ли количество[1-ДА,0-НЕТ])
@@ -48,10 +49,12 @@ function GetToDayDoneRequestCount(){//(searchText - строка поиска, g
 			"FROM Document_Visit " +
 			"WHERE Document_Visit.FactEndDataTime >= @DateStart " +
 			"AND Document_Visit.FactEndDataTime < @DateEnd " +
-			"AND Document_Visit.Status == @StatusComp");	
+			"AND Document_Visit.SR = @SR " +
+			"AND Document_Visit.Status == @StatusComp");
 	q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("DateStart", DateTime.Now.Date);
 	q.AddParameter("DateEnd", DateTime.Now.Date.AddDays(1));
+	q.AddParameter("SR", $.common.UserRef);
 	return q.ExecuteCount();
 }
 
@@ -60,10 +63,11 @@ function GetToDayUnDoneRequestsMonthCount(){//(searchText - строка пои�
 			"WHERE Document_Visit.PlanStartDataTime BETWEEN " +
 			"datetime('now', 'start of month') AND " +
 			"datetime('now', 'start of month', '+1 months') " +
-			"AND Document_Visit.Status = @StatusEx");
-	 
+			"AND Document_Visit.Status = @StatusEx AND Document_Visit.SR = @SR");
+
 	//q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
 	q.AddParameter("StatusEx", DB.Current.Constant.VisitStatus.Expected);
+	q.AddParameter("SR", $.common.UserRef);
 	return q.ExecuteCount();
 	
 }
@@ -75,9 +79,10 @@ function GetToDayDoneRequestMonthCount(){//(searchText - строка поиск
 			"WHERE Document_Visit.FactEndDataTime " +
 			"BETWEEN datetime('now', 'start of month') " +
 			"AND datetime('now', 'start of month', '+1 months') " +
-			"AND Document_Visit.Status = @StatusComp");
-	
+			"AND Document_Visit.Status = @StatusComp AND Document_Visit.SR = @SR");
+
 	q.AddParameter("StatusComp", DB.Current.Constant.VisitStatus.Completed);
+	q.AddParameter("SR", $.common.UserRef);
 	return q.ExecuteCount();
 }
 
