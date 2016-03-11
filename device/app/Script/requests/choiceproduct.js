@@ -5,12 +5,12 @@ function OnLoading(){
  function SetListType() {
     if ($.Exists("listType") == false){
         $.AddGlobal("listType", 1);
-      } 
+      }
       return $.listType;
 }
 
 function isCustProd() {
-	if ( $.listType == 1) {		
+	if ( $.listType == 1) {
 		return true;
 	} else {
 		return false;
@@ -31,9 +31,9 @@ function GetProducts(objCust, searchString, vRef) {
 	q.Text = qt;
 	q.AddParameter("cust", objCust);
 	if (q.ExecuteCount() > 0){
-		q.Text = qt + " AND NOT P.Product IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";
-		q.AddParameter("r", vRef);			
-	} 
+		q.Text = qt;
+		q.AddParameter("r", vRef);
+	}
 	return q.Execute();
 }
 
@@ -41,24 +41,24 @@ function GetAllProducts(searchString, vRef) {
 	//Dialog.Debug(searchString);
 	var q = new Query();
 	var qt = "SELECT S.Id AS Id, S.Description AS Description FROM Catalog_SKU S ";
-	
+
 	if (searchString != "" && searchString != null) {
-		var plus = " WHERE Contains(S.Description, @st) AND NOT S.Id IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";		
-		qt = qt + plus;		
+		var plus = " WHERE Contains(S.Description, @st)";
+		qt = qt + plus;
 		q.AddParameter("st", searchString);
 		q.AddParameter("r", vRef);
 	} else {
-		var plus = " WHERE NOT S.Id IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";		
-		qt = qt + plus;		
+		//var plus = " WHERE NOT S.Id IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";
+		qt = qt + plus;
 		q.AddParameter("st", searchString);
 		q.AddParameter("r", vRef);
-	}	
+	}
 	//Dialog.Debug(qt);
-	q.Text = qt;	
+	q.Text = qt;
 	//q.AddParameter("cust", objCust);
-	
-	return q.Execute();	
-	
+
+	return q.Execute();
+
 }
 
 function GetDirections(objCust, searchString, vRef) {
@@ -70,12 +70,12 @@ function GetDirections(objCust, searchString, vRef) {
 		qt = qt + plus;
 		q.AddParameter("st", searchString);
 	}
-	
+
 	q.Text = qt;
-	
+
 	q.AddParameter("Parent", vRef.DirectionOfAppeal);
 	return q.Execute();
-	
+
 }
 
 //function SetProduct(cw, p){
@@ -87,7 +87,7 @@ function GetDirections(objCust, searchString, vRef) {
 function initsearch() {
 	if ($.Exists("prodsearch") == false){
 	//	Dialog.Debug("Init");
-		$.AddGlobal("prodsearch", null);		
+		$.AddGlobal("prodsearch", null);
 	}
 }
 
@@ -99,7 +99,7 @@ function DoSearch(srchstr, p1, p2, p3){
 	} else {
 		$.AddGlobal("prodsearch", null);
 	}
-	Workflow.Refresh([p1,p2,p3]);	
+	Workflow.Refresh([p1,p2,p3]);
 }
 
 function DoBackAndClean(){
