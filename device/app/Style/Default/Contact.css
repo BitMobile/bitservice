@@ -45,31 +45,31 @@
 		color: #000000;
 		font: 38% Arial;
 	}
-	
+
 .grid vl hl {
 	        width: 100%;
 	        height: 100%;
 	    }
-	
+
 	        .grid vl hl MemoEdit {
 	            height: 60%;
 	            width: 90%;
 	            font: 30% Arial;
 	        }
-	
+
 	        .grid vl hl EditText {
 	            height: 60%;
 	            width: 90%;
 	            font: 30% Arial;
 	            color: #2d89cf;
 	        }
-	 
-	 
+
+
 .main_row {
     width: 75%;
-    height: 40%;
+    height: 35%;
     white-space: normal;
     font: 60% Arial;
-    margin-top: -5%;
-    color: #e6891b; 
+    margin-top: -2%;
+    color: #e6891b;
 }
