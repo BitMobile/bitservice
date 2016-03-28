@@ -20,7 +20,7 @@ dl {
 		color: #e6891b;
 		font: 38% Arial;
 	}
-	
+
 .spacer {
 	width: 100%;
 	height: 50px;
@@ -58,18 +58,18 @@ dl {
 		color: #e6891b;
 		font: 38% Arial;
 	}
-	
+
 .grid vl hl {
 	        width: 100%;
 	        height: 100%;
 	    }
-	
+
 	        .grid vl hl MemoEdit {
 	            height: 60%;
 	            width: 90%;
 	            font: 30% Arial;
 	        }
-	
+
 	        .grid vl hl EditText {
 	            height: 60%;
 	            width: 90%;
@@ -83,12 +83,12 @@ dl {
 
 .parameter_grid {
 	background-color: #ffffff;
-	
-}	
+
+}
 
 .value {
 	margin-top: 10%;
-	
+
 }
 
 .main_row {

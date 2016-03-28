@@ -6,64 +6,64 @@
 	<c:DockLayout>
 
 		<c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_bottom_footer " OnEvent="Back" OnClickAction="$SaveCustomerAndBack()">
+			<c:DockLayout CssClass="btn_bottom_footer" OnEvent="Back" OnClickAction="$SaveCustomerAndBack()">
 				<c:TextView Text="Готово" />
 			</c:DockLayout>
 		</c:DockLayout>
-		
-		<c:HorizontalLayout CssClass="caption_grid">         
+
+		<c:HorizontalLayout CssClass="caption_grid">
           <c:TextView Text="ОСНОВНЫЕ ПАРАМЕТРЫ:"></c:TextView>
         </c:HorizontalLayout>
-		
-		
-		
-		
+
+
+
+
 		<c:DockLayout CssClass="parameter_grid" OnClickAction="$Workflow.DoAction(CurrentActivities, $currentCustomer.Id)">
 	        <c:TextView Text="Вид деятельности"></c:TextView>
-	        
+
 	        <s:Push Id="collectioncount" Value="$GetActivitiesCount($currentCustomer)"></s:Push>
-	        
+
 	        <s:If Test="$collectioncount == 0">
 	        	<c:TextView Text="Нет видов деятельности"  CssClass="value"></c:TextView>
 	        </s:If>
 	        <s:Else>
 	        	<c:TextView Text="$GetActivityCaption($currentCustomer)"  CssClass="value"></c:TextView>
 	        </s:Else>
-	        
+
 	    </c:DockLayout>
 	    <c:HorizontalLine/>
-	    
-	   
-	   
-	   
-	   
+
+
+
+
+
 	  <c:DockLayout CssClass="parameter_grid">
 	        <c:TextView Text="Кол-во сотрудников" ></c:TextView>
-	        
+
 	        <c:EditText Id="PeopleCountField" Value ="$currentCustomer.DigitPeopleCount" Keyboard="numeric" OnChange="$CheckPeopleCount()" CssClass="value"></c:EditText>
-	        
-	        
-	    </c:DockLayout>
-	    <c:HorizontalLine/>	   
-	   
-	   
-	   <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogFinDirExist($currentCustomer)">
-	        <c:TextView Text="Есть Фин. Директор" ></c:TextView>
-	        
-	        <c:TextView Id="FinDirExist" Text="$GetFinDir($currentCustomer)"  CssClass="value"></c:TextView>
-	        
-	        
+
+
 	    </c:DockLayout>
 	    <c:HorizontalLine/>
-	    
+
+
+	   <c:DockLayout CssClass="parameter_grid" OnClickAction="$SetDialogFinDirExist($currentCustomer)">
+	        <c:TextView Text="Есть Фин. Директор" ></c:TextView>
+
+	        <c:TextView Id="FinDirExist" Text="$GetFinDir($currentCustomer)"  CssClass="value"></c:TextView>
+
+
+	    </c:DockLayout>
+	    <c:HorizontalLine/>
+
 		<c:HorizontalLayout Id="CauseOfFailure" CssClass="grid" Visible="$FinDirFailure($currentCustomer.FinDirExist)">
-         
+
            		<c:VerticalLayout >
            			<c:TextView Text="Введите причину отказа" CssClass="description_row"></c:TextView>
            			<c:MemoEdit Id="CauseOfFailureField" Value ="$currentCustomer.CauseOfFailure" CssClass="main_row"></c:MemoEdit>
            		</c:VerticalLayout>
-           		
-        </c:HorizontalLayout>		
+
+        </c:HorizontalLayout>
 	</c:DockLayout>
 
 

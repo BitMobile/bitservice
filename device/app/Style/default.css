@@ -8,7 +8,7 @@ body {
 	text-align: center;
 	margin-top: 30%;
 	color: #c0c0c0;
-	padding-top: 80%;	
+	padding-top: 80%;
 }
 
 line {
@@ -80,6 +80,7 @@ MemoEdit {
 }
 
 .footer {
+  width: 100%;
 	height: 7.6sp;
     dock-align: bottom;
 	background-color: #ffffff;
@@ -346,7 +347,7 @@ MemoEdit {
         margin-left: 2.5%;
         background-image: url(arrow.png);
     }
-    
+
     .grid iphone {
         height: 8%;
         width: 9%;
@@ -429,7 +430,7 @@ MemoEdit {
     height: 0%;
     width: 4.1%;
     margin-left: 2%;
-    margin-right: 0%;    
+    margin-right: 0%;
 }
 
 .no_mark {
@@ -656,7 +657,7 @@ MemoEdit {
 .memo_block {
     height: 48sp;
 }
- 
+
 
     .memo_block vl {
         width: 98%;

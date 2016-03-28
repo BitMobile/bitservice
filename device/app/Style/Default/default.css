@@ -86,6 +86,7 @@ MemoEdit {
 
 .footer {
 	height: 7.6sp;
+  width: 100%;
     dock-align: bottom;
 	background-color: #ffffff;
 }

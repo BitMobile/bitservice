@@ -32,7 +32,7 @@
 
 	  <c:HorizontalLine/>
 	  <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(SelectItem)">
-		
+
 		<c:VerticalLayout>
 		  <c:TextView Text="#descriptioncust#" CssClass="description_row"></c:TextView>
 		  <c:TextView Text="$objCust.Description" CssClass="main_row_custname"></c:TextView>
@@ -115,8 +115,10 @@
 			<c:TextView Text="#PhoneNumbers#" CssClass="description_row"></c:TextView>
 		  <c:TextView Text="$objCust.PhoneNumbers" CssClass="phone_numbrs"></c:TextView>
 		</c:VerticalLayout>
-		<c:VerticalLayout CssClass="PhonePlaceFromConfig" OnClickAction="$MoreMakeContactCall($objCust.PhoneNumbers)">
-		</c:VerticalLayout>
+		<s:If Test="$objCust.PhoneNumbers!=''">
+			<c:VerticalLayout CssClass="PhonePlaceFromConfig" OnClickAction="$MoreMakeContactCall($objCust.PhoneNumbers)">
+			</c:VerticalLayout>
+		</s:If>
 	  </c:HorizontalLayout>
 
 	  <c:HorizontalLine/>
