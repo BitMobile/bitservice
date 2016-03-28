@@ -2,7 +2,7 @@
 <c:Screen xmlns:c="BitMobile.Controls" xmlns:s="BitMobile.ValueStack" StyleSheet="choiceproduct.css">
 
 <c:VerticalLayout>
-  <c:HorizontalLayout CssClass="small_grid">	
+  <c:HorizontalLayout CssClass="small_grid">
 	  <s:If Test="$isCustProd()">
       <c:HorizontalLayout CssClass="mode_left_button_on">
         <c:HorizontalLayout Id="custProd" CssClass="select_zone" OnClickAction="$ChangeListAndRefresh(1)">
@@ -28,7 +28,7 @@
       </c:HorizontalLayout>
       </s:Else>
     </c:HorizontalLayout>
-    <c:HorizontalLine/> 
+    <c:HorizontalLine/>
    <c:HorizontalLayout CssClass="search">
 	 <s:Push Id="val" Value="$initsearch()"/>
       <c:DockLayout >
@@ -36,21 +36,21 @@
         <c:EditText Id="edtSearch" Text="$prodsearch" Placeholder="#search#"></c:EditText>
       </c:DockLayout>
       <c:Button Id="btnSearch" Text="#search#" OnClickAction="$DoSearch($edtSearch.Text, $param1, $param2, $param3)"></c:Button>
-    </c:HorizontalLayout> 
-    
-     
-       
+    </c:HorizontalLayout>
+
+
+
     <c:HorizontalLayout CssClass="shadowLine"></c:HorizontalLayout>
     <s:If Test="$isCustProd()">
         <s:Push Id="product" Value="$GetProducts($param1.Customer, $prodsearch, $param1.Id)"/>
-        <c:ScrollView>   
+        <c:ScrollView>
         <s:Iterator Id="product" Value="$product">
               <c:HorizontalLine/>
               <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $product.Product, 1, $param3)">
                 <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
                 <c:VerticalLayout>
                   <c:TextView Text="$product.Product.Description" CssClass="main_row"></c:TextView>
-                 
+
                 </c:VerticalLayout>
                 <c:Image/>
               </c:HorizontalLayout>
@@ -65,14 +65,14 @@
    </s:If>
    <s:Else>
         <s:Push Id="Allproducts" Value="$GetAllProducts($prodsearch, $param1.Id)"/>
-        <c:ScrollView>   
-        <s:Iterator Id="allProduct" Value="$Allproducts">
+        <c:ScrollView>
+        <s:Iterator Id="Allproducts" Value="$Allproducts">
               <c:HorizontalLine/>
-              <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $allProduct.Id, 1, $param3)">
+              <c:HorizontalLayout CssClass="grid" OnClickAction="$Workflow.DoAction(DoSelect,$param1, $param2, $Allproducts.Id, 1, $param3)">
                 <c:VerticalLayout CssClass="no_mark"></c:VerticalLayout>
                 <c:VerticalLayout>
-                  <c:TextView Text="$allProduct.Description" CssClass="main_row"></c:TextView>
-                 
+                  <c:TextView Text="$Allproducts.Description" CssClass="main_row"></c:TextView>
+
                 </c:VerticalLayout>
                 <c:Image/>
               </c:HorizontalLayout>
@@ -85,6 +85,6 @@
           </c:DockLayout>
       </c:DockLayout>
   </s:Else>
-     
+
 </c:VerticalLayout>
 </c:Screen>

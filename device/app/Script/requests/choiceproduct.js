@@ -39,21 +39,18 @@ function GetProducts(objCust, searchString, vRef) {
 
 function GetAllProducts(searchString, vRef) {
 	//Dialog.Debug(searchString);
+
 	var q = new Query();
 	var qt = "SELECT S.Id AS Id, S.Description AS Description FROM Catalog_SKU S ";
 
-	if (searchString != "" && searchString != null) {
+	if (!IsNullOrEmpty(searchString)) {
 		var plus = " WHERE Contains(S.Description, @st)";
 		qt = qt + plus;
 		q.AddParameter("st", searchString);
-		q.AddParameter("r", vRef);
-	} else {
-		//var plus = " WHERE NOT S.Id IN (SELECT SKU FROM Document_Visit_Result WHERE Document_Visit_Result.Ref = @r)";
-		qt = qt + plus;
-		q.AddParameter("st", searchString);
-		q.AddParameter("r", vRef);
-	}
-	//Dialog.Debug(qt);
+		//q.AddParameter("r", vRef);
+	} 
+		//Dialog.Debug(vRef);
+	//Dialog.Debug(searchString);
 	q.Text = qt;
 	//q.AddParameter("cust", objCust);
 
