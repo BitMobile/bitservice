@@ -3,47 +3,47 @@
 	StyleSheet="work.css">
 <c:DockLayout>
 	<s:Push Id="visit" Value="$param1"></s:Push>
-	
-<c:DockLayout CssClass="top_navigator">			
+
+<c:DockLayout CssClass="top_navigator">
 			<c:HorizontalLayout>
 				<c:TextView Id="caption"/>
 			</c:HorizontalLayout>
 </c:DockLayout>
 <c:DockLayout CssClass="footer">
-			<c:DockLayout CssClass="btn_left_footer"  OnClickAction="$saveChenges($param2)"> 
+			<c:DockLayout CssClass="btn_left_footer"  OnClickAction="$saveChenges($param2)">
 				<c:TextView Text="#ready#"></c:TextView>
 			</c:DockLayout>
-			
+
 			<c:DockLayout CssClass="btn_right_footer" OnEvent="Back" OnClickAction="$DoBack()">
 				<c:TextView Text="#cancel#"></c:TextView>
-			</c:DockLayout>		
-</c:DockLayout>	
-	
+			</c:DockLayout>
+</c:DockLayout>
 
-<c:ScrollView>	
+
+<c:ScrollView>
     <c:HorizontalLine/>
     <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="Рег.номер"></c:TextView>
-       
-	        <c:EditText Id="regnum"  CssClass="value"></c:EditText>
-	     
+
+	        <c:EditText Id="regnum" Keyboard="numeric" CssClass="value"></c:EditText>
+
     </c:DockLayout>
     <c:HorizontalLine/>
-     
-    
+
+
      <c:DockLayout CssClass="parameter_grid">
         <c:TextView Text="Пароль НИ"></c:TextView>
-	
+
         	<c:EditText Id="passni"  CssClass="value"></c:EditText>
-        
+
     </c:DockLayout>
     <c:HorizontalLine/>
-     
-     
+
+
 </c:ScrollView>
-	
-	
-	
+
+
+
 </c:DockLayout>
 <s:Push Id="kkm" Value="$fillValues($param2)"></s:Push>
 </c:Screen>
