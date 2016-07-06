@@ -103,6 +103,21 @@ function StartWork(state, args){
 	var obj = state[1];
 	obj.FactStartDataTime = DateTime.Now;
 	obj.Save(false);
+	var request = new HttpRequest("http://192.168.104.24");
+	request.UserName="admin";
+	request.Password="admin";
+try {
+	var a=request.Get("/InfoBase2/hs/sendendstart/"+obj.Id.Guid+"/start");
+}
+	catch (e) {
+		//Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже."+request.Status);
+	}
+	//var request = Web.Request("http://192.168.104.24/InfoBase2/hs/sendendstart/"+obj.Id.Guid+"/start");//WebRequest.Create("http://192.168.104.24/InfoBase2/hs");
+	//request.UserName = "admin";
+	//request.Password = "admin";
+	//var result = request.Get();
+	//Dialog.Message(obj.Id.Guid);
+	//Dialog.Message(result);
 	req = obj.Id;
 	if (checkUsr()){
 		Workflow.Action("WorkList",[req, state[2], state[3]]);
