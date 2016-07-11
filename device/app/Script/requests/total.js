@@ -276,9 +276,15 @@ function syncOnly(request, fStart, fStop, refStatus){
 }
 
 function SendMail(StrEnd,objrec){
-	var request = new HttpRequest("http://192.168.104.24");
+	var request = Web.Request();
+	request.Host = "http://192.168.104.24";
 	request.UserName="admin";
 	request.Password="admin";
+	request.Timeout = "00:00:01";
+
+//	var request = new HttpRequest("http://192.168.104.24");
+//	request.UserName="admin";
+//	request.Password="admin";
 	try {
 		var a=request.Get("/InfoBase2/hs/sendendstart/"+objrec.Id.Guid+"/"+StrEnd);
 	}
