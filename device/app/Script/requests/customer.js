@@ -103,9 +103,15 @@ function StartWork(state, args){
 	var obj = state[1];
 	obj.FactStartDataTime = DateTime.Now;
 	obj.Save(false);
-	var request = new HttpRequest("http://192.168.104.24");
+	var request = Web.Request();
+	request.Host = "http://192.168.104.24";
+//	request.UserName = username;
+//	request.Password = password;
+
+//	var request = new HttpRequest("http://192.168.104.24");
 	request.UserName="admin";
 	request.Password="admin";
+	request.Timeout = "00:00:01";
 try {
 	var a=request.Get("/InfoBase2/hs/sendendstart/"+obj.Id.Guid+"/start");
 }
