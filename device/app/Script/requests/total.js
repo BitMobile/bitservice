@@ -286,7 +286,13 @@ function SendMail(StrEnd,objrec){
 //	request.UserName="admin";
 //	request.Password="admin";
 	try {
-		var a=request.Get("/InfoBase2/hs/sendendstart/"+objrec.Id.Guid+"/"+StrEnd);
+		var objId = "";
+			if (objrec.Guid=="") {
+					objId = objrec.Id.Guid;
+				}else {
+					objId = objrec.Guid;
+				}
+		var a=request.Get("/InfoBase2/hs/sendendstart/"+objId+"/"+StrEnd);
 	}
 		catch (e) {
 			//Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже."+request.Status);
