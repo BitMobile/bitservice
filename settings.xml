@@ -4,6 +4,6 @@
  <version version="2.11.1.191"></version>
  </resource>
  <client>
-  <supportedCore version="2.1.0.82" />
+  <supportedCore version="2.7.19.190" />
  </client>
 </configuration>
