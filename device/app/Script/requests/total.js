@@ -277,9 +277,10 @@ function syncOnly(request, fStart, fStop, refStatus){
 
 function SendMail(StrEnd,objrec){
 	var request = Web.Request();
-	request.Host = "http://192.168.104.24";
+//	request.Host = "http://192.168.104.24";
+	request.Host = "web-server.ru.com:40021"
 	request.UserName="admin";
-	request.Password="admin";
+	request.Password="iDDqD_bs!";
 	request.Timeout = "00:00:01";
 
 //	var request = new HttpRequest("http://192.168.104.24");
@@ -292,7 +293,9 @@ function SendMail(StrEnd,objrec){
 				}else {
 					objId = objrec.Guid;
 				}
-		var a=request.Get("/InfoBase2/hs/sendendstart/"+objId+"/"+StrEnd);
+//		var a=request.Get("/InfoBase2/hs/sendendstart/"+objId+"/"+StrEnd);
+		var a=request.Get("/mobile1/hs/sendendstart/"+objId+"/"+StrEnd);
+
 	}
 		catch (e) {
 			//Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже."+request.Status);

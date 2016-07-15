@@ -104,12 +104,14 @@ function StartWork(state, args){
 	obj.FactStartDataTime = DateTime.Now;
 	obj.Save(false);
 	var request = Web.Request();
-	request.Host = "http://192.168.104.24";
+//	request.Host = "http://192.168.104.24";
+	request.Host = "web-server.ru.com:40021"
 	request.UserName="admin";
-	request.Password="admin";
+	request.Password="iDDqD_bs!";
 	request.Timeout = "00:00:01";
 try {
-	var a=request.Get("/InfoBase2/hs/sendendstart/"+obj.Id.Guid+"/start");
+//	var a=request.Get("/InfoBase2/hs/sendendstart/"+obj.Id.Guid+"/start");
+		var a=request.Get("/mobile1/hs/sendendstart/"+obj.Id.Guid+"/start");
 }
 	catch (e) {
 		//Dialog.Message("Запрос не отправлен. Попробуйте повторить отправку позже."+request.Status);
