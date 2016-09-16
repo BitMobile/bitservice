@@ -102,7 +102,13 @@ function TryStart(step, req, cust, outlet){
 function StartWork(state, args){
 	var obj = state[1];
 	obj.FactStartDataTime = DateTime.Now;
+	var location = GPS.CurrentLocation;
+    if (ActualLocation(location)) {
+        obj.latitude = location.Latitude;
+        obj.longitude = location.Longitude;
+    }
 	obj.Save(false);
+	GPS.StopTracking();
 	var request = Web.Request();
 //	request.Host = "http://192.168.104.24";
 	request.Host = "web-server.ru.com:40021"
