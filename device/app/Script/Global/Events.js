@@ -130,7 +130,7 @@ function sendClientRequest(staffName, clientName, comment, contact){
 		try {
 			var curUser = $.common.UserRef;
 			//req.Post("/superservice/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //develop
-			req.Post("/mobile/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
+			req.Post("/hs/sending/" + curUser.Id, 'contact='+ contact +'&phone=' + staffName + '&client=' + clientName + '&comment=' + comment); //production
 			return true
 		} catch (e){
 			//Dialog.Debug(e);
